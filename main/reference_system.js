@@ -20,6 +20,9 @@ export function ReferenceSystem(plugins) {
                 if (plugin.getConnectedPapers instanceof Function) {
                     // if haven't gotten them already
                     if (!(this.$accordingTo[pluginName].connectedPapers instanceof Array)) {
+                        if (!(this.$accordingTo[pluginName] instanceof Object)) {
+                            this.$accordingTo[pluginName] = {}
+                        }
                         const promise = Promise.resolve(plugin.getConnectedPapers(this.$accordingTo[pluginName], this)).catch(error=>{
                             warnings[pluginName] = error
                         })
