@@ -1087,7 +1087,7 @@ export async function getLinkedCrossRefArticles(doi) {
 // 
 // search
 // 
-export async function search(query) {
+export async function crossRefSearch(query) {
     const url = `https://search.crossref.org/search/works?q=${encodeURIComponent(query)}&from_ui=yes`
     const htmlResult = await crossRefSearchFetch(url)
     // 
