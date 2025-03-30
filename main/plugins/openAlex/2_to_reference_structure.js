@@ -21,7 +21,7 @@ export function toReferenceStructure(openAlexObject) {
     const output = {
         doi,
         title: openAlexObject.title || openAlexObject.display_name,
-        abstract: openAlexObject.abstract,
+        abstract: openAlexObject.abstract&&openAlexObject.abstract.replace(/<\/?jats:\w+>/g,"").trim().replace(/^Abstract\b/i,"").trim(),
         concepts: [
             ...new Set([ 
                 ...(openAlexObject.topics||[]).map(openAlexObject=>openAlexObject.display_name),
