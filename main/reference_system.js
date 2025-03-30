@@ -17,6 +17,23 @@ export function ReferenceSystem({plugins={}}) {
     }
 
     Object.assign(Reference.prototype, {
+        // TODO: convert this:
+        // async function relatedWorkIncludes({source, }, refChecker) {
+        //     let reference = await autofillDataFor(source)
+        //     if (reference.accordingTo?.openAlex?.citedAlexIds instanceof Array) {
+        //         const { citedBy, cites } = await getLinkedOpenAlexArticles(reference.accordingTo.openAlex.openAlexId)
+        //         for (let each of citedBy.concat(cites)) {
+        //             let citedWork = openAlexToSimpleFormat(each)
+        //             if (citedWork) {
+        //                 if (await refChecker(citedWork)) {
+        //                     return true
+        //                 }
+        //             }
+        //         }
+        //         return false
+        //     }
+        // }
+
         async fillConnectedPapers() {
             let promises = []
             let warnings = {}
@@ -60,6 +77,6 @@ export function ReferenceSystem({plugins={}}) {
         Reference,
         search(query) {
             throw Error(`Not implemented yet`)
-        }
+        },
     }
 }
