@@ -1,12 +1,18 @@
-import { createCachedJsonFetcher } from "../tools/fetch_tools.js"
-import { normalizeDoiString } from "../tools/doi_tools.js"
-import { toRepresentation } from '../imports/good.js'
+import { createCachedJsonFetcher } from "../../tools/fetch_tools.js"
+import { normalizeDoiString } from "../../tools/doi_tools.js"
+import { toRepresentation } from "../../imports/good.js"
 
+// 
+// central rate-limiter for crossRef
+// 
 export const crossRefFetch = createCachedJsonFetcher({
     rateLimit: 100, // not sure what their rate limit is
     urlNormalizer: url=>url,
 })
 
+// 
+// get single
+// 
 export async function crossRefDataFromDoi(doi) {
     if (typeof doi != "string") {
         throw Error(`crossRefDataFromDoi(doi), doi arg was not a string: ${toRepresentation(doi)}`)
@@ -667,6 +673,9 @@ export async function crossRefDataFromDoi(doi) {
     // }
 }
 
+// 
+// get multiple
+// 
 export async function getLinkedCrossRefArticles(doi) {
     if (typeof doi != "string") {
         throw Error(`getLinkedCrossRefArticles(doi), doi arg was not a string: ${toRepresentation(doi)}`)

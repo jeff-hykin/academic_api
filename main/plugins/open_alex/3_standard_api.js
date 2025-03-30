@@ -27,3 +27,10 @@ export async function getConnectedPapers(refDataAccordingToOpenAlex, reference) 
     }
     // on fail, intentionally return null
 }
+
+// this is the only required export
+export default {
+    name: "openAlex",
+    search,
+    getConnectedPapers,
+}
