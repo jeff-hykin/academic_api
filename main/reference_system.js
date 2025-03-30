@@ -78,6 +78,14 @@ export function ReferenceSystem({plugins={}}) {
                 warnings,
             }
         },
+        toJSON() {
+            return {
+                // ...Object.fromEntries(
+                //     Reflect.ownKeys(this).map(each=>[each,Reflect.get(this,each)]),
+                // ),
+                $accordingTo: this.$accordingTo,
+            }
+        },
         [Symbol.for("Deno.customInspect")](inspect,options) {
             return inspect(
                 {
