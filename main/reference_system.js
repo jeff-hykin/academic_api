@@ -62,8 +62,9 @@ export function ReferenceSystem({plugins={}}) {
         },
         toJSON() {
             return {
+                title: this.title,
                 $accordingTo: this.$accordingTo,
-            },
+            }
         },
         [Symbol.for("Deno.customInspect")](inspect,options) {
             return inspect(
@@ -130,7 +131,6 @@ export function ReferenceSystem({plugins={}}) {
             }
             await Promise.all(promises)
             let titleOnlySources = []
-            console.debug(`eachSourceResultsFlattened is:`,eachSourceResultsFlattened)
             for (let each of eachSourceResultsFlattened) {
                 if (!each.doi) {
                     // try to get the DOI from a different source
@@ -148,7 +148,6 @@ export function ReferenceSystem({plugins={}}) {
             let references = []
             
             const titles = new Set(titleOnlySources.map(each=>each.title))
-            console.debug(`titles is:`,titles)
             for (let eachTitle of titles) {
                 const reference = new Reference()
                 for (const [pluginName, value] of Object.entries(resultsByTitle[eachTitle])) {

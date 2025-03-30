@@ -78,7 +78,6 @@ export function coerceInsignificantEdgeCases(obj) {
             coerceInsignificantEdgeCases(each)
         }
     }
-    return obj
 }
 
 export function reasonValueIsInvalidReferenceStructure(obj, {rejectNonModernDois=false, rejectCommasInAuthorNames=true}={}) {

@@ -20,6 +20,13 @@ export function couldBeValidDoi(doi) {
         // /^10\.\d{4}\/\d+-\d+X?(\d+)\d+<[\d\w]+:[\d\w]*>\d+.\d+.\w+;\d$/i
 }
 
+export function urlToDoiMaybe(url) {
+    const doi = normalizeDoiString(url)
+    if (couldBeValidDoi(doi)) {
+        return doi
+    }
+}
+
 export function normalizeDoiString(doi) {
     // remove most common url prefix
     if (doi.startsWith("https://doi.org/")) {
