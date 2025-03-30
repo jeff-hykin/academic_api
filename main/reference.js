@@ -30,6 +30,16 @@ export function coerceInsignificantEdgeCases(obj) {
         // remove leading and trailing whitespace
         obj.title = obj.title.replace(/\s+/g," ").trim()
     }
+    
+    // year
+    if (typeof obj.year == "string") {
+        obj.year = parseInt(obj.year)
+    }
+    
+    // citationCount
+    if (typeof obj.citationCount == "string") {
+        obj.citationCount = parseInt(obj.citationCount)
+    }
 
     // DOI
     if (typeof obj.doi == "string") {
