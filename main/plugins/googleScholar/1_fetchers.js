@@ -130,7 +130,7 @@ export const googleScholarFetcher = createCachedTextFetcher({
 //         }
 //     ]
 export async function queryToListOfResults(query) {
-    const url = `https://scholar.google.com/scholar/?q=${encodeURIComponent(query)}`
+    const url = `https://scholar.google.com/scholar?q=${encodeURIComponent(query)}`
     const baseUrl = new URL(url).origin
     const getHref = (element)=>element.getAttribute("href").startsWith("/")?`${baseUrl}/${element.getAttribute("href")}`:element.getAttribute("href")
     
