@@ -1,6 +1,10 @@
 import { MultiSourceObject } from "./tools/multi_source_object.js"
 
-export function ReferenceSystem(plugins) {
+export function ReferenceSystem({plugins={}}) {
+    plugins = {
+        "manual": {},
+        ...plugins,
+    }
     // for (const [key, value] of Object.entries(plugins)) {
     //     // TODO: validate a plugin here
     // }
@@ -54,6 +58,8 @@ export function ReferenceSystem(plugins) {
     
     return {
         Reference,
-        // TODO: search
+        search(query) {
+            throw Error(`Not implemented yet`)
+        }
     }
 }

@@ -53,7 +53,7 @@ export function MultiSourceObject(sources) {
             if (key == "$accordingTo" || typeof key != "string") {
                 return Reflect.set(original, key, ...args)
             } else {
-                throw Error(`setting key ${key} is not allowed, set the value of .$accordingTo[something].${key} instead`)
+                throw Error(`setting key ${JSON.stringify(key)} is not allowed, set the value of .$accordingTo[nameOfSource].${key} instead\nIf you're doing this manually, use nameOfSource="manual"`)
             }
         },
         has: Reflect.has,

@@ -1,7 +1,7 @@
 import { isValidHttpUrl } from './imports/good.js'
 import { toRepresentation } from './imports/good.js'
-import { MultiSourceObject } from "./multi_source_object.js"
-import { isModernDoi, couldBeValidDoi, matchValidDoiSubstring, normalizeDoiString } from "./doi_tools.js"
+import { MultiSourceObject } from "./tools/multi_source_object.js"
+import { isModernDoi, couldBeValidDoi, matchValidDoiSubstring, normalizeDoiString } from "./tools/doi_tools.js"
 // common reference structure summary:
 //    {string} paper.title - The title of the paper. THE ONLY REQUIRED FIELD.
 //    {string} paper.doi - The DOI (Digital Object Identifier) of the paper.

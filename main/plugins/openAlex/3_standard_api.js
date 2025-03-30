@@ -18,7 +18,7 @@ export async function getConnectedPapers(refDataAccordingToOpenAlex, reference) 
     }
 
     // get conntected papers
-    let openAlexId = refDataAccordingToOpenAlex.id
+    openAlexId = refDataAccordingToOpenAlex.id
     if (openAlexId) {
         const {cites, citedBy} = await getLinkedOpenAlexArticles(openAlexId)
         refDataAccordingToOpenAlex.cites = cites.map(toReferenceStructure)
