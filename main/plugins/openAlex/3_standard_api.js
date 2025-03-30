@@ -1,11 +1,9 @@
-import { openAlexDataFromDoi, getLinkedOpenAlexArticles, openAlexFetch } from "./1_fetchers.js"
+import { openAlexDataFromDoi, getLinkedOpenAlexArticles, queryToListOfResults, openAlexFetch } from "./1_fetchers.js"
 import { toReferenceStructure } from "./2_to_reference_structure.js"
 
-// FIXME:
 export async function search(query) {
-    throw Error(`not implemented`)
-    // TODO: implement
-    return []
+    const { results } = await queryToListOfResults(query)
+    return results.map(toReferenceStructure)
 }
 
 export async function getConnectedPapers(refDataAccordingToOpenAlex, reference) {
@@ -13,7 +11,7 @@ export async function getConnectedPapers(refDataAccordingToOpenAlex, reference) 
     let openAlexId = refDataAccordingToOpenAlex.id
     if (!openAlexId) {
         if (reference.doi) {
-            refDataAccordingToOpenAlex = {...await openAlexDataFromDoi(reference.doi)}
+            refDataAccordingToOpenAlex = toReferenceStructure({...await openAlexDataFromDoi(reference.doi)})
         }
     }
 

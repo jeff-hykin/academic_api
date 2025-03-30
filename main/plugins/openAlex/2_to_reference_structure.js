@@ -1,9 +1,19 @@
 import { coerceInsignificantEdgeCases } from "../../reference.js"
+import { normalizeDoiString, couldBeValidDoi } from "../../tools/doi_tools.js"
 
 export function toReferenceStructure(openAlexObject) {
+    let doi = openAlexObject.doi
+    if (!doi) {
+        if (openAlexObject?.external_id) {
+            const doiFromUrl = normalizeDoiString(openAlexObject.external_id)
+            if (couldBeValidDoi(doiFromUrl)) {
+                doi = doiFromUrl
+            }
+        }
+    }
     return coerceInsignificantEdgeCases({
-        doi: openAlexObject.doi,
-        title: openAlexObject.title,
+        doi,
+        title: openAlexObject.title || openAlexObject.display_name,
         abstract: openAlexObject.abstract,
         concepts: [
             ...new Set([ 
@@ -17,7 +27,7 @@ export function toReferenceStructure(openAlexObject) {
         authorNames: (openAlexObject.authorships||[]).map(openAlexObject=>openAlexObject.author.display_name),
         url: openAlexObject.primary_location?.landing_page_url || (openAlexObject.locations||[]).map(openAlexObject=>openAlexObject.landing_page_url).filter(openAlexObject=>openAlexObject)[0],
         pdfUrl: openAlexObject.primary_location?.pdf_url || (openAlexObject.locations||[]).map(openAlexObject=>openAlexObject.pdf_url).filter(openAlexObject=>openAlexObject)[0],
-        citationCount: (openAlexObject.counts_by_year||[]).map(openAlexObject=>openAlexObject.cited_by_count).reduce((a,b)=>(a-0)+(b-0),0),
+        citationCount: openAlexObject?.cited_by_count || (openAlexObject.counts_by_year||[]).map(openAlexObject=>openAlexObject.cited_by_count).reduce((a,b)=>(a-0)+(b-0),0),
         // citedAlexIds: openAlexObject.referenced_works,
         // relatedAlexIds: openAlexObject.related_works,
         id: openAlexObject.id.replace(/^https:\/\/openalex\.org\//,""),

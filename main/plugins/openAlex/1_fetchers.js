@@ -21569,3 +21569,33 @@ export async function getLinkedOpenAlexArticles(openAlexId) {
         cites: results.filter(each=>!each.referenced_works.includes(`https://openalex.org/${openAlexId}`)),
     }
 }
+
+export async function queryToListOfResults(query) {
+    return openAlexFetch(`https://api.openalex.org/works?page=1&filter=default.search:${encodeURIComponent(query)}&sort=relevance_score:desc&per_page=10`)
+    // {
+    // 	"results": [
+    // 		{
+    // 			"id": "https://openalex.org/W4383108856",
+    // 			"short_id": "works/W4383108856",
+    // 			"display_name": "Visual Affordance Prediction for Guiding Robot Exploration",
+    // 			"hint": "Homanga Bharadhwaj, Abhinav Gupta, Shubham Tulsiani",
+    // 			"cited_by_count": 8,
+    // 			"works_count": null,
+    // 			"entity_type": "work",
+    // 			"external_id": "https://doi.org/10.1109/icra48891.2023.10161288",
+    // 			"filter_key": "id"
+    // 		},
+    // 		{
+    // 			"id": "https://openalex.org/W4378768585",
+    // 			"short_id": "works/W4378768585",
+    // 			"display_name": "Visual Affordance Prediction for Guiding Robot Exploration",
+    // 			"hint": "Homanga Bharadhwaj, Abhinav Gupta, Shubham Tulsiani",
+    // 			"cited_by_count": 0,
+    // 			"works_count": null,
+    // 			"entity_type": "work",
+    // 			"external_id": "https://doi.org/10.48550/arxiv.2305.17783",
+    // 			"filter_key": "id"
+    // 		}
+    // 	]
+    // }
+}
