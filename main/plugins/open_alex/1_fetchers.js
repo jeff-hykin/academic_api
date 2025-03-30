@@ -1,6 +1,6 @@
-import { createCachedJsonFetcher } from "../tools/fetch_tools.js"
-import { normalizeDoiString } from "../tools/doi_tools.js"
-import { toRepresentation } from '../imports/good.js'
+import { createCachedJsonFetcher } from "../../tools/fetch_tools.js"
+import { normalizeDoiString } from "../../tools/doi_tools.js"
+import { toRepresentation } from "../../imports/good.js"
 
 // 
 // central rate-limiter for openAlex

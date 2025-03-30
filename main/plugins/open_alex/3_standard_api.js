@@ -1,5 +1,5 @@
-import { openAlexDataFromDoi, getLinkedOpenAlexArticles, openAlexFetch } from "./fetchers.js"
-import { toReferenceStructure } from "./to_reference_structure.js"
+import { openAlexDataFromDoi, getLinkedOpenAlexArticles, openAlexFetch } from "./1_fetchers.js"
+import { toReferenceStructure } from "./2_to_reference_structure.js"
 
 // FIXME:
 export async function search(query) {
