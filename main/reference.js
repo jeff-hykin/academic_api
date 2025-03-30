@@ -1,9 +1,7 @@
+import { isValidHttpUrl } from './imports/good.js'
+import { toRepresentation } from './imports/good.js'
 import { MultiSourceObject } from "./multi_source_object.js"
-import { isModernDoi, couldBeValidDoi, matchValidDoiSubstring } from "./doi_tools.js"
-import { toRepresentation } from 'https://esm.sh/gh/jeff-hykin/good-js@1.14.6.0/source/flattened/to_representation.js'
-import { isValidHttpUrl } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/source/flattened/is_valid_http_url.js'
-import { toRepresentation } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/source/flattened/to_representation.js'
-
+import { isModernDoi, couldBeValidDoi, matchValidDoiSubstring, normalizeDoiString } from "./doi_tools.js"
 // common reference structure summary:
 //    {string} paper.title - The title of the paper. THE ONLY REQUIRED FIELD.
 //    {string} paper.doi - The DOI (Digital Object Identifier) of the paper.
@@ -35,17 +33,7 @@ export function coerceInsignificantEdgeCases(obj) {
 
     // DOI
     if (typeof obj.doi == "string") {
-        // remove most common url prefix
-        if (obj.doi.startsWith("https://doi.org/")) {
-            obj.doi = obj.doi.replace("https://doi.org/","")
-        }
-        // remove less common url prefixes 
-        // note: to avoid basically any chance of false-positive
-        //       this is an intentionally high-false-negative pattern
-        let match
-        if (match = obj.doi.match(/(https?:\/\/(?:\w+\.)+\w{1,4}\/(?:\w+\/)+)(10\.\d{4,9}\/[-._;()\/:A-Z0-9]+)$/i)) {
-            obj.doi = match[2]
-        }
+        obj.doi = normalizeDoiString(obj.doi)
     }
 
     // authorNames

@@ -1,4 +1,3 @@
-
 export const jsonFetch = async (url, options)=>{
     const response = await fetch(url, options)
     if (response.ok) {
@@ -11,10 +10,6 @@ export const jsonFetch = async (url, options)=>{
     } else {
         throw Error(`when fetching ${url} I got an error response: ${response.statusText}`, response)
     }
-}
-
-export const normalizeDoiString = (doi)=>{
-    return doi.replace(/^(https?:\/\/)(doi\.org|dx.doi.org)\/+/,"")
 }
 
 export function createCachedJsonFetcher({ cache={}, rateLimit=null, onUpdateCache=_=>0, urlNormalizer=_=>_, lastFetchTime=new Date() }={}) {
