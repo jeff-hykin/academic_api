@@ -21572,30 +21572,573 @@ export async function getLinkedOpenAlexArticles(openAlexId) {
 
 export async function queryToListOfResults(query) {
     return openAlexFetch(`https://api.openalex.org/works?page=1&filter=default.search:${encodeURIComponent(query)}&sort=relevance_score:desc&per_page=10`)
-    // {
-    // 	"results": [
-    // 		{
-    // 			"id": "https://openalex.org/W4383108856",
-    // 			"short_id": "works/W4383108856",
-    // 			"display_name": "Visual Affordance Prediction for Guiding Robot Exploration",
-    // 			"hint": "Homanga Bharadhwaj, Abhinav Gupta, Shubham Tulsiani",
-    // 			"cited_by_count": 8,
-    // 			"works_count": null,
-    // 			"entity_type": "work",
-    // 			"external_id": "https://doi.org/10.1109/icra48891.2023.10161288",
-    // 			"filter_key": "id"
-    // 		},
-    // 		{
-    // 			"id": "https://openalex.org/W4378768585",
-    // 			"short_id": "works/W4378768585",
-    // 			"display_name": "Visual Affordance Prediction for Guiding Robot Exploration",
-    // 			"hint": "Homanga Bharadhwaj, Abhinav Gupta, Shubham Tulsiani",
-    // 			"cited_by_count": 0,
-    // 			"works_count": null,
-    // 			"entity_type": "work",
-    // 			"external_id": "https://doi.org/10.48550/arxiv.2305.17783",
-    // 			"filter_key": "id"
-    // 		}
-    // 	]
-    // }
+    // {results: [
+    //     {
+    //         id: "https://openalex.org/W2605182906",
+    //         doi: "https://doi.org/10.1609/aaai.v31i1.10831",
+    //         title: "Asymmetric Discrete Graph Hashing",
+    //         display_name: "Asymmetric Discrete Graph Hashing",
+    //         relevance_score: 847.98535,
+    //         publication_year: 2017,
+    //         publication_date: "2017-02-13",
+    //         ids: {
+    //         openalex: "https://openalex.org/W2605182906",
+    //         doi: "https://doi.org/10.1609/aaai.v31i1.10831",
+    //         mag: "2605182906"
+    //         },
+    //         language: "en",
+    //         primary_location: {
+    //         is_oa: true,
+    //         landing_page_url: "https://doi.org/10.1609/aaai.v31i1.10831",
+    //         pdf_url: "https://ojs.aaai.org/index.php/AAAI/article/download/10831/10690",
+    //         source: {
+    //             id: "https://openalex.org/S4210191458",
+    //             display_name: "Proceedings of the AAAI Conference on Artificial Intelligence",
+    //             issn_l: "2159-5399",
+    //             issn: [ "2159-5399", "2374-3468" ],
+    //             is_oa: true,
+    //             is_in_doaj: false,
+    //             is_indexed_in_scopus: false,
+    //             is_core: false,
+    //             host_organization: "https://openalex.org/P4310320058",
+    //             host_organization_name: "Association for the Advancement of Artificial Intelligence",
+    //             host_organization_lineage: [ "https://openalex.org/P4310320058" ],
+    //             host_organization_lineage_names: [
+    //             "Association for the Advancement of Artificial Intelligence"
+    //             ],
+    //             type: "conference"
+    //         },
+    //         license: null,
+    //         license_id: null,
+    //         version: "publishedVersion",
+    //         is_accepted: true,
+    //         is_published: true
+    //         },
+    //         type: "article",
+    //         type_crossref: "journal-article",
+    //         indexed_in: [ "crossref" ],
+    //         open_access: {
+    //         is_oa: true,
+    //         oa_status: "bronze",
+    //         oa_url: "https://ojs.aaai.org/index.php/AAAI/article/download/10831/10690",
+    //         any_repository_has_fulltext: false
+    //         },
+    //         authorships: [
+    //         {
+    //             author_position: "first",
+    //             author: {
+    //             id: "https://openalex.org/A5069008709",
+    //             display_name: "Xiaoshuang Shi",
+    //             orcid: "https://orcid.org/0000-0003-4934-0850"
+    //             },
+    //             institutions: [ [Object] ],
+    //             countries: [ "US" ],
+    //             is_corresponding: false,
+    //             raw_author_name: "Xiaoshuang Shi",
+    //             raw_affiliation_strings: [ "University of Florida" ],
+    //             affiliations: [ [Object] ]
+    //         },
+    //         {
+    //             author_position: "middle",
+    //             author: {
+    //             id: "https://openalex.org/A5076917512",
+    //             display_name: "Fuyong Xing",
+    //             orcid: "https://orcid.org/0000-0003-0982-8675"
+    //             },
+    //             institutions: [ [Object] ],
+    //             countries: [ "US" ],
+    //             is_corresponding: false,
+    //             raw_author_name: "Fuyong Xing",
+    //             raw_affiliation_strings: [ "University of Florida" ],
+    //             affiliations: [ [Object] ]
+    //         },
+    //         {
+    //             author_position: "middle",
+    //             author: {
+    //             id: "https://openalex.org/A5102775611",
+    //             display_name: "Kaidi Xu",
+    //             orcid: "https://orcid.org/0000-0003-4437-0671"
+    //             },
+    //             institutions: [ [Object] ],
+    //             countries: [ "US" ],
+    //             is_corresponding: false,
+    //             raw_author_name: "Kaidi Xu",
+    //             raw_affiliation_strings: [ "University of Florida" ],
+    //             affiliations: [ [Object] ]
+    //         },
+    //         {
+    //             author_position: "middle",
+    //             author: {
+    //             id: "https://openalex.org/A5048977325",
+    //             display_name: "Manish Sapkota",
+    //             orcid: "https://orcid.org/0000-0001-8409-0397"
+    //             },
+    //             institutions: [ [Object] ],
+    //             countries: [ "US" ],
+    //             is_corresponding: false,
+    //             raw_author_name: "Manish Sapkota",
+    //             raw_affiliation_strings: [ "University of Florida" ],
+    //             affiliations: [ [Object] ]
+    //         },
+    //         {
+    //             author_position: "last",
+    //             author: {
+    //             id: "https://openalex.org/A5103160491",
+    //             display_name: "Lin Yang",
+    //             orcid: "https://orcid.org/0000-0001-9056-0500"
+    //             },
+    //             institutions: [ [Object] ],
+    //             countries: [ "US" ],
+    //             is_corresponding: false,
+    //             raw_author_name: "Lin Yang",
+    //             raw_affiliation_strings: [ "University of Florida" ],
+    //             affiliations: [ [Object] ]
+    //         }
+    //         ],
+    //         institution_assertions: [],
+    //         countries_distinct_count: 1,
+    //         institutions_distinct_count: 1,
+    //         corresponding_author_ids: [],
+    //         corresponding_institution_ids: [],
+    //         apc_list: null,
+    //         apc_paid: null,
+    //         fwci: 6.157,
+    //         has_fulltext: true,
+    //         fulltext_origin: "pdf",
+    //         cited_by_count: 47,
+    //         citation_normalized_percentile: {
+    //         value: 0.953611,
+    //         is_in_top_1_percent: false,
+    //         is_in_top_10_percent: true
+    //         },
+    //         cited_by_percentile_year: { min: 95, max: 96 },
+    //         biblio: { volume: "31", issue: "1", first_page: null, last_page: null },
+    //         is_retracted: false,
+    //         is_paratext: false,
+    //         primary_topic: {
+    //         id: "https://openalex.org/T11478",
+    //         display_name: "Caching and Content Delivery",
+    //         score: 0.9969,
+    //         subfield: {
+    //             id: "https://openalex.org/subfields/1705",
+    //             display_name: "Computer Networks and Communications"
+    //         },
+    //         field: {
+    //             id: "https://openalex.org/fields/17",
+    //             display_name: "Computer Science"
+    //         },
+    //         domain: {
+    //             id: "https://openalex.org/domains/3",
+    //             display_name: "Physical Sciences"
+    //         }
+    //         },
+    //         topics: [
+    //         {
+    //             id: "https://openalex.org/T11478",
+    //             display_name: "Caching and Content Delivery",
+    //             score: 0.9969,
+    //             subfield: {
+    //             id: "https://openalex.org/subfields/1705",
+    //             display_name: "Computer Networks and Communications"
+    //             },
+    //             field: {
+    //             id: "https://openalex.org/fields/17",
+    //             display_name: "Computer Science"
+    //             },
+    //             domain: {
+    //             id: "https://openalex.org/domains/3",
+    //             display_name: "Physical Sciences"
+    //             }
+    //         },
+    //         {
+    //             id: "https://openalex.org/T10627",
+    //             display_name: "Advanced Image and Video Retrieval Techniques",
+    //             score: 0.9954,
+    //             subfield: {
+    //             id: "https://openalex.org/subfields/1707",
+    //             display_name: "Computer Vision and Pattern Recognition"
+    //             },
+    //             field: {
+    //             id: "https://openalex.org/fields/17",
+    //             display_name: "Computer Science"
+    //             },
+    //             domain: {
+    //             id: "https://openalex.org/domains/3",
+    //             display_name: "Physical Sciences"
+    //             }
+    //         },
+    //         {
+    //             id: "https://openalex.org/T12541",
+    //             display_name: "Graph Labeling and Dimension Problems",
+    //             score: 0.9142,
+    //             subfield: {
+    //             id: "https://openalex.org/subfields/1703",
+    //             display_name: "Computational Theory and Mathematics"
+    //             },
+    //             field: {
+    //             id: "https://openalex.org/fields/17",
+    //             display_name: "Computer Science"
+    //             },
+    //             domain: {
+    //             id: "https://openalex.org/domains/3",
+    //             display_name: "Physical Sciences"
+    //             }
+    //         }
+    //         ],
+    //         keywords: [
+    //         {
+    //             id: "https://openalex.org/keywords/binary-code",
+    //             display_name: "Binary code",
+    //             score: 0.52958035
+    //         },
+    //         {
+    //             id: "https://openalex.org/keywords/k-independent-hashing",
+    //             display_name: "K-independent hashing",
+    //             score: 0.5281717
+    //         }
+    //         ],
+    //         concepts: [
+    //         {
+    //             id: "https://openalex.org/C99138194",
+    //             wikidata: "https://www.wikidata.org/wiki/Q183427",
+    //             display_name: "Hash function",
+    //             level: 2,
+    //             score: 0.62877923
+    //         },
+    //         {
+    //             id: "https://openalex.org/C41008148",
+    //             wikidata: "https://www.wikidata.org/wiki/Q21198",
+    //             display_name: "Computer science",
+    //             level: 0,
+    //             score: 0.5890228
+    //         },
+    //         {
+    //             id: "https://openalex.org/C80444323",
+    //             wikidata: "https://www.wikidata.org/wiki/Q2878974",
+    //             display_name: "Theoretical computer science",
+    //             level: 1,
+    //             score: 0.57287514
+    //         },
+    //         {
+    //             id: "https://openalex.org/C63435697",
+    //             wikidata: "https://www.wikidata.org/wiki/Q864135",
+    //             display_name: "Binary code",
+    //             level: 3,
+    //             score: 0.52958035
+    //         },
+    //         {
+    //             id: "https://openalex.org/C187062812",
+    //             wikidata: "https://www.wikidata.org/wiki/Q6322840",
+    //             display_name: "K-independent hashing",
+    //             level: 5,
+    //             score: 0.5281717
+    //         },
+    //         {
+    //             id: "https://openalex.org/C132525143",
+    //             wikidata: "https://www.wikidata.org/wiki/Q141488",
+    //             display_name: "Graph",
+    //             level: 2,
+    //             score: 0.4892435
+    //         },
+    //         {
+    //             id: "https://openalex.org/C67388219",
+    //             wikidata: "https://www.wikidata.org/wiki/Q207440",
+    //             display_name: "Hash table",
+    //             level: 3,
+    //             score: 0.4852638
+    //         },
+    //         {
+    //             id: "https://openalex.org/C48372109",
+    //             wikidata: "https://www.wikidata.org/wiki/Q3913",
+    //             display_name: "Binary number",
+    //             level: 2,
+    //             score: 0.47586125
+    //         },
+    //         {
+    //             id: "https://openalex.org/C11413529",
+    //             wikidata: "https://www.wikidata.org/wiki/Q8366",
+    //             display_name: "Algorithm",
+    //             level: 1,
+    //             score: 0.39536577
+    //         },
+    //         {
+    //             id: "https://openalex.org/C33923547",
+    //             wikidata: "https://www.wikidata.org/wiki/Q395",
+    //             display_name: "Mathematics",
+    //             level: 0,
+    //             score: 0.23638472
+    //         },
+    //         {
+    //             id: "https://openalex.org/C87431388",
+    //             wikidata: "https://www.wikidata.org/wiki/Q2070573",
+    //             display_name: "Perfect hash function",
+    //             level: 4,
+    //             score: 0.16569167
+    //         },
+    //         {
+    //             id: "https://openalex.org/C38652104",
+    //             wikidata: "https://www.wikidata.org/wiki/Q3510521",
+    //             display_name: "Computer security",
+    //             level: 1,
+    //             score: 0
+    //         },
+    //         {
+    //             id: "https://openalex.org/C94375191",
+    //             wikidata: "https://www.wikidata.org/wiki/Q11205",
+    //             display_name: "Arithmetic",
+    //             level: 1,
+    //             score: 0
+    //         }
+    //         ],
+    //         mesh: [],
+    //         locations_count: 1,
+    //         locations: [
+    //         {
+    //             is_oa: true,
+    //             landing_page_url: "https://doi.org/10.1609/aaai.v31i1.10831",
+    //             pdf_url: "https://ojs.aaai.org/index.php/AAAI/article/download/10831/10690",
+    //             source: {
+    //             id: "https://openalex.org/S4210191458",
+    //             display_name: "Proceedings of the AAAI Conference on Artificial Intelligence",
+    //             issn_l: "2159-5399",
+    //             issn: [Array],
+    //             is_oa: true,
+    //             is_in_doaj: false,
+    //             is_indexed_in_scopus: false,
+    //             is_core: false,
+    //             host_organization: "https://openalex.org/P4310320058",
+    //             host_organization_name: "Association for the Advancement of Artificial Intelligence",
+    //             host_organization_lineage: [Array],
+    //             host_organization_lineage_names: [Array],
+    //             type: "conference"
+    //             },
+    //             license: null,
+    //             license_id: null,
+    //             version: "publishedVersion",
+    //             is_accepted: true,
+    //             is_published: true
+    //         }
+    //         ],
+    //         best_oa_location: {
+    //         is_oa: true,
+    //         landing_page_url: "https://doi.org/10.1609/aaai.v31i1.10831",
+    //         pdf_url: "https://ojs.aaai.org/index.php/AAAI/article/download/10831/10690",
+    //         source: {
+    //             id: "https://openalex.org/S4210191458",
+    //             display_name: "Proceedings of the AAAI Conference on Artificial Intelligence",
+    //             issn_l: "2159-5399",
+    //             issn: [ "2159-5399", "2374-3468" ],
+    //             is_oa: true,
+    //             is_in_doaj: false,
+    //             is_indexed_in_scopus: false,
+    //             is_core: false,
+    //             host_organization: "https://openalex.org/P4310320058",
+    //             host_organization_name: "Association for the Advancement of Artificial Intelligence",
+    //             host_organization_lineage: [ "https://openalex.org/P4310320058" ],
+    //             host_organization_lineage_names: [
+    //             "Association for the Advancement of Artificial Intelligence"
+    //             ],
+    //             type: "conference"
+    //         },
+    //         license: null,
+    //         license_id: null,
+    //         version: "publishedVersion",
+    //         is_accepted: true,
+    //         is_published: true
+    //         },
+    //         sustainable_development_goals: [],
+    //         grants: [],
+    //         datasets: [],
+    //         versions: [],
+    //         referenced_works_count: 27,
+    //         referenced_works: [
+    //         "https://openalex.org/W1835419070",
+    //         "https://openalex.org/W1910300841",
+    //         "https://openalex.org/W1969241115",
+    //         "https://openalex.org/W1974647172",
+    //         "https://openalex.org/W1992371516",
+    //         "https://openalex.org/W2005347517",
+    //         "https://openalex.org/W2019464758",
+    //         "https://openalex.org/W2023714745",
+    //         "https://openalex.org/W2074668987",
+    //         "https://openalex.org/W2076363162",
+    //         "https://openalex.org/W2105734423",
+    //         "https://openalex.org/W2117986441",
+    //         "https://openalex.org/W2131628350",
+    //         "https://openalex.org/W2134514757",
+    //         "https://openalex.org/W2142881874",
+    //         "https://openalex.org/W2145607950",
+    //         "https://openalex.org/W2145962650",
+    //         "https://openalex.org/W2153273131",
+    //         "https://openalex.org/W2163808566",
+    //         "https://openalex.org/W2164338181",
+    //         "https://openalex.org/W2221852422",
+    //         "https://openalex.org/W2343166405",
+    //         "https://openalex.org/W2510911086",
+    //         "https://openalex.org/W2519631826",
+    //         "https://openalex.org/W2609517418",
+    //         "https://openalex.org/W3148981562",
+    //         "https://openalex.org/W4239072543"
+    //         ],
+    //         related_works: [
+    //         "https://openalex.org/W4387251676",
+    //         "https://openalex.org/W3108021595",
+    //         "https://openalex.org/W2811247857",
+    //         "https://openalex.org/W2144265691",
+    //         "https://openalex.org/W2134880816",
+    //         "https://openalex.org/W2088296667",
+    //         "https://openalex.org/W1897694601",
+    //         "https://openalex.org/W1835589799",
+    //         "https://openalex.org/W1605991620",
+    //         "https://openalex.org/W1551533237"
+    //         ],
+    //         abstract_inverted_index: {
+    //         "Recently,": [ 0 ],
+    //         many: [ 1 ],
+    //         graph: [ 2, 41, 62, 68, 103 ],
+    //         based: [ 3, 63 ],
+    //         hashing: [ 4, 23, 64 ],
+    //         methods: [ 5 ],
+    //         have: [ 6 ],
+    //         been: [ 7 ],
+    //         emerged: [ 8 ],
+    //         to: [ 9, 38, 82, 96, 121, 155 ],
+    //         tackle: [ 10 ],
+    //         "large-scale": [ 11, 166 ],
+    //         "problems.": [ 12 ],
+    //         "However,": [ 13 ],
+    //         there: [ 14 ],
+    //         exists: [ 15 ],
+    //         two: [ 16, 51, 89 ],
+    //         major: [ 17 ],
+    //         "bottlenecks:": [ 18 ],
+    //         "(1)": [ 19 ],
+    //         directly: [ 20 ],
+    //         learning: [ 21 ],
+    //         discrete: [ 22, 67, 74, 94, 147 ],
+    //         codes: [ 24, 149 ],
+    //         is: [ 25, 46 ],
+    //         an: [ 26, 78 ],
+    //         "NP-hardoptimization": [ 27 ],
+    //         "problem;": [ 28 ],
+    //         "(2)": [ 29 ],
+    //         the: [
+    //             30,  72,  99, 102,
+    //             110, 123, 142, 158,
+    //             173, 177
+    //         ],
+    //         complexity: [ 31 ],
+    //         of: [ 32, 92, 101, 176 ],
+    //         both: [ 33 ],
+    //         storage: [ 34, 134 ],
+    //         and: [ 35, 76, 133, 150 ],
+    //         computational: [ 36, 131 ],
+    //         time: [ 37, 132, 182 ],
+    //         build: [ 39 ],
+    //         a: [ 40, 58, 151 ],
+    //         with: [ 42, 104, 179 ],
+    //         n: [ 43 ],
+    //         data: [ 44, 128 ],
+    //         points: [ 45 ],
+    //         "O(n2).": [ 47 ],
+    //         To: [ 48 ],
+    //         address: [ 49 ],
+    //         these: [ 50 ],
+    //         "problems,": [ 52 ],
+    //         in: [ 53 ],
+    //         this: [ 54 ],
+    //         "paper,": [ 55 ],
+    //         we: [ 56, 87 ],
+    //         propose: [ 57 ],
+    //         novel: [ 59 ],
+    //         yetsimple: [ 60 ],
+    //         supervised: [ 61 ],
+    //         "method,": [ 65 ],
+    //         asymmetric: [ 66, 73, 79, 111 ],
+    //         "hashing,": [ 69 ],
+    //         by: [ 70 ],
+    //         preserving: [ 71 ],
+    //         constraint: [ 75 ],
+    //         building: [ 77 ],
+    //         affinity: [ 80, 112 ],
+    //         matrix: [ 81, 113, 154 ],
+    //         learn: [ 83 ],
+    //         compact: [ 84 ],
+    //         binary: [ 85, 106, 148 ],
+    //         "codes.Specifically,": [ 86 ],
+    //         utilize: [ 88 ],
+    //         different: [ 90 ],
+    //         instead: [ 91 ],
+    //         identical: [ 93 ],
+    //         matrices: [ 95 ],
+    //         better: [ 97 ],
+    //         preserve: [ 98 ],
+    //         similarity: [ 100, 124 ],
+    //         short: [ 105 ],
+    //         "codes.": [ 107 ],
+    //         We: [ 108 ],
+    //         generate: [ 109 ],
+    //         using: [ 114 ],
+    //         m: [ 115 ],
+    //         "(m": [ 116 ],
+    //         "&lt;&lt;": [ 117 ],
+    //         "n)": [ 118 ],
+    //         selected: [ 119 ],
+    //         anchors: [ 120 ],
+    //         approximate: [ 122 ],
+    //         among: [ 125 ],
+    //         all: [ 126 ],
+    //         training: [ 127, 181 ],
+    //         so: [ 129 ],
+    //         that: [ 130 ],
+    //         requirement: [ 135 ],
+    //         can: [ 136 ],
+    //         be: [ 137 ],
+    //         significantly: [ 138 ],
+    //         "improved.": [ 139 ],
+    //         In: [ 140 ],
+    //         "addition,": [ 141 ],
+    //         proposed: [ 143 ],
+    //         method: [ 144 ],
+    //         jointly: [ 145 ],
+    //         learns: [ 146 ],
+    //         "low-dimensional": [ 152 ],
+    //         projection: [ 153 ],
+    //         further: [ 156 ],
+    //         improve: [ 157 ],
+    //         retrieval: [ 159 ],
+    //         "accuracy.": [ 160 ],
+    //         Extensive: [ 161 ],
+    //         experiments: [ 162 ],
+    //         on: [ 163 ],
+    //         three: [ 164 ],
+    //         benchmark: [ 165 ],
+    //         databases: [ 167 ],
+    //         demonstrate: [ 168 ],
+    //         its: [ 169 ],
+    //         superior: [ 170 ],
+    //         performance: [ 171 ],
+    //         over: [ 172 ],
+    //         recent: [ 174 ],
+    //         state: [ 175 ],
+    //         arts: [ 178 ],
+    //         lower: [ 180 ],
+    //         "costs.": [ 183 ]
+    //         },
+    //         abstract_inverted_index_v3: null,
+    //         cited_by_api_url: "https://api.openalex.org/works?filter=cites:W2605182906",
+    //         counts_by_year: [
+    //         { year: 2024, cited_by_count: 2 },
+    //         { year: 2023, cited_by_count: 2 },
+    //         { year: 2022, cited_by_count: 7 },
+    //         { year: 2021, cited_by_count: 3 },
+    //         { year: 2020, cited_by_count: 13 },
+    //         { year: 2019, cited_by_count: 8 },
+    //         { year: 2018, cited_by_count: 9 },
+    //         { year: 2017, cited_by_count: 3 }
+    //         ],
+    //         updated_date: "2025-03-17T23:03:29.647148",
+    //         created_date: "2017-04-14"
+    //     }
+    // ]}
 }

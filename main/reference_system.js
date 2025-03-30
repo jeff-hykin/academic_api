@@ -60,6 +60,11 @@ export function ReferenceSystem({plugins={}}) {
                 warnings,
             }
         },
+        toJSON() {
+            return {
+                $accordingTo: this.$accordingTo,
+            },
+        },
         [Symbol.for("Deno.customInspect")](inspect,options) {
             return inspect(
                 {
@@ -75,8 +80,93 @@ export function ReferenceSystem({plugins={}}) {
     
     return {
         Reference,
-        search(query) {
-            throw Error(`Not implemented yet`)
-        },
+        async search(query) {
+            const warnings = {}
+            let promises = []
+            let resultsByTitle = {}
+            let resultsByDoi = {}
+            let eachSourceResultsFlattened = []
+            for (const [pluginName, plugin] of Object.entries(plugins)) {
+                if (plugin.search instanceof Function) {
+                    const promise = Promise.resolve(plugin.search(query)).catch(error=>{
+                        warnings[pluginName] = error
+                    })
+                    promises.push(promise)
+                    promise.then(results=>{
+                        if (!results) {
+                            warnings[pluginName] = "plugin returned no results "+pluginName
+                            return
+                        }
+                        // TODO: validate results
+                        for (let each of results) {
+                            if (!each) {
+                                continue
+                            }
+                            if (!each.doi && !each.title) {
+                                continue
+                            }
+                            eachSourceResultsFlattened.push(each)
+                            if (each.title) {
+                                if (resultsByTitle[each.title]) {
+                                    resultsByTitle[each.title][pluginName] = each
+                                } else {
+                                    resultsByTitle[each.title] = {
+                                        [pluginName]: each,
+                                    }
+                                }
+                            }
+                            if (each.doi) {
+                                if (resultsByDoi[each.doi]) {
+                                    resultsByDoi[each.doi][pluginName] = each
+                                } else {
+                                    resultsByDoi[each.doi] = {
+                                        [pluginName]: each,
+                                    }
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+            await Promise.all(promises)
+            let titleOnlySources = []
+            console.debug(`eachSourceResultsFlattened is:`,eachSourceResultsFlattened)
+            for (let each of eachSourceResultsFlattened) {
+                if (!each.doi) {
+                    // try to get the DOI from a different source
+                    let doi
+                    // NOTE: its possible that we get the wrong DOI here
+                    // TODO: could add some better checks such as comparing year and other fields
+                    for (const [pluginName, dataFromOtherPlugin] of Object.entries(resultsByTitle[each.title])) {
+                        doi = doi || dataFromOtherPlugin.doi
+                    }
+                    if (!doi) {
+                        titleOnlySources.push(each)
+                    }
+                }
+            }
+            let references = []
+            
+            const titles = new Set(titleOnlySources.map(each=>each.title))
+            console.debug(`titles is:`,titles)
+            for (let eachTitle of titles) {
+                const reference = new Reference()
+                for (const [pluginName, value] of Object.entries(resultsByTitle[eachTitle])) {
+                    reference.$accordingTo[pluginName] = value
+                }
+                references.push(reference)
+            }
+
+            const dois = Object.keys(resultsByDoi)
+            for (let each of dois) {
+                const reference = new Reference()
+                for (const [pluginName, value] of Object.entries(resultsByDoi[each])) {
+                    reference.$accordingTo[pluginName] = value
+                }
+                references.push(reference)
+            }
+            
+            return { results: references, warnings }
+        },      
     }
 }

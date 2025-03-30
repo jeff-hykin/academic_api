@@ -1,6 +1,7 @@
 import { createCachedJsonFetcher, createCachedTextFetcher } from "../../tools/fetch_tools.js"
 import { normalizeDoiString, couldBeValidDoi } from "../../tools/doi_tools.js"
 import { toRepresentation } from "../../imports/good.js"
+import { DOMParser } from "../../imports/deno_dom.js"
 
 // 
 // central rate-limiter for crossRef
