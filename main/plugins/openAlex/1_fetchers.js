@@ -6,7 +6,7 @@ import { toRepresentation } from "../../imports/good.js"
 // central rate-limiter for openAlex
 // 
 export const openAlexFetch = createCachedJsonFetcher({
-    rateLimit: 1000, // according to their website openAlex rate limit is once per second, and 1000 per day
+    rateLimitMilliseconds: 1000, // according to their website openAlex rate limit is once per second, and 1000 per day
     urlNormalizer: url=>url.replace("https://openalex.org","https://api.openalex.org"),
 }) 
 

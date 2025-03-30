@@ -17,7 +17,7 @@ export const jsonFetch = async (url, options)=>{
  * ```js
  * let cachedFetcher = createCachedFetcher({
  *     cache: {},
- *     rateLimit: 5000, // google is picky and defensive
+ *     rateLimitMilliseconds: 5000, // google is picky and defensive
  *     onUpdateCache(url) {
  *        
  *     },
@@ -27,19 +27,19 @@ export const jsonFetch = async (url, options)=>{
  * })
  * cachedFetcher.cache // Object
  * cachedFetcher.lastFetchTime // number, unix epoch
- * cachedFetcher.rateLimit // number, milliseconds (it can be dynamically changed)
+ * cachedFetcher.rateLimitMilliseconds // number, milliseconds (it can be dynamically changed)
  * ```
  */
-export function createCachedFetcher({ cache={}, rateLimit=null, onUpdateCache=_=>0, urlNormalizer=_=>_, lastFetchTime=new Date(), outputModifyer=result=>result.bytes() }={}) {
+export function createCachedFetcher({ cache={}, rateLimitMilliseconds=null, onUpdateCache=_=>0, urlNormalizer=_=>_, lastFetchTime=new Date(), outputModifyer=result=>result.bytes() }={}) {
     async function cachedFetcher(url, options, {onUpdateCache=_=>0,}={}) {
         const cache = cachedFetcher.cache
         url = urlNormalizer(url)
         if (!cache[url]) {
             let needToWait
-            if (cachedFetcher.rateLimit!=null) {
+            if (cachedFetcher.rateLimitMilliseconds!=null) {
                 do {
                     // avoid hitting rate limit
-                    const thresholdTime = cachedFetcher.lastFetchTime.getTime() + cachedFetcher.rateLimit
+                    const thresholdTime = cachedFetcher.lastFetchTime.getTime() + cachedFetcher.rateLimitMilliseconds
                     const now = new Date().getTime()
                     needToWait = thresholdTime - now
                     if (needToWait > 0) {
@@ -64,15 +64,15 @@ export function createCachedFetcher({ cache={}, rateLimit=null, onUpdateCache=_=
     Object.assign(cachedFetcher,{
         cache,
         lastFetchTime,
-        rateLimit,
+        rateLimitMilliseconds,
     })
     return cachedFetcher
 }
 
-export function createCachedJsonFetcher({ cache={}, rateLimit=null, onUpdateCache=_=>0, urlNormalizer=_=>_, lastFetchTime=new Date(), ...args }={}) {
+export function createCachedJsonFetcher({ cache={}, rateLimitMilliseconds=null, onUpdateCache=_=>0, urlNormalizer=_=>_, lastFetchTime=new Date(), ...args }={}) {
     return createCachedFetcher({
         cache,
-        rateLimit,
+        rateLimitMilliseconds,
         onUpdateCache,
         urlNormalizer,
         lastFetchTime,
@@ -81,10 +81,10 @@ export function createCachedJsonFetcher({ cache={}, rateLimit=null, onUpdateCach
     })
 }
 
-export function createCachedTextFetcher({ cache={}, rateLimit=null, onUpdateCache=_=>0, urlNormalizer=_=>_, lastFetchTime=new Date(), ...args }={}) {
+export function createCachedTextFetcher({ cache={}, rateLimitMilliseconds=null, onUpdateCache=_=>0, urlNormalizer=_=>_, lastFetchTime=new Date(), ...args }={}) {
     return createCachedFetcher({
         cache,
-        rateLimit,
+        rateLimitMilliseconds,
         onUpdateCache,
         urlNormalizer,
         lastFetchTime,
