@@ -1,12 +1,17 @@
-import { createCachedJsonFetcher } from "../../tools/fetch_tools.js"
-import { normalizeDoiString } from "../../tools/doi_tools.js"
+import { createCachedJsonFetcher, createCachedTextFetcher } from "../../tools/fetch_tools.js"
+import { normalizeDoiString, couldBeValidDoi } from "../../tools/doi_tools.js"
 import { toRepresentation } from "../../imports/good.js"
 
 // 
 // central rate-limiter for crossRef
 // 
 export const crossRefFetch = createCachedJsonFetcher({
-    rateLimit: 100, // not sure what their rate limit is
+    rateLimitMilliseconds: 100, // not sure what their rate limit is
+    urlNormalizer: url=>url,
+})
+// probbaly would be good to somehow have these share a rate limiter
+export const crossRefSearchFetch = createCachedTextFetcher({
+    rateLimitMilliseconds: 100, // not sure what their rate limit is
     urlNormalizer: url=>url,
 })
 
@@ -1077,4 +1082,39 @@ export async function getLinkedCrossRefArticles(doi) {
         const result = await crossRefFetch(`https://api.crossref.org/works/?filter=${dois.map(eachDoi=>`doi:${eachDoi}`).join(",")}&rows=${dois.length}`)
         return { cites: result?.message?.items||[] }
     }
+}
+
+// 
+// search
+// 
+export async function search(query) {
+    const url = `https://search.crossref.org/search/works?q=${encodeURIComponent(query)}&from_ui=yes`
+    const htmlResult = await crossRefSearchFetch(url)
+    // 
+    // process html
+    // 
+    const baseUrl = new URL(url).origin
+    const getHref = (element)=>element.getAttribute("href").startsWith("/")?`${baseUrl}/${element.getAttribute("href")}`:element.getAttribute("href")
+    const document = new DOMParser().parseFromString(
+        htmlResult,
+        "text/html",
+    )
+    const results =  [...document.querySelector("tbody").children]
+    const titlesAndDois = []
+    for (let each of results) {
+        let titleElement = each.querySelector("p.lead")
+        if (titleElement) {
+            const title = titleElement.innerText.trim()
+            const linksEl = each.querySelector("div.item-links")
+            const dois = [...linksEl.querySelectorAll("a")].map(each=>getHref(each)).map(normalizeDoiString).filter(each=>couldBeValidDoi(each))
+            if (dois.length >= 1) {
+                titlesAndDois.push({
+                    title,
+                    doi: dois[0],
+                    // TODO: could probably scrape more info from the page here
+                })
+            }
+        }
+    }
+    return titlesAndDois
 }
