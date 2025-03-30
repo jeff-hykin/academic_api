@@ -28,7 +28,6 @@ export async function getConnectedReferences(refDataAccordingToOpenAlex, referen
 
 // this is the only required export
 export default {
-    name: "openAlex",
     search,
     getConnectedReferences,
 }

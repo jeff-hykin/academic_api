@@ -14,7 +14,6 @@ export async function getConnectedReferences(refDataAccordingToThisPlugin, refer
 
 // this is the only required export
 export default {
-    name: "crossRef",
     search,
     getConnectedReferences,
 }

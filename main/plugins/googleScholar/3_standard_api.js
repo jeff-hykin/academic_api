@@ -10,7 +10,6 @@ export async function search(query) {
 
 // this is the only required export
 export default {
-    name: "googleScholar",
     search,
     // getConnectedReferences,
 }

@@ -32,3 +32,73 @@ for (const each of results) {
     console.log(each.$accordingTo.googleScholar)
 }
 ```
+
+## Plugins
+
+```js
+import { Reference, search } from 'https://esm.sh/gh/jeff-hyking/academic_api/main/reference_system.js'
+import openAlex from "./plugins/openAlex/3_standard_api.js"
+import crossRef from "./plugins/crossRef/3_standard_api.js"
+import googleScholar from "./plugins/googleScholar/3_standard_api.js"
+
+
+const yourPlugin = {
+    // each of these functions is optinal (e.g. googleScholar only implements search)
+    search: async (query) => {
+        // throwing is fine, it'll get reported in warnings
+        const exampleResult = {
+            title: "my new title",
+            doi: "10.1000/182",
+            url: "https://www.google.com",
+            pdfUrl: "https://www.google.com",
+            authorNames: ["my name"],
+            concepts: ["my concept"],
+            year: 2022,
+            citedBy: [],
+            cites: [],
+            citationCount: 0,
+            abstract: "my abstract",
+        }
+        return [
+            exampleResult,
+        ]
+    },
+    getConnectedReferences: async (dataAccordingToThisPlugin, reference) => {
+        // dataAccordingToThisPlugin is a simple/flat object,
+        // basically the same object that is returned by search
+        
+        // reference is more complex
+        reference.title // the title from one of the sources, unknown which
+        reference.$accordingTo["googleScholar"]?.title // the title from googleScholar
+        reference.$accordingTo["openAlex"]?.title 
+        reference.$accordingTo["crossRef"]?.title 
+        // note: most references will only have data from one source
+        // the DOI is used to combine sources
+        const exampleResult = {
+            title: "my new title",
+            doi: "10.1000/182",
+            url: "https://www.google.com",
+            pdfUrl: "https://www.google.com",
+            authorNames: ["my name"],
+            concepts: ["my concept"],
+            year: 2022,
+            citedBy: [],
+            cites: [],
+            citationCount: 0,
+            abstract: "my abstract",
+        }
+        return [
+            exampleResult,
+        ]
+    },
+}
+
+export const { Reference, search } = ReferenceSystem({
+    plugins: {
+        // NOTE: order matters higher=more reliable data/scraper
+        openAlex,
+        crossRef,
+        googleScholar,
+    },
+})
+```
