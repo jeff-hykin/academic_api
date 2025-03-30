@@ -1,10 +1,7 @@
-import { crossRefDataFromDoi, getLinkedCrossRefArticles } from "./1_fetchers.js"
+import { crossRefDataFromDoi, getLinkedCrossRefArticles, crossRefSearch } from "./1_fetchers.js"
 import { toReferenceStructure } from "./2_to_reference_structure.js"
 
-// no search function
-// export async function search(query) {
-//     return []
-// }
+export const search = crossRefSearch
 
 export async function getConnectedPapers(refDataAccordingToThisPlugin, reference) {
     let doi = refDataAccordingToThisPlugin.doi || reference.doi
@@ -18,5 +15,6 @@ export async function getConnectedPapers(refDataAccordingToThisPlugin, reference
 // this is the only required export
 export default {
     name: "crossRef",
+    search,
     getConnectedPapers,
 }
