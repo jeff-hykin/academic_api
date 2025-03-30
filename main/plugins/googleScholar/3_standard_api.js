@@ -5,12 +5,12 @@ export async function search(query) {
     return queryToListOfResults(query)
 }
 
-// export async function getConnectedPapers(refDataAccordingToThisPlugin, reference) {
+// export async function getConnectedReferences(refDataAccordingToThisPlugin, reference) {
 // }
 
 // this is the only required export
 export default {
     name: "googleScholar",
     search,
-    // getConnectedPapers,
+    // getConnectedReferences,
 }

@@ -6,7 +6,7 @@ export async function search(query) {
     return results.map(toReferenceStructure)
 }
 
-export async function getConnectedPapers(refDataAccordingToOpenAlex, reference) {
+export async function getConnectedReferences(refDataAccordingToOpenAlex, reference) {
     // if we don't have the openAlexId, try to get it based on the doi
     let openAlexId = refDataAccordingToOpenAlex.id
     if (!openAlexId) {
@@ -30,5 +30,5 @@ export async function getConnectedPapers(refDataAccordingToOpenAlex, reference) 
 export default {
     name: "openAlex",
     search,
-    getConnectedPapers,
+    getConnectedReferences,
 }

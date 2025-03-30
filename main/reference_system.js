@@ -8,6 +8,7 @@ export function ReferenceSystem({plugins={}}) {
     // for (const [key, value] of Object.entries(plugins)) {
     //     // TODO: validate a plugin here
     // }
+    const byDoi = {}
     
     // I don't like how this is coded, but because MultiSourceObject is a proxy object, I can't really use the class syntax
     function Reference() {
@@ -17,6 +18,8 @@ export function ReferenceSystem({plugins={}}) {
     }
 
     Object.assign(Reference.prototype, {
+        // TODO: fillData()
+        // TODO: refeshData()
         // TODO: convert this:
         // async function relatedWorkIncludes({source, }, refChecker) {
         //     let reference = await autofillDataFor(source)
@@ -34,22 +37,37 @@ export function ReferenceSystem({plugins={}}) {
         //     }
         // }
 
-        async fillConnectedPapers() {
+        async fillConnections() {
             let promises = []
             let warnings = {}
             for (const [pluginName, plugin] of Object.entries(plugins)) {
-                if (plugin.getConnectedPapers instanceof Function) {
+                if (plugin.getConnectedReferences instanceof Function) {
                     // if haven't gotten them already
-                    if (!(this.$accordingTo[pluginName].connectedPapers instanceof Array)) {
+                    if (!(this.$accordingTo[pluginName]?.connectedPapers instanceof Array)) {
                         if (!(this.$accordingTo[pluginName] instanceof Object)) {
                             this.$accordingTo[pluginName] = {}
                         }
-                        const promise = Promise.resolve(plugin.getConnectedPapers(this.$accordingTo[pluginName], this)).catch(error=>{
+                        const promise = Promise.resolve(plugin.getConnectedReferences(this.$accordingTo[pluginName], this)).catch(error=>{
                             warnings[pluginName] = error
                         })
                         promises.push(promise)
                         promise.then(connectedPapers=>{
-                            this.$accordingTo[pluginName].connectedPapers = connectedPapers
+                            const references = []
+                            for (let each of connectedPapers) {
+                                if (each.doi) {
+                                    if (!byDoi[each.doi]) {
+                                        byDoi[each.doi] = new Reference()
+                                    }
+                                    let reference = byDoi[each.doi]
+                                    reference.$accordingTo[pluginName] = each
+                                    references.push(reference)
+                                } else {
+                                    const reference = new Reference()
+                                    reference.$accordingTo[pluginName] = each
+                                    references.push(reference)
+                                }
+                            }
+                            this.$accordingTo[pluginName].connectedPapers = references
                         })
                     }
                 }
@@ -152,7 +170,12 @@ export function ReferenceSystem({plugins={}}) {
 
             const dois = Object.keys(resultsByDoi)
             for (let each of dois) {
-                const reference = new Reference()
+                let reference
+                if (!byDoi[each]) {
+                    reference = byDoi[each]
+                } else {
+                    reference = new Reference()
+                }
                 for (const [pluginName, value] of Object.entries(resultsByDoi[each])) {
                     reference.$accordingTo[pluginName] = value
                 }

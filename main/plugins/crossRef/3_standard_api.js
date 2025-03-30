@@ -3,7 +3,7 @@ import { toReferenceStructure } from "./2_to_reference_structure.js"
 
 export const search = crossRefSearch
 
-export async function getConnectedPapers(refDataAccordingToThisPlugin, reference) {
+export async function getConnectedReferences(refDataAccordingToThisPlugin, reference) {
     let doi = refDataAccordingToThisPlugin.doi || reference.doi
     if (doi) {
         const {cites} = await getLinkedCrossRefArticles(doi)
@@ -16,5 +16,5 @@ export async function getConnectedPapers(refDataAccordingToThisPlugin, reference
 export default {
     name: "crossRef",
     search,
-    getConnectedPapers,
+    getConnectedReferences,
 }
