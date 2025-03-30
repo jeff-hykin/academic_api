@@ -60,12 +60,6 @@ export function ReferenceSystem({plugins={}}) {
                 warnings,
             }
         },
-        toJSON() {
-            return {
-                title: this.title,
-                $accordingTo: this.$accordingTo,
-            }
-        },
         [Symbol.for("Deno.customInspect")](inspect,options) {
             return inspect(
                 {
@@ -94,8 +88,8 @@ export function ReferenceSystem({plugins={}}) {
                     })
                     promises.push(promise)
                     promise.then(results=>{
-                        if (!results) {
-                            warnings[pluginName] = "plugin returned no results "+pluginName
+                        if (!(results instanceof Array)) {
+                            warnings[pluginName] = "plugin failed search "+pluginName
                             return
                         }
                         // TODO: validate results

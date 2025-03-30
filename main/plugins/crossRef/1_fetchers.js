@@ -1108,13 +1108,14 @@ export async function crossRefSearch(query) {
             const title = titleElement.innerText.trim()
             const linksEl = each.querySelector("div.item-links")
             const dois = [...linksEl.querySelectorAll("a")].map(each=>getHref(each)).map(normalizeDoiString).filter(each=>couldBeValidDoi(each))
-            if (dois.length >= 1) {
-                titlesAndDois.push({
-                    title,
-                    doi: dois[0],
-                    // TODO: could probably scrape more info from the page here
-                })
-            }
+            // TODO: could filter this better
+            const urls = [...linksEl.querySelectorAll("a")].map(each=>getHref(each))
+            titlesAndDois.push({
+                title,
+                doi: dois[0],
+                url: urls[0],
+                // TODO: could probably scrape more info from the page here
+            })
         }
     }
     return titlesAndDois
