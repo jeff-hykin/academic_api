@@ -30,13 +30,16 @@ export const jsonFetch = async (url, options)=>{
  * cachedFetcher.rateLimitMilliseconds // number, milliseconds (it can be dynamically changed)
  * ```
  */
-export function createCachedFetcher({ cache={}, rateLimitMilliseconds=null, onUpdateCache=_=>0, urlNormalizer=_=>_, lastFetchTime=new Date(), outputModifyer=result=>result.bytes() }={}) {
+export function createCachedFetcher({ cache={}, rateLimitMilliseconds=null, onUpdateCache=_=>0, urlNormalizer=_=>_, lastFetchTime=null, outputModifyer=result=>result.bytes() }={}) {
     async function cachedFetcher(url, options, {onUpdateCache=_=>0,}={}) {
         const cache = cachedFetcher.cache
         url = urlNormalizer(url)
         if (!cache[url]) {
             let needToWait
             if (cachedFetcher.rateLimitMilliseconds!=null) {
+                if (lastFetchTime == null) {
+                    lastFetchTime = new Date()
+                }
                 do {
                     // avoid hitting rate limit
                     const thresholdTime = cachedFetcher.lastFetchTime.getTime() + cachedFetcher.rateLimitMilliseconds
