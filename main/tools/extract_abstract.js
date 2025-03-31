@@ -126,7 +126,7 @@ export async function extractAbstract(url, {fetchOptions=null, cleanupWhitespace
         throw Error(`unable to parse html from ${JSON.stringify(url)}`)
     }
     
-    let redirectedUrls = []
+    const redirectedUrls = []
     try {
         let prevUrl = url
         while (1) {
@@ -143,12 +143,12 @@ export async function extractAbstract(url, {fetchOptions=null, cleanupWhitespace
     } catch (error) {
         
     }
-    
+
     // 
     // custom parsing rules first
     // 
     for (const [key, value] of Object.entries(customParsingRules)) {
-        if (url.startsWith(key)) {
+        if (url.startsWith(key) || redirectedUrls.some(each=>each.startsWith(key))) {
             abstract = value(document)
         }
         if (abstract) {
@@ -158,15 +158,33 @@ export async function extractAbstract(url, {fetchOptions=null, cleanupWhitespace
     
     // fallback case:
     if (!abstract) {
-        const headers = [...document.querySelectorAll("header")]
-        for (let each of headers) {
-            each.innerText = ""
-        }
-        let mains = [...document.querySelectorAll("main")]
-        if (mains.length == 1) {
-            abstract = mains[0].innerText
+        let abstractElement
+        if (
+            (abstractElement=document.querySelector("#abstract")) ||
+            (abstractElement=document.querySelector("#Abstract")) ||
+            (abstractElement=document.querySelector("#abstracts")) ||
+            (abstractElement=document.querySelector("#Abstracts")) ||
+            (abstractElement=document.querySelector("#abs"))
+        ) {
+            abstract = abstractElement.innerText
         } else {
-            abstract = document.body.innerText
+            // try to remove irrelevent content
+            const headers = [...document.querySelectorAll("header")]
+            for (let each of headers) {
+                each.innerText = ""
+            }
+            // try main element
+            let mains = [...document.querySelectorAll("main")]
+            if (mains.length == 1) {
+                abstract = mains[0].innerText
+            // absolute fallback
+            } else {
+                abstract = document.body.innerText
+                // if the body does not contain the word "abstract", then fail
+                if (!abstract.match(/abstract/i)) {
+                    throw Error(`unable to get abstract, body text did not contain "abstract"\n${abstract}`)
+                }
+            }
         }
     }
     
