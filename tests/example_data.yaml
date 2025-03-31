@@ -1,0 +1,917 @@
+references:
+    -
+        notes:
+            nickname: NeoSLAM
+            resumeStatus: super-relevent|abstract
+            comment: 'has github link, but not only is it broken, it seems it never existed. Emailed author to try and get access.'
+            reasonsRelevant:
+                - title
+                - abstract
+            reasonsNotRelevant: []
+            discoveryMethod:
+                dateTime: '2025-01-29T15:26:58.981Z'
+                originalQuery: NeuroSLAM
+                searchEngine: googleScholar
+            events:
+                added: '2025-01-29T15:26:59.208Z'
+                sawAbstract: '2025-03-18T00:12:58.792Z'
+        $accordingTo:
+            manual:
+                title: null
+                doi: null
+                year: null
+                publisherFlags: null
+                authorNames: null
+                url: null
+                pdfUrl: null
+                cites: null
+                citedBy: null
+                abstract: 'Simultaneous Localization and Mapping (SLAM) is a fundamental problem in the field of robotics, enabling autonomous robots to navigate and create maps of unknown environments. Nevertheless, the SLAM methods that use cameras face problems in maintaining accurate localization over extended periods across various challenging conditions and scenarios. Following advances in neuroscience, we propose NeoSLAM, a novel long-term visual SLAM, which uses computational models of the brain to deal with this problem. Inspired by the human neocortex, NeoSLAM is based on a hierarchical temporal memory model that has the potential to identify temporal sequences of spatial patterns using sparse distributed representations. Being known to have a high representational capacity and high tolerance to noise, sparse distributed representations have several properties, enabling the development of a novel neuroscience-based loop-closure detector that allows for real-time performance, especially in resource-constrained robotic systems. The proposed method has been thoroughly evaluated in terms of environmental complexity by using a wheeled robot deployed in the field and demonstrated that the accuracy of loop-closure detection was improved compared with the traditional RatSLAM system.'
+            crossref:
+                doi: 10.3390/s24041143
+            openAlex:
+                doi: 'https://doi.org/10.3390/s24041143'
+                title: 'NeoSLAM: Long-Term SLAM Using Computational Models of the Brain'
+                abstract: null
+                concepts:
+                    - robotics and sensor-based localization
+                    - advanced image and video retrieval techniques
+                    - underwater vehicles and communication systems
+                    - aerospace engineering
+                    - computer vision and pattern recognition
+                    - ocean engineering
+                    - simultaneous localization and mapping
+                    - computer science
+                    - artificial intelligence
+                    - robotics
+                    - field (mathematics)
+                    - robot
+                    - noise (video)
+                    - face (sociological concept)
+                    - term (time)
+                    - computer vision
+                    - mobile robot
+                    - physics
+                    - quantum mechanics
+                    - social science
+                    - mathematics
+                    - sociology
+                    - pure mathematics
+                    - image (mathematics)
+                year: 2024
+                authorNames:
+                    - Carlos Alexandre Pontes Pizzino
+                    - Ramon R. Costa
+                    - Daniel Mitchell
+                    - Patrícia A. Vargas
+                url: 'https://www.mdpi.com/1424-8220/24/4/1143'
+                pdfUrl: 'https://www.mdpi.com/1424-8220/24/4/1143/pdf?version=1707467876'
+                citationCount: 0
+                citedAlexIds:
+                    - 'https://openalex.org/W1515596477'
+                    - 'https://openalex.org/W1833770305'
+                    - 'https://openalex.org/W2012592962'
+                    - 'https://openalex.org/W2035360823'
+                    - 'https://openalex.org/W2071027807'
+                    - 'https://openalex.org/W2106069155'
+                    - 'https://openalex.org/W2112669647'
+                    - 'https://openalex.org/W2117228865'
+                    - 'https://openalex.org/W2119605622'
+                    - 'https://openalex.org/W2121780146'
+                    - 'https://openalex.org/W2131846894'
+                    - 'https://openalex.org/W2141584146'
+                    - 'https://openalex.org/W2151103935'
+                    - 'https://openalex.org/W2284029970'
+                    - 'https://openalex.org/W2404327188'
+                    - 'https://openalex.org/W2593504731'
+                    - 'https://openalex.org/W2618530766'
+                    - 'https://openalex.org/W2743606304'
+                    - 'https://openalex.org/W2746973055'
+                    - 'https://openalex.org/W2765148382'
+                    - 'https://openalex.org/W2769720482'
+                    - 'https://openalex.org/W2950860789'
+                    - 'https://openalex.org/W2953649472'
+                    - 'https://openalex.org/W2963609447'
+                    - 'https://openalex.org/W2964284952'
+                    - 'https://openalex.org/W2979058050'
+                    - 'https://openalex.org/W301022506'
+                    - 'https://openalex.org/W3104162526'
+                    - 'https://openalex.org/W3115677524'
+                    - 'https://openalex.org/W3129245057'
+                    - 'https://openalex.org/W3170571425'
+                    - 'https://openalex.org/W3203768829'
+                    - 'https://openalex.org/W3207777176'
+                    - 'https://openalex.org/W4200630024'
+                    - 'https://openalex.org/W4213094647'
+                    - 'https://openalex.org/W4214868310'
+                    - 'https://openalex.org/W4234756960'
+                    - 'https://openalex.org/W4365147444'
+                    - 'https://openalex.org/W4383343917'
+                    - 'https://openalex.org/W4385301537'
+                    - 'https://openalex.org/W4390276499'
+                relatedAlexIds:
+                    - 'https://openalex.org/W4254970379'
+                    - 'https://openalex.org/W4250956039'
+                    - 'https://openalex.org/W4240485100'
+                    - 'https://openalex.org/W42295635'
+                    - 'https://openalex.org/W2912965286'
+                    - 'https://openalex.org/W28570768'
+                    - 'https://openalex.org/W2039460805'
+                    - 'https://openalex.org/W2012658348'
+                    - 'https://openalex.org/W1973996291'
+                    - 'https://openalex.org/W1508899372'
+                openAlexId: W4391684984
+            googleScholar:
+                title: 'NeoSLAM: Long-Term SLAM Using Computational Models of the Brain'
+                authorNames:
+                    - CAP Pizzino
+                    - RR Costa
+                    - D Mitchell
+                    - PA Vargas
+                pdfUrl: null
+                url: 'https://www.mdpi.com/1424-8220/24/4/1143'
+                citationId: '13197553707910522902'
+                multiArticleId: '13197553707910522902'
+                citedByLink: 'https://scholar.google.com//scholar?cites=13197553707910522902&as_sdt=5,44&sciodt=0,44&hl=en&oe=ASCII'
+                publisherInfo: 'Sensors, 2024'
+                year: 2024
+                urlToCitedBy: 'https://scholar.google.com//scholar?cites=13197553707910522902&as_sdt=5,44&sciodt=0,44&hl=en&oe=ASCII'
+                citedByCount: 1
+        score:
+            - 5
+            - 1
+            - 303
+            - 0
+            - 2024
+        scoreString: 5|1|303|0|2024
+        _:
+            title: 'NeoSLAM: Long-Term SLAM Using Computational Models of the Brain'
+            doi: 10.3390/s24041143
+            year: 2024
+            publisherFlags: null
+            authorNames:
+                - Carlos Alexandre Pontes Pizzino
+                - Ramon R. Costa
+                - Daniel Mitchell
+                - Patrícia A. Vargas
+            url: 'https://www.mdpi.com/1424-8220/24/4/1143'
+            pdfUrl: 'https://www.mdpi.com/1424-8220/24/4/1143/pdf?version=1707467876'
+            cites: null
+            citedBy: null
+            abstract: 'Simultaneous Localization and Mapping (SLAM) is a fundamental problem in the field of robotics, enabling autonomous robots to navigate and create maps of unknown environments. Nevertheless, the SLAM methods that use cameras face problems in maintaining accurate localization over extended periods across various challenging conditions and scenarios. Following advances in neuroscience, we propose NeoSLAM, a novel long-term visual SLAM, which uses computational models of the brain to deal with this problem. Inspired by the human neocortex, NeoSLAM is based on a hierarchical temporal memory model that has the potential to identify temporal sequences of spatial patterns using sparse distributed representations. Being known to have a high representational capacity and high tolerance to noise, sparse distributed representations have several properties, enabling the development of a novel neuroscience-based loop-closure detector that allows for real-time performance, especially in resource-constrained robotic systems. The proposed method has been thoroughly evaluated in terms of environmental complexity by using a wheeled robot deployed in the field and demonstrated that the accuracy of loop-closure detection was improved compared with the traditional RatSLAM system.'
+    - 
+        notes:
+            isDuplicate: true
+            resumeStatus: unclear|title
+            comment: ''
+            reasonsRelevant: []
+            reasonsNotRelevant: []
+            discoveryMethod:
+                dateTime: '2025-01-29T15:26:58.981Z'
+                originalQuery: NeuroSLAM
+                searchEngine: googleScholar
+            events:
+                added: '2025-01-29T15:26:59.209Z'
+        $accordingTo:
+            manual:
+                title: null
+                doi: null
+                year: null
+                publisherFlags: null
+                authorNames: null
+                url: null
+                pdfUrl: null
+                cites: null
+                citedBy: null
+                abstract: null
+            crossref:
+                doi: null
+            openAlex: {}
+            googleScholar:
+                title: 31.1 a 65nm 8.79 TOPS/W 23.82 mW mixed-signal oscillator-based NeuroSLAM accelerator for applications in edge robotics
+                authorNames:
+                    - JH Yoon
+                    - A Raychowdhury
+                pdfUrl: 'https://drive.google.com/file/d/1NhMGT1jW9hgBDKr4RX0lmvMBY5wTDjIL/view'
+                url: 'https://ieeexplore.ieee.org/abstract/document/9063142/'
+                citationId: '11918216110764081361'
+                multiArticleId: '11918216110764081361'
+                citedByLink: 'https://scholar.google.com//scholar?cites=11918216110764081361&as_sdt=5,44&sciodt=0,44&hl=en&oe=ASCII'
+                publisherInfo: '2020 IEEE International Solid, 2020'
+                year: 2020
+                urlToCitedBy: 'https://scholar.google.com//scholar?cites=11918216110764081361&as_sdt=5,44&sciodt=0,44&hl=en&oe=ASCII'
+                citedByCount: 13
+        score:
+            - 10
+            - 1
+            - 156
+            - 0
+            - 2020
+        scoreString: 10|1|156|0|2020
+        _:
+            title: 31.1 a 65nm 8.79 TOPS/W 23.82 mW mixed-signal oscillator-based NeuroSLAM accelerator for applications in edge robotics
+            doi: null
+            year: 2020
+            publisherFlags: null
+            authorNames:
+                - JH Yoon
+                - A Raychowdhury
+            url: 'https://ieeexplore.ieee.org/abstract/document/9063142/'
+            pdfUrl: 'https://drive.google.com/file/d/1NhMGT1jW9hgBDKr4RX0lmvMBY5wTDjIL/view'
+            cites: null
+            citedBy: null
+            abstract: null
+    - 
+        notes:
+            isDuplicate: true
+            resumeStatus: super-relevent|abstract
+            comment: ''
+            reasonsRelevant:
+                - title
+                - abstract
+            reasonsNotRelevant: []
+            discoveryMethod:
+                dateTime: '2025-01-29T15:26:58.981Z'
+                originalQuery: NeuroSLAM
+                searchEngine: googleScholar
+            events:
+                added: '2025-01-29T15:26:59.209Z'
+                sawAbstract: '2025-02-25T02:11:02.791Z'
+        $accordingTo:
+            manual:
+                title: null
+                doi: null
+                year: null
+                publisherFlags: null
+                authorNames: null
+                url: null
+                pdfUrl: null
+                cites: null
+                citedBy: null
+                abstract: 'Simultaneous Localization and Mapping (SLAM) with fixed landmark objects creates topological maps by extracting semantic information from the environment. In this paper, we propose a new method for mapping, Neural Object SLAM (NeoSLAM), which uses objects seen in stereo images to learn associations between the pose of the robot and the observed landmark objects. We perform mapping with a biologically inspired approach based on creating patterns memorizing places in a network of grid cells and head direction cells. Our model is inspired by the object vector cells discovered recently by neuroscientists exploring the navigation of mammals. We model the firing field of these cells with a feed-forward neural network and create keyframes of objects with their 3D pose in a world-centered frame of reference. We train a Hebbian network connecting keyframe templates to the grid cells to memorize familiar places. We use the NeuroSLAM algorithm to train the grid cells and the head direction cells with the 4 Degree of Freedom (DoF) poses of the robot. Then, we detect loops in the trajectory by matching objects in the keyframes. Finally, we create an object experience map and correct the cumulative error if we detect loop closure candidates. Thus, our system performs object-based place recognition with a brain-inspired approach and produces 2D/3D object topological maps.'
+            crossref:
+                doi: null
+            openAlex: {}
+            googleScholar:
+                title: 'NeoSLAM: Neural object SLAM for loop closure and navigation'
+                authorNames:
+                    - Y Raoui
+                    - C Weber
+                    - S Wermter
+                pdfUrl: 'https://www2.informatik.uni-hamburg.de/wtm/publications/2022/RWW22/paper318_postreview-revised_.pdf'
+                url: 'https://link.springer.com/chapter/10.1007/978-3-031-15934-3_37'
+                citationId: '2472474949514220396'
+                multiArticleId: '2472474949514220396'
+                citedByLink: 'https://scholar.google.com//scholar?cites=2472474949514220396&as_sdt=5,44&sciodt=0,44&hl=en&oe=ASCII'
+                publisherInfo: 'International Conference on Artificial, 2022'
+                year: 2022
+                urlToCitedBy: 'https://scholar.google.com//scholar?cites=2472474949514220396&as_sdt=5,44&sciodt=0,44&hl=en&oe=ASCII'
+                citedByCount: 2
+        score:
+            - 3
+            - 1
+            - 309
+            - 1
+            - 2022
+        scoreString: 3|1|309|1|2022
+        _:
+            title: 'NeoSLAM: Neural object SLAM for loop closure and navigation'
+            doi: null
+            year: 2022
+            publisherFlags: null
+            authorNames:
+                - Y Raoui
+                - C Weber
+                - S Wermter
+            url: 'https://link.springer.com/chapter/10.1007/978-3-031-15934-3_37'
+            pdfUrl: 'https://www2.informatik.uni-hamburg.de/wtm/publications/2022/RWW22/paper318_postreview-revised_.pdf'
+            cites: null
+            citedBy: null
+            abstract: 'Simultaneous Localization and Mapping (SLAM) with fixed landmark objects creates topological maps by extracting semantic information from the environment. In this paper, we propose a new method for mapping, Neural Object SLAM (NeoSLAM), which uses objects seen in stereo images to learn associations between the pose of the robot and the observed landmark objects. We perform mapping with a biologically inspired approach based on creating patterns memorizing places in a network of grid cells and head direction cells. Our model is inspired by the object vector cells discovered recently by neuroscientists exploring the navigation of mammals. We model the firing field of these cells with a feed-forward neural network and create keyframes of objects with their 3D pose in a world-centered frame of reference. We train a Hebbian network connecting keyframe templates to the grid cells to memorize familiar places. We use the NeuroSLAM algorithm to train the grid cells and the head direction cells with the 4 Degree of Freedom (DoF) poses of the robot. Then, we detect loops in the trajectory by matching objects in the keyframes. Finally, we create an object experience map and correct the cumulative error if we detect loop closure candidates. Thus, our system performs object-based place recognition with a brain-inspired approach and produces 2D/3D object topological maps.'
+    -
+        notes:
+            nickname: KeySLAM
+            category: qualifiedSystem
+            resumeStatus: relevent|title
+            comment: ''
+            reasonsRelevant:
+                - title
+            reasonsNotRelevant: []
+            discoveryMethod:
+                dateTime: '2025-01-29T15:26:58.981Z'
+                originalQuery: NeuroSLAM
+                searchEngine: googleScholar
+            events:
+                added: '2025-01-29T15:26:59.209Z'
+        $accordingTo:
+            manual:
+                title: null
+                doi: null
+                year: null
+                publisherFlags: null
+                authorNames: null
+                url: null
+                pdfUrl: null
+                cites: null
+                citedBy: null
+                abstract: null
+            crossref:
+                doi: 10.1109/isas61044.2024.10552602
+            openAlex:
+                doi: 'https://doi.org/10.1109/isas61044.2024.10552602'
+                title: A Brain-inspired SLAM System Based on Keyframe Template Matching
+                abstract: null
+                concepts:
+                    - robotics and sensor-based localization
+                    - robotics and automated systems
+                    - advanced image and video retrieval techniques
+                    - aerospace engineering
+                    - control and systems engineering
+                    - computer vision and pattern recognition
+                    - computer science
+                    - artificial intelligence
+                    - computer vision
+                    - matching (statistics)
+                    - mathematics
+                    - statistics
+                year: 2024
+                authorNames:
+                    - Pijia Wei
+                    - Bo Shao
+                    - Qiuxian Chen
+                    - Xiumin Li
+                url: 'https://doi.org/10.1109/isas61044.2024.10552602'
+                pdfUrl: null
+                citationCount: 0
+                citedAlexIds:
+                    - 'https://openalex.org/W1533091003'
+                    - 'https://openalex.org/W1612997784'
+                    - 'https://openalex.org/W1833770305'
+                    - 'https://openalex.org/W2014913292'
+                    - 'https://openalex.org/W2106991551'
+                    - 'https://openalex.org/W2132311402'
+                    - 'https://openalex.org/W2161226993'
+                    - 'https://openalex.org/W2761791932'
+                    - 'https://openalex.org/W2788239209'
+                    - 'https://openalex.org/W2804281404'
+                    - 'https://openalex.org/W2922402118'
+                    - 'https://openalex.org/W2979058050'
+                    - 'https://openalex.org/W3010436516'
+                    - 'https://openalex.org/W3043971245'
+                    - 'https://openalex.org/W3102327032'
+                    - 'https://openalex.org/W3107919704'
+                relatedAlexIds:
+                    - 'https://openalex.org/W3116076068'
+                    - 'https://openalex.org/W2951359407'
+                    - 'https://openalex.org/W2775347418'
+                    - 'https://openalex.org/W2772917594'
+                    - 'https://openalex.org/W2755342338'
+                    - 'https://openalex.org/W2229312674'
+                    - 'https://openalex.org/W2166024367'
+                    - 'https://openalex.org/W2079911747'
+                    - 'https://openalex.org/W2058170566'
+                    - 'https://openalex.org/W1969923398'
+                openAlexId: W4399620296
+            googleScholar:
+                title: A Brain-inspired SLAM System Based on Keyframe Template Matching
+                authorNames:
+                    - P Wei
+                    - B Shao
+                    - Q Chen
+                    - X Li
+                pdfUrl: null
+                url: 'https://ieeexplore.ieee.org/abstract/document/10552602/'
+                citationId: null
+                multiArticleId: null
+                citedByLink: null
+                publisherInfo: '2024 7th International, 2024'
+                year: 2024
+        score:
+            - 3
+            - 1
+            - 306
+            - 0
+            - 2024
+        scoreString: 3|1|306|0|2024
+        _:
+            title: A Brain-inspired SLAM System Based on Keyframe Template Matching
+            doi: 10.1109/isas61044.2024.10552602
+            year: 2024
+            publisherFlags: null
+            authorNames:
+                - Pijia Wei
+                - Bo Shao
+                - Qiuxian Chen
+                - Xiumin Li
+            url: 'https://doi.org/10.1109/isas61044.2024.10552602'
+            pdfUrl: null
+            cites: null
+            citedBy: null
+            abstract: null
+    -
+        notes:
+            category: similarProblemSurveys
+            resumeStatus: super-relevent|title
+            comment: ''
+            reasonsRelevant:
+                - title
+            reasonsNotRelevant: []
+            discoveryMethod:
+                dateTime: '2025-01-29T15:26:58.981Z'
+                originalQuery: NeuroSLAM
+                searchEngine: googleScholar
+            events:
+                added: '2025-01-29T15:26:59.209Z'
+                sawTitle: '2025-01-29T15:36:44.341Z'
+        $accordingTo:
+            manual:
+                title: null
+                doi: null
+                year: null
+                publisherFlags: null
+                authorNames: null
+                url: null
+                pdfUrl: null
+                cites: null
+                citedBy: null
+                abstract: 'Simultaneous Localization and Mapping (SLAM) is a crucial function for most autonomous systems, allowing them to both navigate through and create maps of unfamiliar surroundings. Traditional Visual SLAM, also commonly known as VSLAM, relies on frame-based cameras and structured processing pipelines, which face challenges in dynamic or low-light environments. However, recent advancements in event camera technology and neuromorphic processing offer promising opportunities to overcome these limitations. Event cameras inspired by biological vision systems capture the scenes asynchronously consuming minimal power but with higher temporal resolution. Neuromorphic processors, which are designed to mimic the parallel processing capabilities of the human brain, offer efficient computation for real-time data processing of event-based data streams. This paper provides a comprehensive overview of recent research efforts in integrating event cameras and neuromorphic processors into VSLAM systems. It discusses the principles behind event cameras and neuromorphic processors, highlighting their advantages over traditional sensing and processing methods. Furthermore, an in-depth survey was conducted on state-of-the-art approaches in event-based SLAM, including feature extraction, motion estimation, and map reconstruction techniques. Additionally, the integration of event cameras with neuromorphic processors, focusing on their synergistic benefits in terms of energy efficiency, robustness, and real-time performance was explored. The paper also discusses the challenges and open research questions in this emerging field, such as sensor calibration, data fusion, and algorithmic development. Finally, the potential applications and future directions for event-based SLAM systems are outlined, ranging from robotics and autonomous vehicles to augmented reality.'
+            crossref:
+                doi: 10.20944/preprints202405.1094.v1
+            openAlex:
+                doi: 'https://doi.org/10.20944/preprints202405.1094.v1'
+                title: 'Application of Event Cameras and Neuromorphic Computing to VSLAM: A Survey'
+                abstract: null
+                concepts:
+                    - advanced memory and neural computing
+                    - modular robots and swarm intelligence
+                    - ferroelectric and negative capacitance devices
+                    - electrical and electronic engineering
+                    - mechanical engineering
+                    - neuromorphic engineering
+                    - event (particle physics)
+                    - computer vision
+                    - artificial intelligence
+                    - computer science
+                    - psychology
+                    - artificial neural network
+                    - physics
+                    - quantum mechanics
+                year: 2024
+                authorNames:
+                    - Sangay Tenzin
+                    - Alexander Rassau
+                    - Douglas Chai
+                url: 'https://doi.org/10.20944/preprints202405.1094.v1'
+                pdfUrl: null
+                citationCount: 0
+                citedAlexIds:
+                    - 'https://openalex.org/W1516776843'
+                    - 'https://openalex.org/W1545825812'
+                    - 'https://openalex.org/W1546953644'
+                    - 'https://openalex.org/W1591994013'
+                    - 'https://openalex.org/W1666962919'
+                    - 'https://openalex.org/W1967377294'
+                    - 'https://openalex.org/W1989420339'
+                    - 'https://openalex.org/W1991133733'
+                    - 'https://openalex.org/W1992915712'
+                    - 'https://openalex.org/W2010172797'
+                    - 'https://openalex.org/W2021851106'
+                    - 'https://openalex.org/W2028528153'
+                    - 'https://openalex.org/W2034761325'
+                    - 'https://openalex.org/W2049981393'
+                    - 'https://openalex.org/W2053608739'
+                    - 'https://openalex.org/W2055762478'
+                    - 'https://openalex.org/W2063561386'
+                    - 'https://openalex.org/W2069552454'
+                    - 'https://openalex.org/W2071550864'
+                    - 'https://openalex.org/W2076184423'
+                    - 'https://openalex.org/W2080625874'
+                    - 'https://openalex.org/W2096944968'
+                    - 'https://openalex.org/W2097696373'
+                    - 'https://openalex.org/W2107292864'
+                    - 'https://openalex.org/W2108134361'
+                    - 'https://openalex.org/W2114919953'
+                    - 'https://openalex.org/W2129936377'
+                    - 'https://openalex.org/W2133028480'
+                    - 'https://openalex.org/W2135733258'
+                    - 'https://openalex.org/W2140782460'
+                    - 'https://openalex.org/W2146378652'
+                    - 'https://openalex.org/W2147881244'
+                    - 'https://openalex.org/W2151290401'
+                    - 'https://openalex.org/W2152671441'
+                    - 'https://openalex.org/W2160072137'
+                    - 'https://openalex.org/W2166333243'
+                    - 'https://openalex.org/W2169688337'
+                    - 'https://openalex.org/W2176749394'
+                    - 'https://openalex.org/W2289545646'
+                    - 'https://openalex.org/W2295314072'
+                    - 'https://openalex.org/W2411394052'
+                    - 'https://openalex.org/W2474281075'
+                    - 'https://openalex.org/W2480387442'
+                    - 'https://openalex.org/W2507898583'
+                    - 'https://openalex.org/W2508268073'
+                    - 'https://openalex.org/W2513148968'
+                    - 'https://openalex.org/W2515958221'
+                    - 'https://openalex.org/W2519559998'
+                    - 'https://openalex.org/W2528596085'
+                    - 'https://openalex.org/W2530906228'
+                    - 'https://openalex.org/W2539413846'
+                    - 'https://openalex.org/W2556125783'
+                    - 'https://openalex.org/W2559007995'
+                    - 'https://openalex.org/W2560705663'
+                    - 'https://openalex.org/W2563042993'
+                    - 'https://openalex.org/W2563767618'
+                    - 'https://openalex.org/W2565755350'
+                    - 'https://openalex.org/W2568919276'
+                    - 'https://openalex.org/W2581251857'
+                    - 'https://openalex.org/W2609883120'
+                    - 'https://openalex.org/W2739136981'
+                    - 'https://openalex.org/W2745933219'
+                    - 'https://openalex.org/W2749476078'
+                    - 'https://openalex.org/W2754360834'
+                    - 'https://openalex.org/W2766013930'
+                    - 'https://openalex.org/W2767800299'
+                    - 'https://openalex.org/W2783525259'
+                    - 'https://openalex.org/W2785582094'
+                    - 'https://openalex.org/W2790551463'
+                    - 'https://openalex.org/W2798859500'
+                    - 'https://openalex.org/W2799742631'
+                    - 'https://openalex.org/W2801498385'
+                    - 'https://openalex.org/W2809732489'
+                    - 'https://openalex.org/W2887090061'
+                    - 'https://openalex.org/W2890016712'
+                    - 'https://openalex.org/W2900163261'
+                    - 'https://openalex.org/W2904275768'
+                    - 'https://openalex.org/W2908544477'
+                    - 'https://openalex.org/W2929275274'
+                    - 'https://openalex.org/W2944996566'
+                    - 'https://openalex.org/W2947533126'
+                    - 'https://openalex.org/W2963200201'
+                    - 'https://openalex.org/W2963760790'
+                    - 'https://openalex.org/W2964010909'
+                    - 'https://openalex.org/W2966103660'
+                    - 'https://openalex.org/W2966174534'
+                    - 'https://openalex.org/W2968161291'
+                    - 'https://openalex.org/W2968243907'
+                    - 'https://openalex.org/W2969508737'
+                    - 'https://openalex.org/W2974328520'
+                    - 'https://openalex.org/W2979058050'
+                    - 'https://openalex.org/W2979489021'
+                    - 'https://openalex.org/W2986901621'
+                    - 'https://openalex.org/W2990793844'
+                    - 'https://openalex.org/W2998281665'
+                    - 'https://openalex.org/W3003677417'
+                    - 'https://openalex.org/W3003876377'
+                    - 'https://openalex.org/W3006966652'
+                    - 'https://openalex.org/W3010477810'
+                    - 'https://openalex.org/W3013325599'
+                    - 'https://openalex.org/W3013872140'
+                    - 'https://openalex.org/W3015712293'
+                    - 'https://openalex.org/W3021789557'
+                    - 'https://openalex.org/W3033564916'
+                    - 'https://openalex.org/W3033926966'
+                    - 'https://openalex.org/W3035056458'
+                    - 'https://openalex.org/W3039515597'
+                    - 'https://openalex.org/W3048686556'
+                    - 'https://openalex.org/W3065747603'
+                    - 'https://openalex.org/W3084220991'
+                    - 'https://openalex.org/W3089892344'
+                    - 'https://openalex.org/W3092451347'
+                    - 'https://openalex.org/W3096741513'
+                    - 'https://openalex.org/W3097400035'
+                    - 'https://openalex.org/W3097980825'
+                    - 'https://openalex.org/W3099039688'
+                    - 'https://openalex.org/W3101265958'
+                    - 'https://openalex.org/W3101533106'
+                    - 'https://openalex.org/W3101853098'
+                    - 'https://openalex.org/W3102327032'
+                    - 'https://openalex.org/W3103648783'
+                    - 'https://openalex.org/W3113613660'
+                    - 'https://openalex.org/W3118343352'
+                    - 'https://openalex.org/W3120564201'
+                    - 'https://openalex.org/W3122190729'
+                    - 'https://openalex.org/W3123618337'
+                    - 'https://openalex.org/W3127641627'
+                    - 'https://openalex.org/W3129515718'
+                    - 'https://openalex.org/W3129601843'
+                    - 'https://openalex.org/W3133213258'
+                    - 'https://openalex.org/W3134784623'
+                    - 'https://openalex.org/W3134867831'
+                    - 'https://openalex.org/W3139657805'
+                    - 'https://openalex.org/W3144939529'
+                    - 'https://openalex.org/W3165610079'
+                    - 'https://openalex.org/W3166169953'
+                    - 'https://openalex.org/W3172672177'
+                    - 'https://openalex.org/W3179993171'
+                    - 'https://openalex.org/W3181885273'
+                    - 'https://openalex.org/W3185918112'
+                    - 'https://openalex.org/W3186582707'
+                    - 'https://openalex.org/W3186688999'
+                    - 'https://openalex.org/W3197950218'
+                    - 'https://openalex.org/W3203196551'
+                    - 'https://openalex.org/W3204394763'
+                    - 'https://openalex.org/W4200364535'
+                    - 'https://openalex.org/W4205804651'
+                    - 'https://openalex.org/W4206044543'
+                    - 'https://openalex.org/W4206152389'
+                    - 'https://openalex.org/W4206901711'
+                    - 'https://openalex.org/W4210357113'
+                    - 'https://openalex.org/W4210705247'
+                    - 'https://openalex.org/W4211154833'
+                    - 'https://openalex.org/W4214734943'
+                    - 'https://openalex.org/W4214867718'
+                    - 'https://openalex.org/W4221145923'
+                    - 'https://openalex.org/W4226051885'
+                    - 'https://openalex.org/W4226206925'
+                    - 'https://openalex.org/W4226311642'
+                    - 'https://openalex.org/W4226391002'
+                    - 'https://openalex.org/W4230796200'
+                    - 'https://openalex.org/W4238276956'
+                    - 'https://openalex.org/W4253626132'
+                    - 'https://openalex.org/W4283373333'
+                    - 'https://openalex.org/W4285077896'
+                    - 'https://openalex.org/W4285152481'
+                    - 'https://openalex.org/W4285182881'
+                    - 'https://openalex.org/W4285247025'
+                    - 'https://openalex.org/W4285288882'
+                    - 'https://openalex.org/W4285512293'
+                    - 'https://openalex.org/W4288792472'
+                    - 'https://openalex.org/W4291172312'
+                    - 'https://openalex.org/W4292120591'
+                    - 'https://openalex.org/W4294255656'
+                    - 'https://openalex.org/W4295591660'
+                    - 'https://openalex.org/W4297633481'
+                    - 'https://openalex.org/W4300223384'
+                    - 'https://openalex.org/W4307437114'
+                    - 'https://openalex.org/W4308084260'
+                    - 'https://openalex.org/W4310626783'
+                    - 'https://openalex.org/W4311053350'
+                    - 'https://openalex.org/W4312337918'
+                    - 'https://openalex.org/W4312344287'
+                    - 'https://openalex.org/W4312400353'
+                    - 'https://openalex.org/W4312543370'
+                    - 'https://openalex.org/W4312835276'
+                    - 'https://openalex.org/W4312965928'
+                    - 'https://openalex.org/W4319430548'
+                    - 'https://openalex.org/W4320732233'
+                    - 'https://openalex.org/W4323066495'
+                    - 'https://openalex.org/W4366564431'
+                    - 'https://openalex.org/W4367016663'
+                    - 'https://openalex.org/W4367321814'
+                    - 'https://openalex.org/W4376136446'
+                    - 'https://openalex.org/W4376464574'
+                    - 'https://openalex.org/W4378189021'
+                    - 'https://openalex.org/W4378229361'
+                    - 'https://openalex.org/W4379469919'
+                    - 'https://openalex.org/W4383223592'
+                    - 'https://openalex.org/W4384831993'
+                    - 'https://openalex.org/W4385717414'
+                    - 'https://openalex.org/W4386076324'
+                    - 'https://openalex.org/W4386743108'
+                    - 'https://openalex.org/W4386976884'
+                    - 'https://openalex.org/W4387623734'
+                    - 'https://openalex.org/W4388895081'
+                    - 'https://openalex.org/W4389750091'
+                    - 'https://openalex.org/W4392149817'
+                    - 'https://openalex.org/W612478963'
+                relatedAlexIds:
+                    - 'https://openalex.org/W3116076068'
+                    - 'https://openalex.org/W2951359407'
+                    - 'https://openalex.org/W2775347418'
+                    - 'https://openalex.org/W2772917594'
+                    - 'https://openalex.org/W2755342338'
+                    - 'https://openalex.org/W2229312674'
+                    - 'https://openalex.org/W2166024367'
+                    - 'https://openalex.org/W2079911747'
+                    - 'https://openalex.org/W2058170566'
+                    - 'https://openalex.org/W1969923398'
+                openAlexId: W4397012684
+            googleScholar:
+                title: 'Application of Event Cameras and Neuromorphic Computing to VSLAM: A Survey'
+                authorNames:
+                    - S Tenzin
+                    - A Rassau
+                    - D Chai
+                pdfUrl: 'https://www.preprints.org/manuscript/202405.1094/download/final_file'
+                url: 'https://www.preprints.org/manuscript/202405.1094'
+                citationId: '200708373285079196'
+                multiArticleId: '200708373285079196'
+                citedByLink: 'https://scholar.google.com//scholar?cites=200708373285079196&as_sdt=5,44&sciodt=0,44&hl=en&oe=ASCII'
+                publisherInfo: null
+                urlToCitedBy: 'https://scholar.google.com//scholar?cites=200708373285079196&as_sdt=5,44&sciodt=0,44&hl=en&oe=ASCII'
+                citedByCount: 2
+        score:
+            - 5
+            - 1
+            - 312
+            - 0
+            - 2024
+        scoreString: 5|1|312|0|2024
+        _:
+            title: 'Application of Event Cameras and Neuromorphic Computing to VSLAM: A Survey'
+            doi: 10.20944/preprints202405.1094.v1
+            year: 2024
+            publisherFlags: null
+            authorNames:
+                - Sangay Tenzin
+                - Alexander Rassau
+                - Douglas Chai
+            url: 'https://doi.org/10.20944/preprints202405.1094.v1'
+            pdfUrl: 'https://www.preprints.org/manuscript/202405.1094/download/final_file'
+            cites: null
+            citedBy: null
+            abstract: 'Simultaneous Localization and Mapping (SLAM) is a crucial function for most autonomous systems, allowing them to both navigate through and create maps of unfamiliar surroundings. Traditional Visual SLAM, also commonly known as VSLAM, relies on frame-based cameras and structured processing pipelines, which face challenges in dynamic or low-light environments. However, recent advancements in event camera technology and neuromorphic processing offer promising opportunities to overcome these limitations. Event cameras inspired by biological vision systems capture the scenes asynchronously consuming minimal power but with higher temporal resolution. Neuromorphic processors, which are designed to mimic the parallel processing capabilities of the human brain, offer efficient computation for real-time data processing of event-based data streams. This paper provides a comprehensive overview of recent research efforts in integrating event cameras and neuromorphic processors into VSLAM systems. It discusses the principles behind event cameras and neuromorphic processors, highlighting their advantages over traditional sensing and processing methods. Furthermore, an in-depth survey was conducted on state-of-the-art approaches in event-based SLAM, including feature extraction, motion estimation, and map reconstruction techniques. Additionally, the integration of event cameras with neuromorphic processors, focusing on their synergistic benefits in terms of energy efficiency, robustness, and real-time performance was explored. The paper also discusses the challenges and open research questions in this emerging field, such as sensor calibration, data fusion, and algorithmic development. Finally, the potential applications and future directions for event-based SLAM systems are outlined, ranging from robotics and autonomous vehicles to augmented reality.'
+    -
+        notes:
+            category: almostQualifiedSystem
+            resumeStatus: super-relevent|title
+            comment: ''
+            reasonsRelevant:
+                - title
+            reasonsNotRelevant: []
+            discoveryMethod:
+                dateTime: '2025-01-29T15:26:58.981Z'
+                originalQuery: NeuroSLAM
+                searchEngine: googleScholar
+            events:
+                added: '2025-01-29T15:26:59.209Z'
+        $accordingTo:
+            manual:
+                title: null
+                doi: null
+                year: null
+                publisherFlags: null
+                authorNames: null
+                url: null
+                pdfUrl: null
+                cites: null
+                citedBy: null
+                abstract: null
+            crossref:
+                doi: 10.3389/fnins.2023.1190515
+            openAlex:
+                doi: '10.3389/fnins.2023.1190515'
+                title: Exploiting semantic information in a spiking neural SLAM system
+                abstract: null
+                concepts:
+                    - advanced memory and neural computing
+                    - memory and neural mechanisms
+                    - robotics and sensor-based localization
+                    - electrical and electronic engineering
+                    - cognitive neuroscience
+                    - aerospace engineering
+                    - cognitive map
+                    - computer science
+                    - artificial intelligence
+                    - simultaneous localization and mapping
+                    - computer vision
+                    - pattern recognition (psychology)
+                    - robot
+                    - mobile robot
+                    - cognition
+                    - neuroscience
+                    - biology
+                year: 2023
+                authorNames:
+                    - Nicole Sandra-Yaffa Dumont
+                    - P. Michael Furlong
+                    - Jeff Orchard
+                    - Chris Eliasmith
+                url: 'https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2023.1190515/full'
+                pdfUrl: 'https://www.frontiersin.org/articles/10.3389/fnins.2023.1190515/pdf'
+                citationCount: 8
+                citedAlexIds:
+                    - 'https://openalex.org/W129946528'
+                    - 'https://openalex.org/W1511694993'
+                    - 'https://openalex.org/W1543297064'
+                    - 'https://openalex.org/W1614298861'
+                    - 'https://openalex.org/W1833770305'
+                    - 'https://openalex.org/W1968399385'
+                    - 'https://openalex.org/W1999399477'
+                    - 'https://openalex.org/W2000214310'
+                    - 'https://openalex.org/W2013702864'
+                    - 'https://openalex.org/W2016708835'
+                    - 'https://openalex.org/W2020676607'
+                    - 'https://openalex.org/W2020950478'
+                    - 'https://openalex.org/W2021756236'
+                    - 'https://openalex.org/W2024908906'
+                    - 'https://openalex.org/W2045353501'
+                    - 'https://openalex.org/W2045396639'
+                    - 'https://openalex.org/W2049836196'
+                    - 'https://openalex.org/W2051682114'
+                    - 'https://openalex.org/W2052651408'
+                    - 'https://openalex.org/W207723284'
+                    - 'https://openalex.org/W2077974183'
+                    - 'https://openalex.org/W2078023722'
+                    - 'https://openalex.org/W2092580449'
+                    - 'https://openalex.org/W2117443520'
+                    - 'https://openalex.org/W2125928414'
+                    - 'https://openalex.org/W2137333905'
+                    - 'https://openalex.org/W2138128929'
+                    - 'https://openalex.org/W2144309171'
+                    - 'https://openalex.org/W2144902422'
+                    - 'https://openalex.org/W2146600851'
+                    - 'https://openalex.org/W2148228392'
+                    - 'https://openalex.org/W2149422514'
+                    - 'https://openalex.org/W2150066425'
+                    - 'https://openalex.org/W2157306293'
+                    - 'https://openalex.org/W2157514959'
+                    - 'https://openalex.org/W2161338791'
+                    - 'https://openalex.org/W2276607561'
+                    - 'https://openalex.org/W2417065300'
+                    - 'https://openalex.org/W2432567885'
+                    - 'https://openalex.org/W2554593340'
+                    - 'https://openalex.org/W2575148670'
+                    - 'https://openalex.org/W2590198803'
+                    - 'https://openalex.org/W2594908799'
+                    - 'https://openalex.org/W2615322227'
+                    - 'https://openalex.org/W2734648945'
+                    - 'https://openalex.org/W2739423245'
+                    - 'https://openalex.org/W2769720482'
+                    - 'https://openalex.org/W2769806377'
+                    - 'https://openalex.org/W2804590179'
+                    - 'https://openalex.org/W2887699334'
+                    - 'https://openalex.org/W2895745202'
+                    - 'https://openalex.org/W2904949706'
+                    - 'https://openalex.org/W2912118994'
+                    - 'https://openalex.org/W2912327653'
+                    - 'https://openalex.org/W2946928390'
+                    - 'https://openalex.org/W2951734697'
+                    - 'https://openalex.org/W2952062681'
+                    - 'https://openalex.org/W2963713713'
+                    - 'https://openalex.org/W2964010909'
+                    - 'https://openalex.org/W2979058050'
+                    - 'https://openalex.org/W2990048493'
+                    - 'https://openalex.org/W3003876377'
+                    - 'https://openalex.org/W3003991701'
+                    - 'https://openalex.org/W3008827235'
+                    - 'https://openalex.org/W3035234631'
+                    - 'https://openalex.org/W3036078768'
+                    - 'https://openalex.org/W3036805013'
+                    - 'https://openalex.org/W3081173589'
+                    - 'https://openalex.org/W3086636289'
+                    - 'https://openalex.org/W3094649618'
+                    - 'https://openalex.org/W3105922581'
+                    - 'https://openalex.org/W3138783654'
+                    - 'https://openalex.org/W3139657805'
+                    - 'https://openalex.org/W3173761280'
+                    - 'https://openalex.org/W3184329476'
+                    - 'https://openalex.org/W3187115527'
+                    - 'https://openalex.org/W3196769885'
+                    - 'https://openalex.org/W3201013180'
+                    - 'https://openalex.org/W4226042959'
+                    - 'https://openalex.org/W4233030948'
+                    - 'https://openalex.org/W4241757988'
+                    - 'https://openalex.org/W4287705645'
+                    - 'https://openalex.org/W4298139715'
+                    - 'https://openalex.org/W4304117832'
+                    - 'https://openalex.org/W4389850796'
+                relatedAlexIds:
+                    - 'https://openalex.org/W3116076068'
+                    - 'https://openalex.org/W2775347418'
+                    - 'https://openalex.org/W2772917594'
+                    - 'https://openalex.org/W2755342338'
+                    - 'https://openalex.org/W2229312674'
+                    - 'https://openalex.org/W2166024367'
+                    - 'https://openalex.org/W2079911747'
+                    - 'https://openalex.org/W2058170566'
+                    - 'https://openalex.org/W2036807459'
+                    - 'https://openalex.org/W1969923398'
+                openAlexId: W4383223592
+            googleScholar:
+                title: Exploiting semantic information in a spiking neural SLAM system
+                authorNames:
+                    - NSY Dumont
+                    - PM Furlong
+                    - J Orchard
+                pdfUrl: null
+                url: 'https://www.frontiersin.org/articles/10.3389/fnins.2023.1190515/full'
+                citationId: '3920420586536630904'
+                multiArticleId: '3920420586536630904'
+                citedByLink: 'https://scholar.google.com//scholar?cites=3920420586536630904&as_sdt=5,44&sciodt=0,44&hl=en&oe=ASCII'
+                publisherInfo: 'Frontiers in, 2023'
+                year: 2023
+                urlToCitedBy: 'https://scholar.google.com//scholar?cites=3920420586536630904&as_sdt=5,44&sciodt=0,44&hl=en&oe=ASCII'
+                citedByCount: 11
+        score:
+            - 1
+            - 1
+            - 306
+            - 2
+            - 2023
+        scoreString: 1|1|306|2|2023
+        _:
+            title: Exploiting semantic information in a spiking neural SLAM system
+            doi: 10.3389/fnins.2023.1190515
+            year: 2023
+            publisherFlags: null
+            authorNames:
+                - Nicole Sandra-Yaffa Dumont
+                - P. Michael Furlong
+                - Jeff Orchard
+                - Chris Eliasmith
+            url: 'https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2023.1190515/full'
+            pdfUrl: 'https://www.frontiersin.org/articles/10.3389/fnins.2023.1190515/pdf'
+            cites: null
+            citedBy: null
+            abstract: null

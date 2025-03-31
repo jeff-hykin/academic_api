@@ -1,3 +1,13 @@
+export const getRedirectedUrl = async (url, options)=>{
+    const {resolve, reject, promise} = Promise.withResolvers()
+    if (options?.timeout) {
+        setTimeout(()=>reject(Error("timeout")), options.timeout)
+        delete options.timeout
+    }
+    const output = fetch(url, options).then(response => response.redirected ? response.url : null)
+    output.then(resolve).catch(reject)
+    return promise
+}
 export const jsonFetch = async (url, options)=>{
     const response = await fetch(url, options)
     if (response.ok) {
