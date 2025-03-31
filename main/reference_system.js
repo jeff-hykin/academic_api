@@ -10,7 +10,7 @@ export function ReferenceSystem({plugins={}}) {
     // }
     const byDoi = {}
     
-    // I don't like how this is coded, but because MultiSourceObject is a proxy object, I can't really use the class syntax
+    // I don't like this code-layout, but because MultiSourceObject is a proxy object, I can't really use the class syntax
     function Reference() {
         const output = MultiSourceObject({})
         Object.setPrototypeOf(output, Reference.prototype)
@@ -18,26 +18,12 @@ export function ReferenceSystem({plugins={}}) {
     }
 
     Object.assign(Reference.prototype, {
+        // TODO: getPdf()
+        // TODO: getAbstract()
         // TODO: fillData()
         // TODO: refeshData()
-        // TODO: convert this:
-        // async function relatedWorkIncludes({source, }, refChecker) {
-        //     let reference = await autofillDataFor(source)
-        //     if (reference.accordingTo?.openAlex?.citedAlexIds instanceof Array) {
-        //         const { citedBy, cites } = await getLinkedOpenAlexArticles(reference.accordingTo.openAlex.openAlexId)
-        //         for (let each of citedBy.concat(cites)) {
-        //             let citedWork = openAlexToSimpleFormat(each)
-        //             if (citedWork) {
-        //                 if (await refChecker(citedWork)) {
-        //                     return true
-        //                 }
-        //             }
-        //         }
-        //         return false
-        //     }
-        // }
-
-        async fillConnections() {
+        // TODO: relatedWorkIncludes({source, }, refChecker)
+        fillConnections: async function() {
             let promises = []
             let warnings = {}
             for (const [pluginName, plugin] of Object.entries(plugins)) {
@@ -105,7 +91,7 @@ export function ReferenceSystem({plugins={}}) {
     
     return {
         Reference,
-        async search(query) {
+        search: async function(query) {
             const warnings = {}
             let promises = []
             let resultsByTitle = {}
@@ -183,7 +169,7 @@ export function ReferenceSystem({plugins={}}) {
             const dois = Object.keys(resultsByDoi)
             for (let each of dois) {
                 let reference
-                if (!byDoi[each]) {
+                if (byDoi[each] instanceof Reference) {
                     reference = byDoi[each]
                 } else {
                     reference = new Reference()
@@ -195,6 +181,6 @@ export function ReferenceSystem({plugins={}}) {
             }
             
             return { results: references, warnings }
-        },      
+        },
     }
 }
