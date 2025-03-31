@@ -1,0 +1,497 @@
+{
+  results: [
+    {
+      title: "Discrete graph hashing",
+      authorNames: [ "W Liu", "C Mu", "S Kumar" ],
+      pdfUrl: "https://proceedings.neurips.cc/paper/2014/file/f63f65b503e22cb970527f23c9ad7db1-Paper.pdf",
+      url: "https://proceedings.neurips.cc/paper/2014/hash/f63f65b503e22cb970527f23c9ad7db1-Abstract.html",
+      citationId: "16583591227025747672",
+      id: "16583591227025747672",
+      citedByUrl: "https://scholar.google.com//scholar?cites=16583591227025747672&as_sdt=5,45&sciodt=0,45&hl=en",
+      publisherInfo: "Advances in neural , 2014",
+      year: 2014,
+      linkToCitedBy: "https://scholar.google.com//scholar?cites=16583591227025747672&as_sdt=5,45&sciodt=0,45&hl=en",
+      citedByCount: 652,
+      "$accordingTo": {
+        googleScholar: {
+          title: "Discrete graph hashing",
+          authorNames: [ "W Liu", "C Mu", "S Kumar" ],
+          pdfUrl: "https://proceedings.neurips.cc/paper/2014/file/f63f65b503e22cb970527f23c9ad7db1-Paper.pdf",
+          url: "https://proceedings.neurips.cc/paper/2014/hash/f63f65b503e22cb970527f23c9ad7db1-Abstract.html",
+          citationId: "16583591227025747672",
+          id: "16583591227025747672",
+          citedByUrl: "https://scholar.google.com//scholar?cites=16583591227025747672&as_sdt=5,45&sciodt=0,45&hl=en",
+          publisherInfo: "Advances in neural , 2014",
+          year: 2014,
+          linkToCitedBy: "https://scholar.google.com//scholar?cites=16583591227025747672&as_sdt=5,45&sciodt=0,45&hl=en",
+          citedByCount: 652
+        }
+      }
+    },
+    {
+      title: "Hashing with graphs",
+      authorNames: [ "W Liu", "J Wang", "S Kumar", "SF Chang" ],
+      pdfUrl: "https://www.ee.columbia.edu/ln/dvmm/publications/11/ICML11_AGH.pdf",
+      url: "https://www.ee.columbia.edu/ln/dvmm/publications/11/ICML11_AGH.pdf",
+      citationId: "15617274766468726460",
+      id: "15617274766468726460",
+      citedByUrl: "https://scholar.google.com//scholar?cites=15617274766468726460&as_sdt=5,45&sciodt=0,45&hl=en",
+      publisherInfo: "Proceedings of the 28th , 2011",
+      year: 2011,
+      linkToCitedBy: "https://scholar.google.com//scholar?cites=15617274766468726460&as_sdt=5,45&sciodt=0,45&hl=en",
+      citedByCount: 1225,
+      "$accordingTo": {
+        googleScholar: {
+          title: "Hashing with graphs",
+          authorNames: [ "W Liu", "J Wang", "S Kumar", "SF Chang" ],
+          pdfUrl: "https://www.ee.columbia.edu/ln/dvmm/publications/11/ICML11_AGH.pdf",
+          url: "https://www.ee.columbia.edu/ln/dvmm/publications/11/ICML11_AGH.pdf",
+          citationId: "15617274766468726460",
+          id: "15617274766468726460",
+          citedByUrl: "https://scholar.google.com//scholar?cites=15617274766468726460&as_sdt=5,45&sciodt=0,45&hl=en",
+          publisherInfo: "Proceedings of the 28th , 2011",
+          year: 2011,
+          linkToCitedBy: "https://scholar.google.com//scholar?cites=15617274766468726460&as_sdt=5,45&sciodt=0,45&hl=en",
+          citedByCount: 1225
+        }
+      }
+    },
+    {
+      title: "Scalable graph hashing with feature transformation.",
+      authorNames: [ "QY Jiang", "WJ Li" ],
+      pdfUrl: "https://cs.nju.edu.cn/_upload/tpl/00/ce/206/template206/paper/IJCAI15_SGH.pdf",
+      url: "https://cs.nju.edu.cn/_upload/tpl/00/ce/206/template206/paper/IJCAI15_SGH.pdf",
+      citationId: "13644533019742668996",
+      id: "13644533019742668996",
+      citedByUrl: "https://scholar.google.com//scholar?cites=13644533019742668996&as_sdt=5,45&sciodt=0,45&hl=en",
+      publisherInfo: "IJCAI, 2015",
+      year: 2015,
+      linkToCitedBy: "https://scholar.google.com//scholar?cites=13644533019742668996&as_sdt=5,45&sciodt=0,45&hl=en",
+      citedByCount: 282,
+      "$accordingTo": {
+        googleScholar: {
+          title: "Scalable graph hashing with feature transformation.",
+          authorNames: [ "QY Jiang", "WJ Li" ],
+          pdfUrl: "https://cs.nju.edu.cn/_upload/tpl/00/ce/206/template206/paper/IJCAI15_SGH.pdf",
+          url: "https://cs.nju.edu.cn/_upload/tpl/00/ce/206/template206/paper/IJCAI15_SGH.pdf",
+          citationId: "13644533019742668996",
+          id: "13644533019742668996",
+          citedByUrl: "https://scholar.google.com//scholar?cites=13644533019742668996&as_sdt=5,45&sciodt=0,45&hl=en",
+          publisherInfo: "IJCAI, 2015",
+          year: 2015,
+          linkToCitedBy: "https://scholar.google.com//scholar?cites=13644533019742668996&as_sdt=5,45&sciodt=0,45&hl=en",
+          citedByCount: 282
+        }
+      }
+    },
+    {
+      title: "Large graph hashing with spectral rotation",
+      authorNames: [ "X Li", "D Hu", "F Nie" ],
+      pdfUrl: "https://ojs.aaai.org/index.php/AAAI/article/download/10875/10734",
+      url: "https://ojs.aaai.org/index.php/AAAI/article/view/10875",
+      citationId: "635328919663638438",
+      id: "635328919663638438",
+      citedByUrl: "https://scholar.google.com//scholar?cites=635328919663638438&as_sdt=5,45&sciodt=0,45&hl=en",
+      publisherInfo: "Proceedings of the AAAI Conference on Artificial , 2017",
+      year: 2017,
+      linkToCitedBy: "https://scholar.google.com//scholar?cites=635328919663638438&as_sdt=5,45&sciodt=0,45&hl=en",
+      citedByCount: 68,
+      "$accordingTo": {
+        googleScholar: {
+          title: "Large graph hashing with spectral rotation",
+          authorNames: [ "X Li", "D Hu", "F Nie" ],
+          pdfUrl: "https://ojs.aaai.org/index.php/AAAI/article/download/10875/10734",
+          url: "https://ojs.aaai.org/index.php/AAAI/article/view/10875",
+          citationId: "635328919663638438",
+          id: "635328919663638438",
+          citedByUrl: "https://scholar.google.com//scholar?cites=635328919663638438&as_sdt=5,45&sciodt=0,45&hl=en",
+          publisherInfo: "Proceedings of the AAAI Conference on Artificial , 2017",
+          year: 2017,
+          linkToCitedBy: "https://scholar.google.com//scholar?cites=635328919663638438&as_sdt=5,45&sciodt=0,45&hl=en",
+          citedByCount: 68
+        }
+      }
+    },
+    {
+      title: "Graph convolutional network hashing",
+      authorNames: [ "X Zhou", "F Shen", "L Liu", "W Liu", "L Nie" ],
+      pdfUrl: null,
+      url: "https://ieeexplore.ieee.org/abstract/document/8576642/",
+      citationId: "12713628167995112241",
+      id: "12713628167995112241",
+      citedByUrl: "https://scholar.google.com//scholar?cites=12713628167995112241&as_sdt=5,45&sciodt=0,45&hl=en",
+      publisherInfo: "IEEE transactions on , 2018",
+      year: 2018,
+      linkToCitedBy: "https://scholar.google.com//scholar?cites=12713628167995112241&as_sdt=5,45&sciodt=0,45&hl=en",
+      citedByCount: 139,
+      "$accordingTo": {
+        googleScholar: {
+          title: "Graph convolutional network hashing",
+          authorNames: [ "X Zhou", "F Shen", "L Liu", "W Liu", "L Nie" ],
+          pdfUrl: null,
+          url: "https://ieeexplore.ieee.org/abstract/document/8576642/",
+          citationId: "12713628167995112241",
+          id: "12713628167995112241",
+          citedByUrl: "https://scholar.google.com//scholar?cites=12713628167995112241&as_sdt=5,45&sciodt=0,45&hl=en",
+          publisherInfo: "IEEE transactions on , 2018",
+          year: 2018,
+          linkToCitedBy: "https://scholar.google.com//scholar?cites=12713628167995112241&as_sdt=5,45&sciodt=0,45&hl=en",
+          citedByCount: 139
+        }
+      }
+    },
+    {
+      title: "GHashing: Semantic graph hashing for approximate similarity search in graph databases",
+      authorNames: [ "Z Qin", "Y Bai", "Y Sun" ],
+      pdfUrl: "https://dl.acm.org/doi/pdf/10.1145/3394486.3403257",
+      url: "https://dl.acm.org/doi/abs/10.1145/3394486.3403257",
+      citationId: "11833329081334293631",
+      id: "11833329081334293631",
+      citedByUrl: "https://scholar.google.com//scholar?cites=11833329081334293631&as_sdt=5,45&sciodt=0,45&hl=en",
+      publisherInfo: "Proceedings of the 26th ACM SIGKDD international , 2020",
+      year: 2020,
+      linkToCitedBy: "https://scholar.google.com//scholar?cites=11833329081334293631&as_sdt=5,45&sciodt=0,45&hl=en",
+      citedByCount: 36,
+      "$accordingTo": {
+        googleScholar: {
+          title: "GHashing: Semantic graph hashing for approximate similarity search in graph databases",
+          authorNames: [ "Z Qin", "Y Bai", "Y Sun" ],
+          pdfUrl: "https://dl.acm.org/doi/pdf/10.1145/3394486.3403257",
+          url: "https://dl.acm.org/doi/abs/10.1145/3394486.3403257",
+          citationId: "11833329081334293631",
+          id: "11833329081334293631",
+          citedByUrl: "https://scholar.google.com//scholar?cites=11833329081334293631&as_sdt=5,45&sciodt=0,45&hl=en",
+          publisherInfo: "Proceedings of the 26th ACM SIGKDD international , 2020",
+          year: 2020,
+          linkToCitedBy: "https://scholar.google.com//scholar?cites=11833329081334293631&as_sdt=5,45&sciodt=0,45&hl=en",
+          citedByCount: 36
+        }
+      }
+    },
+    {
+      title: "Graph PCA hashing for similarity search",
+      authorNames: [ "X Zhu", "X Li", "S Zhang", "Z Xu", "L Yu" ],
+      pdfUrl: "https://opus.lib.uts.edu.au/bitstream/10453/135791/3/Binder1.pdf",
+      url: "https://ieeexplore.ieee.org/abstract/document/7926439/",
+      citationId: "17097063868497096676",
+      id: "17097063868497096676",
+      citedByUrl: "https://scholar.google.com//scholar?cites=17097063868497096676&as_sdt=5,45&sciodt=0,45&hl=en",
+      publisherInfo: "IEEE Transactions on , 2017",
+      year: 2017,
+      linkToCitedBy: "https://scholar.google.com//scholar?cites=17097063868497096676&as_sdt=5,45&sciodt=0,45&hl=en",
+      citedByCount: 197,
+      "$accordingTo": {
+        googleScholar: {
+          title: "Graph PCA hashing for similarity search",
+          authorNames: [ "X Zhu", "X Li", "S Zhang", "Z Xu", "L Yu" ],
+          pdfUrl: "https://opus.lib.uts.edu.au/bitstream/10453/135791/3/Binder1.pdf",
+          url: "https://ieeexplore.ieee.org/abstract/document/7926439/",
+          citationId: "17097063868497096676",
+          id: "17097063868497096676",
+          citedByUrl: "https://scholar.google.com//scholar?cites=17097063868497096676&as_sdt=5,45&sciodt=0,45&hl=en",
+          publisherInfo: "IEEE Transactions on , 2017",
+          year: 2017,
+          linkToCitedBy: "https://scholar.google.com//scholar?cites=17097063868497096676&as_sdt=5,45&sciodt=0,45&hl=en",
+          citedByCount: 197
+        }
+      }
+    },
+    {
+      title: "Distributed graph hashing",
+      authorNames: [ "S Wang", "C Li", "HL Shen" ],
+      pdfUrl: null,
+      url: "https://ieeexplore.ieee.org/abstract/document/8332089/",
+      citationId: "12271433563961592636",
+      id: "12271433563961592636",
+      citedByUrl: "https://scholar.google.com//scholar?cites=12271433563961592636&as_sdt=5,45&sciodt=0,45&hl=en",
+      publisherInfo: "IEEE transactions on cybernetics, 2018",
+      year: 2018,
+      linkToCitedBy: "https://scholar.google.com//scholar?cites=12271433563961592636&as_sdt=5,45&sciodt=0,45&hl=en",
+      citedByCount: 28,
+      "$accordingTo": {
+        googleScholar: {
+          title: "Distributed graph hashing",
+          authorNames: [ "S Wang", "C Li", "HL Shen" ],
+          pdfUrl: null,
+          url: "https://ieeexplore.ieee.org/abstract/document/8332089/",
+          citationId: "12271433563961592636",
+          id: "12271433563961592636",
+          citedByUrl: "https://scholar.google.com//scholar?cites=12271433563961592636&as_sdt=5,45&sciodt=0,45&hl=en",
+          publisherInfo: "IEEE transactions on cybernetics, 2018",
+          year: 2018,
+          linkToCitedBy: "https://scholar.google.com//scholar?cites=12271433563961592636&as_sdt=5,45&sciodt=0,45&hl=en",
+          citedByCount: 28
+        }
+      }
+    },
+    {
+      title: "Asymmetric discrete graph hashing",
+      authorNames: [ "X Shi", "F Xing", "K Xu", "M Sapkota", "L Yang" ],
+      pdfUrl: "https://ojs.aaai.org/index.php/AAAI/article/view/10831/10690",
+      url: "https://ojs.aaai.org/index.php/AAAI/article/view/10831",
+      citationId: "15424618611279636119",
+      id: "15424618611279636119",
+      citedByUrl: "https://scholar.google.com//scholar?cites=15424618611279636119&as_sdt=5,45&sciodt=0,45&hl=en",
+      publisherInfo: "Proceedings of the AAAI , 2017",
+      year: 2017,
+      linkToCitedBy: "https://scholar.google.com//scholar?cites=15424618611279636119&as_sdt=5,45&sciodt=0,45&hl=en",
+      citedByCount: 55,
+      "$accordingTo": {
+        googleScholar: {
+          title: "Asymmetric discrete graph hashing",
+          authorNames: [ "X Shi", "F Xing", "K Xu", "M Sapkota", "L Yang" ],
+          pdfUrl: "https://ojs.aaai.org/index.php/AAAI/article/view/10831/10690",
+          url: "https://ojs.aaai.org/index.php/AAAI/article/view/10831",
+          citationId: "15424618611279636119",
+          id: "15424618611279636119",
+          citedByUrl: "https://scholar.google.com//scholar?cites=15424618611279636119&as_sdt=5,45&sciodt=0,45&hl=en",
+          publisherInfo: "Proceedings of the AAAI , 2017",
+          year: 2017,
+          linkToCitedBy: "https://scholar.google.com//scholar?cites=15424618611279636119&as_sdt=5,45&sciodt=0,45&hl=en",
+          citedByCount: 55
+        }
+      }
+    },
+    {
+      title: "Anchor graph hashing with semantically consistent graph",
+      doi: "10.1109/wcsp.2016.7752458",
+      url: "https://doi.org/10.1109/wcsp.2016.7752458",
+      "$accordingTo": {
+        crossRef: {
+          title: "Anchor graph hashing with semantically consistent graph",
+          doi: "10.1109/wcsp.2016.7752458",
+          url: "https://doi.org/10.1109/wcsp.2016.7752458"
+        }
+      }
+    },
+    {
+      title: "Graph Hashing Network for Image Retrieval",
+      doi: "10.2139/ssrn.4936658",
+      url: "https://doi.org/10.2139/ssrn.4936658",
+      "$accordingTo": {
+        crossRef: {
+          title: "Graph Hashing Network for Image Retrieval",
+          doi: "10.2139/ssrn.4936658",
+          url: "https://doi.org/10.2139/ssrn.4936658"
+        }
+      }
+    },
+    {
+      title: "Multi-Label Graph Convolutional Hashing for Enhanced Cross-Modal Retrieval",
+      doi: "10.2139/ssrn.5071394",
+      url: "https://doi.org/10.2139/ssrn.5071394",
+      "$accordingTo": {
+        crossRef: {
+          title: "Multi-Label Graph Convolutional Hashing for Enhanced Cross-Modal Retrieval",
+          doi: "10.2139/ssrn.5071394",
+          url: "https://doi.org/10.2139/ssrn.5071394"
+        }
+      }
+    },
+    {
+      title: "Graph Hashing Network for Image Retrieval",
+      doi: "10.2139/ssrn.4974348",
+      url: "https://doi.org/10.2139/ssrn.4974348",
+      "$accordingTo": {
+        crossRef: {
+          title: "Graph Hashing Network for Image Retrieval",
+          doi: "10.2139/ssrn.4974348",
+          url: "https://doi.org/10.2139/ssrn.4974348"
+        }
+      }
+    },
+    {
+      title: "An improved graph-entropy bound for perfect hashing",
+      doi: "10.1109/isit.1994.394704",
+      url: "https://doi.org/10.1109/isit.1994.394704",
+      "$accordingTo": {
+        crossRef: {
+          title: "An improved graph-entropy bound for perfect hashing",
+          doi: "10.1109/isit.1994.394704",
+          url: "https://doi.org/10.1109/isit.1994.394704"
+        }
+      }
+    },
+    {
+      title: "Locality-constrained discrete graph hashing",
+      doi: "10.1016/j.neucom.2019.03.104",
+      url: "https://doi.org/10.1016/j.neucom.2019.03.104",
+      "$accordingTo": {
+        crossRef: {
+          title: "Locality-constrained discrete graph hashing",
+          doi: "10.1016/j.neucom.2019.03.104",
+          url: "https://doi.org/10.1016/j.neucom.2019.03.104"
+        }
+      }
+    },
+    {
+      title: "Graph hashing and factorization for fast graph stream classification",
+      doi: "10.1145/2505515.2505730",
+      url: "https://doi.org/10.1145/2505515.2505730",
+      "$accordingTo": {
+        crossRef: {
+          title: "Graph hashing and factorization for fast graph stream classification",
+          doi: "10.1145/2505515.2505730",
+          url: "https://doi.org/10.1145/2505515.2505730"
+        }
+      }
+    },
+    {
+      title: "String graph construction using incremental hashing",
+      doi: "10.1093/bioinformatics/btu578",
+      url: "https://doi.org/10.1093/bioinformatics/btu578",
+      "$accordingTo": {
+        crossRef: {
+          title: "String graph construction using incremental hashing",
+          doi: "10.1093/bioinformatics/btu578",
+          url: "https://doi.org/10.1093/bioinformatics/btu578"
+        }
+      }
+    },
+    {
+      title: "Graph-based Robust Model Hashing",
+      doi: "10.1109/wifs55849.2022.9975424",
+      url: "https://doi.org/10.1109/wifs55849.2022.9975424",
+      "$accordingTo": {
+        crossRef: {
+          title: "Graph-based Robust Model Hashing",
+          doi: "10.1109/wifs55849.2022.9975424",
+          url: "https://doi.org/10.1109/wifs55849.2022.9975424"
+        }
+      }
+    },
+    {
+      title: "Multi-view anchor graph hashing",
+      doi: "10.1109/icassp.2013.6638233",
+      url: "https://doi.org/10.1109/icassp.2013.6638233",
+      "$accordingTo": {
+        crossRef: {
+          title: "Multi-view anchor graph hashing",
+          doi: "10.1109/icassp.2013.6638233",
+          url: "https://doi.org/10.1109/icassp.2013.6638233"
+        }
+      }
+    },
+    {
+      title: "GMaglev: Graph-friendly Consistent Hashing for Distributed Social Graph Partition",
+      doi: "10.1109/iditr57726.2023.10145968",
+      url: "https://doi.org/10.1109/iditr57726.2023.10145968",
+      "$accordingTo": {
+        crossRef: {
+          title: "GMaglev: Graph-friendly Consistent Hashing for Distributed Social Graph Partition",
+          doi: "10.1109/iditr57726.2023.10145968",
+          url: "https://doi.org/10.1109/iditr57726.2023.10145968"
+        }
+      }
+    },
+    {
+      title: "Supervised Consensus Anchor Graph Hashing for Cross Modal Retrieval",
+      doi: "10.1109/access.2023.3348508",
+      url: "https://doi.org/10.1109/access.2023.3348508",
+      "$accordingTo": {
+        crossRef: {
+          title: "Supervised Consensus Anchor Graph Hashing for Cross Modal Retrieval",
+          doi: "10.1109/access.2023.3348508",
+          url: "https://doi.org/10.1109/access.2023.3348508"
+        }
+      }
+    },
+    {
+      title: "Differential hashing functions: application to reachability graph generation",
+      doi: "10.1109/icci.1993.315380",
+      url: "https://doi.org/10.1109/icci.1993.315380",
+      "$accordingTo": {
+        crossRef: {
+          title: "Differential hashing functions: application to reachability graph generation",
+          doi: "10.1109/icci.1993.315380",
+          url: "https://doi.org/10.1109/icci.1993.315380"
+        }
+      }
+    },
+    {
+      title: "Perfect hashing, graph entropy, and circuit complexity",
+      doi: "10.1109/sct.1990.113958",
+      url: "https://doi.org/10.1109/sct.1990.113958",
+      "$accordingTo": {
+        crossRef: {
+          title: "Perfect hashing, graph entropy, and circuit complexity",
+          doi: "10.1109/sct.1990.113958",
+          url: "https://doi.org/10.1109/sct.1990.113958"
+        }
+      }
+    },
+    {
+      title: "GHashing: Semantic Graph Hashing for Approximate Similarity Search in Graph Databases",
+      doi: "10.1145/3394486.3403257",
+      url: "https://doi.org/10.1145/3394486.3403257",
+      "$accordingTo": {
+        crossRef: {
+          title: "GHashing: Semantic Graph Hashing for Approximate Similarity Search in Graph Databases",
+          doi: "10.1145/3394486.3403257",
+          url: "https://doi.org/10.1145/3394486.3403257"
+        }
+      }
+    },
+    {
+      title: "Perfect spatial hashing",
+      doi: "10.1145/1141911.1141926",
+      url: "https://doi.org/10.1145/1141911.1141926",
+      "$accordingTo": {
+        crossRef: {
+          title: "Perfect spatial hashing",
+          doi: "10.1145/1141911.1141926",
+          url: "https://doi.org/10.1145/1141911.1141926"
+        }
+      }
+    },
+    {
+      title: "Deep Collaborative Graph Hashing",
+      doi: "10.1007/978-981-97-2112-2_6",
+      url: "https://doi.org/10.1007/978-981-97-2112-2_6",
+      "$accordingTo": {
+        crossRef: {
+          title: "Deep Collaborative Graph Hashing",
+          doi: "10.1007/978-981-97-2112-2_6",
+          url: "https://doi.org/10.1007/978-981-97-2112-2_6"
+        }
+      }
+    },
+    {
+      title: "Model indexing: the graph-hashing approach",
+      doi: "10.1109/cvpr.1992.223252",
+      url: "https://doi.org/10.1109/cvpr.1992.223252",
+      "$accordingTo": {
+        crossRef: {
+          title: "Model indexing: the graph-hashing approach",
+          doi: "10.1109/cvpr.1992.223252",
+          url: "https://doi.org/10.1109/cvpr.1992.223252"
+        }
+      }
+    },
+    {
+      title: "Deep Semantic Cross Modal Hashing Based on Graph Similarity of Modal-Specific",
+      doi: "10.1109/access.2021.3093357",
+      url: "https://doi.org/10.1109/access.2021.3093357",
+      "$accordingTo": {
+        crossRef: {
+          title: "Deep Semantic Cross Modal Hashing Based on Graph Similarity of Modal-Specific",
+          doi: "10.1109/access.2021.3093357",
+          url: "https://doi.org/10.1109/access.2021.3093357"
+        }
+      }
+    },
+    {
+      title: "Text-Enhanced Graph Attention Hashing for Cross-Modal Retrieval",
+      doi: "10.3390/e26110911",
+      url: "https://doi.org/10.3390/e26110911",
+      "$accordingTo": {
+        crossRef: {
+          title: "Text-Enhanced Graph Attention Hashing for Cross-Modal Retrieval",
+          doi: "10.3390/e26110911",
+          url: "https://doi.org/10.3390/e26110911"
+        }
+      }
+    }
+  ],
+  warnings: { openAlex: "plugin failed search openAlex" }
+}
