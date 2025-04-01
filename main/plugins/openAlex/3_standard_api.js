@@ -6,8 +6,15 @@ export async function search(query) {
     return results.map(toReferenceStructure)
 }
 
-export async function getDataForDoi(doi) {
-    return toReferenceStructure(await dataForDoi(doi))
+export async function getDataForDois(dois) {
+    // AFAIK I don't know a way to get multiple DOI's all at once with openAlex (there probably is a way)
+    // these dont work:
+        // https://api.openalex.org/works?filter=doi.search:(10.1177/0278364906065387 OR 10.3390/s24041143)
+        // https://api.openalex.org/works?filter=doi:(10.1177/0278364906065387 OR 10.3390/s24041143)
+        // https://api.openalex.org/works?filter=(doi:10.1177/0278364906065387 OR doi:10.3390/s24041143)
+    return Promise.all(dois.map(
+        doi=>dataForDoi(doi).then(toReferenceStructure)
+    ))
 }
 
 export async function getConnectedReferences(refDataAccordingToOpenAlex, reference) {
