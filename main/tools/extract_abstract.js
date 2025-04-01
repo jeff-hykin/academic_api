@@ -158,16 +158,29 @@ export async function extractAbstract(url, {fetchOptions=null, cleanupWhitespace
     
     // fallback case:
     if (!abstract) {
-        let abstractElement
-        if (
-            (abstractElement=document.querySelector("#abstract")) ||
-            (abstractElement=document.querySelector("#Abstract")) ||
-            (abstractElement=document.querySelector("#abstracts")) ||
-            (abstractElement=document.querySelector("#Abstracts")) ||
-            (abstractElement=document.querySelector("#abs"))
-        ) {
-            abstract = abstractElement.innerText
-        } else {
+        for (let each of [
+            "#abstract",
+            "#Abstract",
+            "#abstracts",
+            "#Abstracts",
+            "#abs",
+            ".abstract",
+        ]) {
+            let abstractElement = document.querySelector("#abstract")
+            if (abstractElement) {
+                if (hasTwoPeriods(abstractElement.innerText)) {
+                    abstract = abstractElement.innerText
+                    break
+                } else {
+                    if (hasTwoPeriods(abstractElement.parentElement.innerText) && abstractElement.parentElement.innerText.trim().startsWith("Abstract")) {
+                        abstract = abstractElement.innerText
+                        break
+                    }
+                }
+            }
+        }
+        
+        if (!abstract) {
             // try to remove irrelevent content
             const headers = [...document.querySelectorAll("header")]
             for (let each of headers) {
@@ -191,5 +204,22 @@ export async function extractAbstract(url, {fetchOptions=null, cleanupWhitespace
     if (cleanupWhitespace) {
         abstract = abstract.replace(/[ \t]+/g," ").replace(/[\n\r]+[ \t]+$/gm,"\n").replace(/[\n\r]+/g,"\n").trim()
     }
+    
+    // 
+    // suspicious checks
+    // 
+    if (hasTwoPeriods(abstract)){
+        console.warn(`${JSON.stringify(url)} abstract doesn't contain two periods, which is suspicious: ${abstract}`)
+    } else if ((abstract.match(/\b\w+\b/g)||[]).length > 3000) {
+        console.warn(`${JSON.stringify(url)} abstract contains over 3,000 words, which is suspiciously long for an abstract`)
+        if (attemptFallbackExtract) {
+            let match
+            // grab out section
+            if (match = abstract.match(/\bAbstract\b([\w\W]+)(?:Introduction|INTRODUCTION|References|REFERENCES|Keywords|KEYWORDS)/)) {
+                abstract = match[1]
+            }
+        }
+    }
+
     return abstract
 }
