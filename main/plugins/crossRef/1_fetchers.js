@@ -682,6 +682,9 @@ export async function crossRefDataFromDoi(doi) {
 // 
 // get multiple
 // 
+export function dataForDois(dois) {
+    return crossRefFetch(`https://api.crossref.org/works/?filter=${dois.map(eachDoi=>`doi:${eachDoi}`).join(",")}&rows=${dois.length}`).then(result=>result?.message?.items||[])
+}
 export async function getLinkedCrossRefArticles(doi) {
     if (typeof doi != "string") {
         throw Error(`getLinkedCrossRefArticles(doi), doi arg was not a string: ${toRepresentation(doi)}`)
@@ -689,7 +692,7 @@ export async function getLinkedCrossRefArticles(doi) {
     const crossRefObject = await crossRefDataFromDoi(doi)
     
     const dois = (crossRefObject?.reference||[]).map(each=>each.DOI).filter(each=>each)
-    // [
+    // crossRefObject?.reference = [
     //     {
     //         "issue": "4",
     //         "key": "1",
@@ -1080,8 +1083,7 @@ export async function getLinkedCrossRefArticles(doi) {
     if (dois.length == 0) {
         return { cites: [] }
     } else {
-        const result = await crossRefFetch(`https://api.crossref.org/works/?filter=${dois.map(eachDoi=>`doi:${eachDoi}`).join(",")}&rows=${dois.length}`)
-        return { cites: result?.message?.items||[] }
+        return { cites: await dataForDois(dois) }
     }
 }
 

@@ -1,4 +1,4 @@
-import { crossRefDataFromDoi, getLinkedCrossRefArticles, crossRefSearch } from "./1_fetchers.js"
+import { crossRefDataFromDoi, getLinkedCrossRefArticles, crossRefSearch, dataForDois } from "./1_fetchers.js"
 import { toReferenceStructure } from "./2_to_reference_structure.js"
 
 export const search = crossRefSearch
@@ -10,6 +10,10 @@ export async function getConnectedReferences(refDataAccordingToThisPlugin, refer
         return cites.map(toReferenceStructure)
     }
     // on fail, return null
+}
+
+export function getDataForDois(dois) {
+    return dataForDois(dois).then(each=>each.map(toReferenceStructure))
 }
 
 // this is the only required export
