@@ -1,9 +1,13 @@
-import { openAlexDataFromDoi, getLinkedOpenAlexArticles, queryToListOfResults, openAlexFetch } from "./1_fetchers.js"
+import { openAlexDataFromDoi, getLinkedOpenAlexArticles, queryToListOfResults, openAlexFetch, dataForDoi } from "./1_fetchers.js"
 import { toReferenceStructure } from "./2_to_reference_structure.js"
 
 export async function search(query) {
     const { results } = await queryToListOfResults(query)
     return results.map(toReferenceStructure)
+}
+
+export async function getDataForDoi(doi) {
+    return toReferenceStructure(await dataForDoi(doi))
 }
 
 export async function getConnectedReferences(refDataAccordingToOpenAlex, reference) {

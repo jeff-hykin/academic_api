@@ -21570,6 +21570,10 @@ export async function getLinkedOpenAlexArticles(openAlexId) {
     }
 }
 
+export function dataForDoi(doi) {
+    return openAlexFetch(`https://api.openalex.org/works/https://doi.org/${normalizeDoiString(doi)}`)
+}
+
 export async function queryToListOfResults(query) {
     return openAlexFetch(`https://api.openalex.org/works?page=1&filter=default.search:${encodeURIComponent(query)}&sort=relevance_score:desc&per_page=10`)
     // {results: [
