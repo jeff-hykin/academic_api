@@ -43,7 +43,7 @@ export function MultiSourceObject(sources) {
                 return originalThing[key]
             }
             for (const [source, value] of Object.entries(originalThing?.$accordingTo||{})) {
-                if (Reflect.has(value, key)) {
+                if (Reflect.has(value, key) && Reflect.get(value, key) != null) {
                     return Reflect.get(value, key, ...args)
                 }
             }
