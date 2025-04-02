@@ -50,6 +50,7 @@ export function createCachedFetcher({ cache={}, rateLimitMilliseconds=null, onUp
                 if (lastFetchTime == null) {
                     lastFetchTime = new Date()
                 }
+                cachedFetcher.lastFetchTime = cachedFetcher.lastFetchTime || new Date() 
                 do {
                     // avoid hitting rate limit
                     const thresholdTime = cachedFetcher.lastFetchTime.getTime() + cachedFetcher.rateLimitMilliseconds
