@@ -1,5 +1,14 @@
+# What is this?
+
+This is an API for getting information about published works.
+
+# How do I use it?
+
+
+### Basic Search
+
 ```js
-import { Reference, search } from 'https://esm.sh/gh/jeff-hyking/academic_api/main/main.js'
+import { Reference, search, loadReferences, getReferences } from 'https://esm.sh/gh/jeff-hyking/academic_api/main/main.js'
 
 // searches google scholar, crossref, and open alex, and combines the results into 1 object per reference
 // (you can also add plugins to search other sources)
@@ -33,6 +42,41 @@ for (const each of results) {
 }
 ```
 
+### Save and Load
+
+```js
+import { Reference, search, loadReferences, getReferences } from 'https://esm.sh/gh/jeff-hyking/academic_api/main/main.js'
+import * as yaml from "https://deno.land/std@0.168.0/encoding/yaml.ts"
+
+// 
+// load
+// 
+loadReferences(
+    yaml.parse(
+        Deno.readTextFileSync("references.yaml")
+    )
+)
+
+// 
+// use/modify
+// 
+const references = getReferences()
+// get the abstract, cited works, etc
+await references.fillCoreData()
+console.debug(`references[0].title is:`,references[0].title)
+
+// 
+// save
+// 
+Deno.writeTextFileSync(
+    "references.yaml",
+    yaml.stringify(
+        getReferences()
+    )
+)
+```
+
+
 ## Plugins
 
 ```js
@@ -40,7 +84,6 @@ import { Reference, search } from 'https://esm.sh/gh/jeff-hyking/academic_api/ma
 import openAlex from "./plugins/openAlex/3_standard_api.js"
 import crossRef from "./plugins/crossRef/3_standard_api.js"
 import googleScholar from "./plugins/googleScholar/3_standard_api.js"
-
 
 const yourPlugin = {
     // each of these functions is optinal (e.g. googleScholar only implements search)
