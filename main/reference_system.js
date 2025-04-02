@@ -14,7 +14,7 @@ export function ReferenceSystem({plugins={}}) {
     const byDoi = {}
     const allReferences = []
     plugins = {
-        "manual": {},
+        "$manuallyEntered": {},
         ...plugins,
     }
     
