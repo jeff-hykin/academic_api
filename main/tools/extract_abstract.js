@@ -13,14 +13,15 @@ const htmlFetcher = createCachedTextFetcher({
 })
 
 const hasTwoPeriods = (str)=>{
-    return !!str.replace(/\s+/," ").match(/\..+\./)
+    return !!str.replace(/\s+/g," ").match(/\..+\./)
 }
 
 export const defaultCustomParsingRules = {
     // 
     // IEEE
     // 
-    "https://ieeexplore.ieee.org/document/": ()=>{
+    "https://ieeexplore.ieee.org/document/": (document)=>{
+        var abstract
         const abstractElement = [...document.querySelectorAll("div.u-mb-1")].filter(each=>each.innerText.trim().startsWith("Abstract"))[0]
         if (abstractElement) {
             abstract = abstractElement[0].innerText
@@ -30,7 +31,8 @@ export const defaultCustomParsingRules = {
     // 
     // Frontiers
     // 
-    "https://www.frontiersin.org/articles/": ()=>{
+    "https://www.frontiersin.org/articles/": (document)=>{
+        var abstract
         document.querySelectorAll(".JournalAbstract p")[0].innerText 
         const abstractElement = document.querySelector(".JournalAbstract p")
         // .filter(each=>each.innerText.trim().startsWith("Abstract"))[0]
@@ -64,21 +66,24 @@ export const defaultCustomParsingRules = {
     // 
     // Sensors
     // 
-    "https://www.mdpi.com/": ()=>{
+    "https://www.mdpi.com/": (document)=>{
+        var abstract
         abstract = document.querySelector("#html-abstract div")?.innerText 
         return abstract
     },
     // 
     // Springer Nature
     // 
-    "https://link.springer.com/": ()=>{
+    "https://link.springer.com/": (document)=>{
+        var abstract
         abstract = document.querySelector("#Abs1-content")?.innerText
         return abstract
     },
     // 
     // Science Direct
     // 
-    "https://www.sciencedirect.com/": ()=>{
+    "https://www.sciencedirect.com/": (document)=>{
+        var abstract
         abstract = document.querySelector("#aep-abstract-sec-id5")?.innerText 
         if (!abstract) {
             abstract = document.querySelector("#aep-abstract-id4")?.innerText 
@@ -94,7 +99,8 @@ export const defaultCustomParsingRules = {
     // 
     // Nature
     // 
-    "https://www.nature.com/": ()=>{
+    "https://www.nature.com/": (document)=>{
+        var abstract
         abstract = document.querySelector("#Abs1-content")?.innerText 
         if (!abstract) {
             abstract = document.querySelector("#Abs1-section")?.innerText 
@@ -104,7 +110,8 @@ export const defaultCustomParsingRules = {
     // 
     // Arxiv
     // 
-    "https://arxiv.org/": ()=>{
+    "https://arxiv.org/": (document)=>{
+        var abstract
         abstract = document.querySelector("blockquote.abstract")?.innerText 
         if (!abstract) {
             abstract = document.querySelector("#abs blockquote")?.innerText 
@@ -121,14 +128,16 @@ export const defaultCustomParsingRules = {
     // 
     // Wiley (likely unable because of is-human check)
     // 
-    "https://onlinelibrary.wiley.com/": ()=>{
+    "https://onlinelibrary.wiley.com/": (document)=>{
+        var abstract
         abstract = document.querySelector(".abstract-group p")?.innerText 
         if (!abstract) {
             abstract = document.querySelector(".article-section__content.en.main")?.innerText 
         }
         return abstract
     },
-    "https://advanced.onlinelibrary.wiley.com/": ()=>{
+    "https://advanced.onlinelibrary.wiley.com/": (document)=>{
+        var abstract
         abstract = document.querySelector(".abstract-group p")?.innerText 
         if (!abstract) {
             abstract = document.querySelector(".article-section__content.en.main")?.innerText 
@@ -142,50 +151,46 @@ export const defaultCustomParsingRules = {
     // 
     // sagepub (likely unable because of is-human check)
     // 
-    "https://journals.sagepub.com/": ()=>{
-        abstract = document.querySelector("#abstract")?.innerText 
-        return abstract
+    "https://journals.sagepub.com/": (document)=>{
+        return document.querySelector("#abstract")?.innerText 
     },
     // 
     // ACM (likely unable because of is-human check)
     // 
-    "https://dl.acm.org/": ()=>{
-        abstract = document.querySelector("#abstract")?.innerText 
-        return abstract
+    "https://dl.acm.org/": (document)=>{
+        return document.querySelector("#abstract")?.innerText 
     },
     // 
     // biorxiv
     // 
-    "https://www.biorxiv.org/": ()=>{
-        abstract = document.querySelector("#abstract-1")?.innerText 
-        return abstract
+    "https://www.biorxiv.org/": (document)=>{
+        return document.querySelector("#abstract-1")?.innerText 
     },
     // 
     // academic group
     // 
-    "https://academic.oup.com/": ()=>{
-        abstract = document.querySelector(".abstract")?.innerText 
-        return abstract
+    "https://academic.oup.com/": (document)=>{
+        return document.querySelector(".abstract")?.innerText 
     },
 
 
-    "https://www.tandfonline.com/": ()=>{
+    "https://www.tandfonline.com/": (document)=>{
         return document.querySelector("#abstract")?.parentElement?.innerText
     },
-    "https://www.cell.com/": ()=>{
+    "https://www.cell.com/": (document)=>{
         return document.querySelector("#author-abstract")?.innerText
     },
 
-    "https://www.science.org": ()=>document.querySelector("#abstract")?.innerText,
-    "https://journals.plos.org": ()=>document.querySelector(".abstract-content")?.innerText,
-    // "https://www.researchgate.net": ()=>document.querySelector("#abstract")?.innerText, // they're all PDF's
-    "https://direct.mit.edu": ()=>document.querySelector(".abstract")?.innerText,
-    "https://elifesciences.org": ()=>document.querySelector("#abstract")?.innerText,
-    "https://proceedings.neurips.cc": ()=>{
+    "https://www.science.org": (document)=>document.querySelector("#abstract")?.innerText,
+    "https://journals.plos.org": (document)=>document.querySelector(".abstract-content")?.innerText,
+    // "https://www.researchgate.net": (document)=>document.querySelector("#abstract")?.innerText, // they're all PDF's
+    "https://direct.mit.edu": (document)=>document.querySelector(".abstract")?.innerText,
+    "https://elifesciences.org": (document)=>document.querySelector("#abstract")?.innerText,
+    "https://proceedings.neurips.cc": (document)=>{
         return document.querySelector("#container-fluid")?.innerText?.replace?.(/Abstract\b.+/,"")
     },
-    "https://www.cambridge.org": ()=>document.querySelector(".abstract")?.innerText,
-    "https://www.jneurosci.org": ()=>document.querySelector("#abstract-1")?.innerText,
+    "https://www.cambridge.org": (document)=>document.querySelector(".abstract")?.innerText,
+    "https://www.jneurosci.org": (document)=>document.querySelector("#abstract-1")?.innerText,
 }
 
 export async function extractAbstract(url, {fetchOptions=null, cleanupWhitespace=true, customParsingRules={}, timeout=5000, attemptFallbackExtract=true}={}) {
@@ -310,7 +315,7 @@ export async function extractAbstract(url, {fetchOptions=null, cleanupWhitespace
     // 
     // suspicious checks
     // 
-    if (hasTwoPeriods(abstract)){
+    if (!hasTwoPeriods(abstract)){
         console.warn(`${JSON.stringify(url)} abstract doesn't contain two periods, which is suspicious: ${abstract}`)
     } else if ((abstract.match(/\b\w+\b/g)||[]).length > 3000) {
         console.warn(`${JSON.stringify(url)} abstract contains over 3,000 words, which is suspiciously long for an abstract`)

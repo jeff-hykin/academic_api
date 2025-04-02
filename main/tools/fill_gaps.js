@@ -1,4 +1,4 @@
-import { urlToDoiMaybe } from "./doi_tools.js"
+import { urlToDoiMaybe, normalizeDoiString } from "./doi_tools.js"
 import { getRedirectedUrl } from "./fetch_tools.js"
 import { extractAbstract } from "./extract_abstract.js"
 
