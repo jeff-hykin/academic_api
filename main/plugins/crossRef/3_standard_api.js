@@ -13,11 +13,12 @@ export async function getConnectedReferences(refDataAccordingToThisPlugin, refer
 }
 
 export function getDataForDois(dois) {
-    return dataForDois(dois).then(each=>each.map(toReferenceStructure))
+    return dataForDois(dois).then(results=>results.map(toReferenceStructure))
 }
 
 // this is the only required export
 export default {
     search,
     getConnectedReferences,
+    getDataForDois,
 }

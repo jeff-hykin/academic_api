@@ -1,9 +1,10 @@
 import { MultiSourceObject } from "./tools/multi_source_object.js"
-import { htmlFetch } from "./tools/fetch_tools.js"
 import { merge } from "./imports/good.js"
 import { DOMParser } from "./imports/deno_dom.js"
 import { toRepresentation } from "./imports/good.js"
 import { extractAbstract } from "./tools/extract_abstract.js"
+import { fillGaps } from "./tools/fill_gaps.js"
+import { deepSortObject } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/source/flattened/deep_sort_object.js'
 
 export function ReferenceSystem({plugins={}}) {
     // for (const [key, value] of Object.entries(plugins)) {
@@ -29,11 +30,68 @@ export function ReferenceSystem({plugins={}}) {
         }
         Object.assign(Reference.prototype, {
             // TODO: getPdf()
-            // TODO: getAbstract()
             // TODO: fillData()
             // TODO: refeshData()
             // TODO: relatedWorkIncludes({source, }, refChecker)
-            
+            async fillCoreData({extractAbstractOptions={}}={}) {
+                // grabs urls from DOI and vice-versa
+                const warnings = await fillGaps(this, {extractAbstractOptions})
+                // in the future we can try and get it based on title with some validation from the author and/or links
+                if (!this.doi) {
+                    return { coreData: this.$accordingTo, warnings }
+                }
+                const copy1 = structuredClone(this.$accordingTo)
+                deepSortObject(copy1)
+                const before = JSON.stringify(copy1)
+                let promises = []
+                // pull in data from other sources
+                for (const [pluginName, plugin] of Object.entries(plugins)) {
+                    this.$accordingTo[pluginName] = this.$accordingTo[pluginName] || {}
+                    if (!(plugin.getDataForDois instanceof Function)) {
+                        continue
+                    }
+                    // 
+                    // detect if not all the way filled
+                    // 
+                    let hasSomeMissingData = true
+                    for (const [key, value] of Object.entries(this.$accordingTo[pluginName])) {
+                        // ignore basic data
+                        if (key == "title" || key == "doi" || key == "url" || key == "pdfUrl") {
+                            continue
+                        }
+                        if (value != null) {
+                            hasSomeMissingData = false
+                            break
+                        }
+                    }
+                    if (hasSomeMissingData) {
+                        // 
+                        // fill
+                        // 
+                        promises.push(
+                            plugin.getDataForDois([this.doi]).then(([data])=>{
+                                this.$accordingTo[pluginName] = merge({
+                                    oldData: this.$accordingTo[pluginName],
+                                    newData: data,
+                                })
+                            }).catch(error=>{
+                                warnings[pluginName] = error
+                            })
+                        )
+                    }
+                }
+                await Promise.all(promises)
+
+                // try again at filling in more data (like abstracts)
+                const copy2 = structuredClone(this.$accordingTo)
+                deepSortObject(copy2)
+                const after = JSON.stringify(copy2)
+                if (before != after) {
+                    const moreWarnings = await fillGaps(this, {extractAbstractOptions})
+                    Object.assign(warnings, moreWarnings)
+                }
+                return { coreData: this.$accordingTo, warnings }
+            },
             async fillAbstractsFromHtml({fetchOptions=null, cleanupWhitespace=true, customParsingRules={}}={}) {
                 let abstracts = []
                 const warnings = {}

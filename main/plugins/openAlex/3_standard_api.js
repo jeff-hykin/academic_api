@@ -41,4 +41,5 @@ export async function getConnectedReferences(refDataAccordingToOpenAlex, referen
 export default {
     search,
     getConnectedReferences,
+    getDataForDois,
 }
