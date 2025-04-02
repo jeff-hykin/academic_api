@@ -217,14 +217,15 @@ export const defaultCustomParsingRules = {
 }
 
 export async function extractAbstract(url, {useFallback=false, fetchOptions=null, cleanupWhitespace=true, cleanupStartWithAbstract=true, customParsingRules={}, timeout=5000, warnOnCustomParseError=true, attemptFallbackExtract=true, astralBrowser}={}) {
+    if (typeof url != "string") {
+        throw Error(`url must be a string, got ${url}`)
+    }
     customParsingRules = {
         ...customParsingRules,
         ...defaultCustomParsingRules,
         ...customParsingRules, // this is intenionally here twice. We want the user to both have the first order, and overwrite exact matches
     }
-    if (typeof url != "string") {
-        throw Error(`url must be a string, got ${url}`)
-    }
+    
     fetchOptions = fetchOptions||{
         "credentials": "include",
         "headers": {
@@ -245,9 +246,9 @@ export async function extractAbstract(url, {useFallback=false, fetchOptions=null
         "mode": "cors"
     }
     let abstract
-    let result
+    var result, redirectedUrl
     try {
-        result = await htmlFetcher(url, fetchOptions)
+        var {result, redirectedUrl} = await htmlFetcher(url, fetchOptions)
     } catch (error) {
         if (astralBrowser) {
             const page = await astralBrowser.newPage(url)
@@ -272,32 +273,18 @@ export async function extractAbstract(url, {useFallback=false, fetchOptions=null
         throw Error(`unable to parse html from ${JSON.stringify(url)}`)
     }
     
-    const redirectedUrls = []
-    try {
-        let prevUrl = url
-        while (1) {
-            const nextUrl = await getRedirectedUrl(prevUrl, {timeout, ...fetchOptions})
-            if (!nextUrl) {
-                break
-            }
-            // otherwise some urls are redirected to randomly generated stuff
-            if (new URL(nextUrl).origin == new URL(prevUrl).origin) {
-                break
-            }
-            redirectedUrls.push(nextUrl)
-            prevUrl = nextUrl
-        }
-    } catch (error) {
-        
-    }
-
+    const urls = [...new Set([url, redirectedUrl])].filter(each=>each)
+    
     // 
     // custom parsing rules first
     // 
+    const matched = []
     for (const [key, value] of Object.entries(customParsingRules)) {
-        if (url.startsWith(key) || redirectedUrls.some(each=>each.startsWith(key))) {
+        if (urls.some(each=>each.startsWith(key))) {
+            matched.push(key)
+            const matchingUrl = urls.find(each=>each.startsWith(key))
             try {
-                abstract = value(document)
+                abstract = value(document, {matchingUrl, urls})
             } catch (error) {
                 // go to next if error
                 if (warnOnCustomParseError) {
@@ -316,7 +303,11 @@ export async function extractAbstract(url, {useFallback=false, fetchOptions=null
     }
     
     if (!useFallback && typeof abstract != "string") {
-        throw Error(`Unable to extract abstract from ${url}, no custom parsing rules matched ${JSON.stringify([url, ...redirectedUrls])}`)
+        if (matched.length == 0) {
+            throw Error(`Unable to extract abstract from ${url}, no custom parsing rules matched ${JSON.stringify(urls)}`)
+        } else {
+            throw Error(`Unable to extract abstract from ${url}, rules matched ${JSON.stringify(matched)}, but they didn't error or extract the abstract.\n\n${result}`)
+        }
     }
     
     // fallback case:
