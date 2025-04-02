@@ -96,13 +96,16 @@ export function ReferenceSystem({plugins={}}) {
             async fillAbstractsFromHtml({fetchOptions=null, cleanupWhitespace=true, customParsingRules={}, ...other}={}) {
                 let abstracts = []
                 const warnings = {}
+                if (!this.url) {
+                    return { abstracts: [], warnings: { "main": "No url to get abstracts with/from" } }
+                }
                 
                 const promisePerUrl = {}
                 for (const [pluginName, value] of Object.entries(this.$accordingTo)) {
                     if (typeof value.abstract != "string" && value.url) {
                         if (!promisePerUrl[value.url]) {
                             promisePerUrl[value.url] = extractAbstract(value.url, {fetchOptions, cleanupWhitespace, customParsingRules, ...other}).then(abstract=>{
-                                abstracts.push(value.abstract)
+                                abstracts.push(abstract)
                                 return abstract
                             })
                         }

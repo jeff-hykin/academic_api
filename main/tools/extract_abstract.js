@@ -164,9 +164,12 @@ export const defaultCustomParsingRules = {
         }
         return abstract
     },
-    
-    // UNABLE (no abstract)
-    // https://books.google.com
+    // 
+    // google books
+    // 
+    "https://books.google.com/": (document)=>{
+        return Error(`No abstract for books.google.com`)
+    },
 
     // 
     // sagepub (likely unable because of is-human check)
@@ -213,7 +216,7 @@ export const defaultCustomParsingRules = {
     "https://www.jneurosci.org": (document)=>document.querySelector("#abstract-1")?.innerText,
 }
 
-export async function extractAbstract(url, {useFallback=false, fetchOptions=null, cleanupWhitespace=true, customParsingRules={}, timeout=5000, warnOnCustomParseError=true, attemptFallbackExtract=true}={}) {
+export async function extractAbstract(url, {useFallback=false, fetchOptions=null, cleanupWhitespace=true, cleanupStartWithAbstract=true, customParsingRules={}, timeout=5000, warnOnCustomParseError=true, attemptFallbackExtract=true, astralBrowser}={}) {
     customParsingRules = {
         ...customParsingRules,
         ...defaultCustomParsingRules,
@@ -242,7 +245,23 @@ export async function extractAbstract(url, {useFallback=false, fetchOptions=null
         "mode": "cors"
     }
     let abstract
-    let result = await htmlFetcher(url, fetchOptions)
+    let result
+    try {
+        result = await htmlFetcher(url, fetchOptions)
+    } catch (error) {
+        if (astralBrowser) {
+            const page = await astralBrowser.newPage(url)
+            result = await page.evaluate(() => document.body.innerHTML)
+            try {
+                // NOTE: memory leak here until https://github.com/lino-levan/astral/issues/85
+                page.close()
+            } catch (error) {
+                
+            }
+        } else {
+            throw error
+        }
+    }
     let document
     try {
         document = new DOMParser().parseFromString(
@@ -296,8 +315,8 @@ export async function extractAbstract(url, {useFallback=false, fetchOptions=null
         throw abstract
     }
     
-    if (!useFallback && !abstract) {
-        throw Error(`Unable to extract abstract from ${url}`)
+    if (!useFallback && typeof abstract != "string") {
+        throw Error(`Unable to extract abstract from ${url}, no custom parsing rules matched ${JSON.stringify([url, ...redirectedUrls])}`)
     }
     
     // fallback case:
@@ -345,6 +364,10 @@ export async function extractAbstract(url, {useFallback=false, fetchOptions=null
         }
     }
     
+    if (typeof abstract != "string") {
+        throw Error(`Internal error, was unable to get abstract as a string for ${url}`)
+    }
+    
     if (cleanupWhitespace) {
         abstract = abstract.replace(/[ \t]+/g," ").replace(/[\n\r]+[ \t]+$/gm,"\n").replace(/[\n\r]+/g,"\n").trim()
     }
@@ -363,6 +386,10 @@ export async function extractAbstract(url, {useFallback=false, fetchOptions=null
                 abstract = match[1]
             }
         }
+    }
+    
+    if (cleanupStartWithAbstract) {
+        abstract = abstract.replace(/^Abstract\s*/i,"")
     }
 
     return abstract
