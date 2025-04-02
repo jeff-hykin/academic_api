@@ -20,13 +20,29 @@ export const defaultCustomParsingRules = {
     // 
     // IEEE
     // 
-    "https://ieeexplore.ieee.org/document/": (document)=>{
-        var abstract
-        const abstractElement = [...document.querySelectorAll("div.u-mb-1")].filter(each=>each.innerText.trim().startsWith("Abstract"))[0]
-        if (abstractElement) {
-            abstract = abstractElement[0].innerText
+    "https://ieeexplore.ieee.org/": (document)=>{
+        let match
+        // IEEE doesn't render the abstract in the HTML elements, its inside a script tag
+        // if (match = document.body.innerHTML.match(new RegExp(`, *("abstract":"(\\\\(?:[\\"\\\\\\\/bfnrt]|u[0-9a-fA-F]{4})|[^"])*")`))) {
+        if (match = document.body.innerHTML.match(/, *("abstract":"(\\(?:[\"\\\\/bfnrt]|u[0-9a-fA-F]{4})|[^"])*")/)) {
+            // any string matching that regex is guarenteed valid json
+            return JSON.parse(`{${match[1]}}`).abstract
         }
-        return abstract
+        return Error(`Failed to extract abstract from ${document.body.innerHTML}`)
+        
+        // // FIXME
+        // var abstract
+        // for (let each of document.querySelectorAll("*")) {
+        //     if (each.tagName == "SCRIPT") {
+        //         each.innerHTML = ""
+        //     }
+        // }
+        // const abstractElement = [...document.querySelectorAll("*")].filter(each=>each.innerText.trim().startsWith("Abstract"))
+        // const abstractElement = [...document.querySelectorAll("div.u-mb-1")].filter(each=>each.innerText.trim().startsWith("Abstract"))[0]
+        // if (abstractElement) {
+        //     abstract = abstractElement[0].innerText
+        // }
+        // return abstract
     },
     // 
     // Frontiers
@@ -61,6 +77,10 @@ export const defaultCustomParsingRules = {
                 }
             }
         }
+        // dont use fallback for frontiers
+        if (!abstract) {
+            return Error(`Failed to extract abstract from ${document.body.innerHTML}`)
+        }
         return abstract
     },
     // 
@@ -68,7 +88,7 @@ export const defaultCustomParsingRules = {
     // 
     "https://www.mdpi.com/": (document)=>{
         var abstract
-        abstract = document.querySelector("#html-abstract div")?.innerText 
+        abstract = document.querySelector("#html-abstract div")?.innerText
         return abstract
     },
     // 
@@ -193,7 +213,7 @@ export const defaultCustomParsingRules = {
     "https://www.jneurosci.org": (document)=>document.querySelector("#abstract-1")?.innerText,
 }
 
-export async function extractAbstract(url, {fetchOptions=null, cleanupWhitespace=true, customParsingRules={}, timeout=5000, attemptFallbackExtract=true}={}) {
+export async function extractAbstract(url, {useFallback=false, fetchOptions=null, cleanupWhitespace=true, customParsingRules={}, timeout=5000, warnOnCustomParseError=true, attemptFallbackExtract=true}={}) {
     customParsingRules = {
         ...customParsingRules,
         ...defaultCustomParsingRules,
@@ -202,9 +222,7 @@ export async function extractAbstract(url, {fetchOptions=null, cleanupWhitespace
     if (typeof url != "string") {
         throw Error(`url must be a string, got ${url}`)
     }
-
-    let abstract
-    let result = await htmlFetcher(url, fetchOptions||{
+    fetchOptions = fetchOptions||{
         "credentials": "include",
         "headers": {
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:133.0) Gecko/20100101 Firefox/133.0",
@@ -222,7 +240,9 @@ export async function extractAbstract(url, {fetchOptions=null, cleanupWhitespace
         },
         "method": "GET",
         "mode": "cors"
-    })
+    }
+    let abstract
+    let result = await htmlFetcher(url, fetchOptions)
     let document
     try {
         document = new DOMParser().parseFromString(
@@ -237,15 +257,16 @@ export async function extractAbstract(url, {fetchOptions=null, cleanupWhitespace
     try {
         let prevUrl = url
         while (1) {
-            const nextUrl = await getRedirectedUrl(url, {timeout})
+            const nextUrl = await getRedirectedUrl(prevUrl, {timeout, ...fetchOptions})
             if (!nextUrl) {
                 break
             }
-            if (nextUrl == prevUrl) {
+            // otherwise some urls are redirected to randomly generated stuff
+            if (new URL(nextUrl).origin == new URL(prevUrl).origin) {
                 break
             }
             redirectedUrls.push(nextUrl)
-            prevUrl = url
+            prevUrl = nextUrl
         }
     } catch (error) {
         
@@ -256,11 +277,27 @@ export async function extractAbstract(url, {fetchOptions=null, cleanupWhitespace
     // 
     for (const [key, value] of Object.entries(customParsingRules)) {
         if (url.startsWith(key) || redirectedUrls.some(each=>each.startsWith(key))) {
-            abstract = value(document)
+            try {
+                abstract = value(document)
+            } catch (error) {
+                // go to next if error
+                if (warnOnCustomParseError) {
+                    console.warn(`Custom parsing rule ${key} failed to extract abstract for ${url}`)
+                }
+            }
         }
         if (abstract) {
             break
         }
+    }
+
+    // if one returned an error, that means we need to bail (dont use fallback)
+    if (abstract instanceof Error) {
+        throw abstract
+    }
+    
+    if (!useFallback && !abstract) {
+        throw Error(`Unable to extract abstract from ${url}`)
     }
     
     // fallback case:

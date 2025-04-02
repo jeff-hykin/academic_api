@@ -16,6 +16,12 @@ export function MultiSourceObject(sources) {
         },
         get(original, key, ...args) {
             if (key == "$accordingTo") {
+                // clean out any null values
+                for (const [key, value] of Object.entries(originalThing.$accordingTo)) {
+                    if (!(value instanceof Object)) {
+                        delete originalThing.$accordingTo[key]
+                    }
+                }
                 return originalThing.$accordingTo
             }
             if (key == "$allKeys" || key == "$all") {
