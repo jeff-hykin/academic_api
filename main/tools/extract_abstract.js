@@ -1,12 +1,16 @@
 import { DOMParser } from "../imports/deno_dom.js"
-import { createCachedTextFetcher, getRedirectedUrl } from "./fetch_tools.js"
+import { createCachedFetcher, getRedirectedUrl } from "./fetch_tools.js"
 
-const htmlFetcher = createCachedTextFetcher({
+const htmlFetcher = createCachedFetcher({
     cache: {},
     rateLimitMilliseconds: 500, // google is picky and defensive
     onUpdateCache(url) {
         
     },
+    outputModifyer: result=>({
+        result: result.text(),
+        redirectedUrl: result.redirected,
+    }),
     urlNormalizer(url) {
         return new URL(url)
     }
@@ -47,7 +51,7 @@ export const defaultCustomParsingRules = {
     // 
     // Frontiers
     // 
-    "https://www.frontiersin.org/articles/": (document)=>{
+    "https://www.frontiersin.org/": (document)=>{
         var abstract
         document.querySelectorAll(".JournalAbstract p")[0].innerText 
         const abstractElement = document.querySelector(".JournalAbstract p")
@@ -116,6 +120,20 @@ export const defaultCustomParsingRules = {
         }
         return abstract
     },
+    "https://linkinghub.elsevier.com/": (document)=>{
+        var abstract
+        abstract = document.querySelector("#aep-abstract-sec-id5")?.innerText 
+        if (!abstract) {
+            abstract = document.querySelector("#aep-abstract-id4")?.innerText 
+            if (!abstract) {
+                abstract = document.querySelector("#abstracts")?.innerText 
+                if (!abstract) {
+                    abstract = document.querySelector("#preview-section-abstract")?.innerText 
+                }
+            }
+        }
+        return abstract
+    },
     // 
     // Nature
     // 
@@ -157,6 +175,14 @@ export const defaultCustomParsingRules = {
         return abstract
     },
     "https://advanced.onlinelibrary.wiley.com/": (document)=>{
+        var abstract
+        abstract = document.querySelector(".abstract-group p")?.innerText 
+        if (!abstract) {
+            abstract = document.querySelector(".article-section__content.en.main")?.innerText 
+        }
+        return abstract
+    },
+    "https://ietresearch.onlinelibrary.wiley.com/": (document)=>{
         var abstract
         abstract = document.querySelector(".abstract-group p")?.innerText 
         if (!abstract) {
@@ -206,7 +232,14 @@ export const defaultCustomParsingRules = {
 
     "https://www.science.org": (document)=>document.querySelector("#abstract")?.innerText,
     "https://journals.plos.org": (document)=>document.querySelector(".abstract-content")?.innerText,
-    // "https://www.researchgate.net": (document)=>document.querySelector("#abstract")?.innerText, // they're all PDF's
+    "https://www.researchgate.net": (document, {matchingUrl})=>{ // they're all PDF's (afaik)
+        if (matchingUrl.endsWith(".pdf")) {
+            return new Error(`PDF from www.researchgate.net (can't extract abstract)`)
+        }
+    },
+    "https://search.proquest.com/": (document, {matchingUrl})=>{ // they're all PDF's (afaik)
+        return new Error(`PDF from search.proquest.com (can't extract abstract)`)
+    },
     "https://direct.mit.edu": (document)=>document.querySelector(".abstract")?.innerText,
     "https://elifesciences.org": (document)=>document.querySelector("#abstract")?.innerText,
     "https://proceedings.neurips.cc": (document)=>{
@@ -214,6 +247,15 @@ export const defaultCustomParsingRules = {
     },
     "https://www.cambridge.org": (document)=>document.querySelector(".abstract")?.innerText,
     "https://www.jneurosci.org": (document)=>document.querySelector("#abstract-1")?.innerText,
+    "https://iopscience.iop.org/": (document)=>{
+        if (document.body.innerText.match(/please can you confirm you are a human by ticking the box below/i)) {
+            return Error(`is-human check failed`)
+        }
+        return document.querySelector(".article-abstract")?.innerText
+    },
+    "https://eprints.qut.edu.au/": (document)=>document.querySelector("#ep_abstract p")?.innerText,
+    "https://www.science.org/": (document)=>document.querySelector("#abstract")?.innerText,
+    "https://dspace.mit.edu/": (document)=>document.querySelector(".simple-item-view-description")?.innerText,
 }
 
 export async function extractAbstract(url, {useFallback=false, fetchOptions=null, cleanupWhitespace=true, cleanupStartWithAbstract=true, customParsingRules={}, timeout=5000, warnOnCustomParseError=true, attemptFallbackExtract=true, astralBrowser}={}) {
