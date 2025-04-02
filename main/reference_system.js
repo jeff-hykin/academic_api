@@ -4,6 +4,7 @@ import { DOMParser } from "./imports/deno_dom.js"
 import { extractAbstract } from "./tools/extract_abstract.js"
 import { fillGaps } from "./tools/fill_gaps.js"
 import { deepSortObject } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/source/flattened/deep_sort_object.js'
+import { zipShort } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/source/flattened/zip_short.js'
 import { reasonValueIsInvalidReferenceStructure } from "./reference.js"
 
 export function ReferenceSystem({plugins={}}) {
@@ -92,14 +93,30 @@ export function ReferenceSystem({plugins={}}) {
                 }
                 return { coreData: this.$accordingTo, warnings }
             },
-            async fillAbstractsFromHtml({fetchOptions=null, cleanupWhitespace=true, customParsingRules={}}={}) {
+            async fillAbstractsFromHtml({fetchOptions=null, cleanupWhitespace=true, customParsingRules={}, ...other}={}) {
                 let abstracts = []
                 const warnings = {}
+                
+                const promisePerUrl = {}
                 for (const [pluginName, value] of Object.entries(this.$accordingTo)) {
                     if (typeof value.abstract != "string" && value.url) {
-                        value.abstract = await extractAbstract(value.url, {fetchOptions, cleanupWhitespace, customParsingRules})
-                        abstracts.push(value.abstract)
+                        if (!promisePerUrl[value.url]) {
+                            promisePerUrl[value.url] = extractAbstract(value.url, {fetchOptions, cleanupWhitespace, customParsingRules, ...other}).then(abstract=>{
+                                abstracts.push(value.abstract)
+                                return abstract
+                            })
+                        }
+                        promisePerUrl[value.url].then(abstract=>{
+                            value.abstract = abstract
+                        }).catch(error=>{
+                            warnings[`${pluginName}.abstract`] = error
+                        })
                     }
+                }
+                try {
+                    await Promise.all(Object.values(promisePerUrl))
+                } catch (error) {
+                    // the .catch()'s will handle the errors, this await is just to avoid dangling promises
                 }
                 return {
                     abstracts,
