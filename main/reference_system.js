@@ -1,10 +1,10 @@
 import { MultiSourceObject } from "./tools/multi_source_object.js"
-import { merge } from "./imports/good.js"
+import { merge, toRepresentation } from "./imports/good.js"
 import { DOMParser } from "./imports/deno_dom.js"
-import { toRepresentation } from "./imports/good.js"
 import { extractAbstract } from "./tools/extract_abstract.js"
 import { fillGaps } from "./tools/fill_gaps.js"
 import { deepSortObject } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/source/flattened/deep_sort_object.js'
+import { reasonValueIsInvalidReferenceStructure } from "./reference.js"
 
 export function ReferenceSystem({plugins={}}) {
     // for (const [key, value] of Object.entries(plugins)) {
@@ -178,11 +178,22 @@ export function ReferenceSystem({plugins={}}) {
             return allReferences
         },
         // TODO: duplicate removal
-        loadReferences: async function(references) {
+        loadReferences: function(references, {validationOptions={}, ...options}={}) {
             nextReference: for (const eachRef of references) {
                 if (!(eachRef?.$accordingTo instanceof Object)) {
                     console.warn(`While loading a reference, found a reference without $accordingTo, which will be skipped\n`,toRepresentation(eachRef))
                     continue nextReference
+                }
+                for (const [key, value] of Object.entries(eachRef.$accordingTo)) {
+                    if (key[0] == "$") {
+                        continue
+                    }
+                    if (value instanceof Object) {
+                        const reason = reasonValueIsInvalidReferenceStructure(value, { rejectCommasInAuthorNames: false, ...validationOptions})
+                        if (reason) {
+                            throw Error(`${toRepresentation(value)} from ${toRepresentation(key)} is not a valid reference structure because ${reason}`)
+                        }
+                    }
                 }
                 for (const [source, data] of Object.entries(eachRef?.$accordingTo||{})) {
                     if (data?.doi && byDoi[data.doi]) {

@@ -1,4 +1,4 @@
-import { isValidHttpUrl } from './imports/good.js'
+import { isValidUrl } from "./tools/is_valid_url.js"
 import { toRepresentation } from './imports/good.js'
 import { MultiSourceObject } from "./tools/multi_source_object.js"
 import { isModernDoi, couldBeValidDoi, matchValidDoiSubstring, normalizeDoiString } from "./tools/doi_tools.js"
@@ -58,6 +58,12 @@ export function coerceInsignificantEdgeCases(obj) {
             
         }
     }
+    for (let each of ["url", "pdfUrl"]) {
+        if (typeof obj[each] == "string") {
+            // spaces are technically not allowed in URLs
+            obj[each] = obj[each].replace(/ /g, encodeURIComponent(" "))
+        }
+    }
 
     if (obj.cites instanceof Array) {
         // remove any nulls or references with no title (does happen occasionally)
@@ -112,7 +118,7 @@ export function reasonValueIsInvalidReferenceStructure(obj, {rejectNonModernDois
         return ".title is not a non-empty string"
     }
     if (obj.title.replace(/\s/g," ") != obj.title) {
-        return ".title is a string but contains newlines, tabs, or carriage returns (only spaces are allowed for whitespace)\n" + JSON.stringify(title)
+        return ".title is a string but contains newlines, tabs, or carriage returns (only spaces are allowed for whitespace)\n" + JSON.stringify(obj.title)
     }
     if (obj.title.match(/^\s+\S|\S\s+$/)) {
         return ".title is a string but has leading or trailing whitespace\n" + JSON.stringify(title)
@@ -122,25 +128,27 @@ export function reasonValueIsInvalidReferenceStructure(obj, {rejectNonModernDois
     if (obj.doi != null && typeof obj.doi != "string") {
         return ".doi must be null or a string, instead it was\n" + toRepresentation(obj.doi)
     }
-    if (!couldBeValidDoi(obj.doi)) {
-        let match
-        if (match = matchValidDoiSubstring(obj.doi)) {
-            return `.doi needs to be exactly a DOI, not a URL to a DOI. For example, its possible you meant ${JSON.stringify(match[0])} instead of ${JSON.stringify(obj.doi)}`
+    if (typeof obj.doi == "string") {
+        if (!couldBeValidDoi(obj.doi)) {
+            let match
+            if (match = matchValidDoiSubstring(obj.doi)) {
+                return `.doi needs to be exactly a DOI, not a URL to a DOI. For example, its possible you meant ${JSON.stringify(match[0])} instead of ${JSON.stringify(obj.doi)}`
+            }
+            return ".doi was not a valid DOI, instead it was\n" + toRepresentation(obj.doi)
         }
-        return ".doi was not a valid DOI, instead it was\n" + toRepresentation(obj.doi)
-    }
-    if (rejectNonModernDois && !isModernDoi(obj.doi)) {
-        return ".doi matched an older style of DOI, but does not match the current standard of /10\\.\\d{4,9}\\/[-._;()\\/:A-Z0-9]+$/i, instead the DOI was\n" + toRepresentation(obj.doi)
+        if (rejectNonModernDois && !isModernDoi(obj.doi)) {
+            return ".doi matched an older style of DOI, but does not match the current standard of /10\\.\\d{4,9}\\/[-._;()\\/:A-Z0-9]+$/i, instead the DOI was\n" + toRepresentation(obj.doi)
+        }
     }
 
     // url && pdfUrl
     for (let eachAttr of ["url", "pdfUrl"]) {
         if (obj[eachAttr] != null) {
-            if (typeof obj[eachAttr] != "string" || obj[eachAttr].length > 0) {
+            if (typeof obj[eachAttr] != "string" || obj[eachAttr].length == 0) {
                 return `.${eachAttr} must be null or a non-empty string, instead it was\n${toRepresentation(obj[eachAttr])}`
             }
-            if (!isValidHttpUrl(obj[eachAttr])) {
-                return `.${eachAttr} is not a valid Http URL, instead it was\n${toRepresentation(obj[eachAttr])}`
+            if (!isValidUrl(obj[eachAttr])) {
+                return `.${eachAttr} is not a valid URL, instead it was\n${toRepresentation(obj[eachAttr])}`
             }
         }
     }
@@ -158,11 +166,13 @@ export function reasonValueIsInvalidReferenceStructure(obj, {rejectNonModernDois
     }
 
     // concepts not empty and not an array of strings
-    if (!(obj.concepts instanceof Array)) {
+    if (obj.concepts != null && !(obj.concepts instanceof Array)) {
         return ".concepts is not an array, it is " + (typeof obj.concepts)
     }
-    if (obj.concepts.length > 0 && !obj.concepts.every(each=>typeof each == "string")) {
-        return ".concepts is not an array of strings"
+    if (obj.concepts instanceof Array) {
+        if (obj.concepts.length > 0 && !obj.concepts.every(each=>typeof each == "string")) {
+            return ".concepts is not an array of strings"
+        }
     }
     
     // JSONifyable

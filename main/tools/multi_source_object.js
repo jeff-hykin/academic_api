@@ -4,7 +4,7 @@ export function MultiSourceObject(sources) {
         // Object.keys
         ownKeys(original, ...args) {
             return [
-                ...new Set([...Object.values(originalThing?.$accordingTo).map(each=>Reflect.ownKeys(each)).flat(1)])
+                ...new Set([...Object.values(originalThing?.$accordingTo).map(each=>Reflect.ownKeys(each||{})).flat(1)])
             ]
         },
         // Object.keys only does what you think it will if getOwnPropertyDescriptor says the key is enumerable and configurable
@@ -43,8 +43,10 @@ export function MultiSourceObject(sources) {
                 return originalThing[key]
             }
             for (const [source, value] of Object.entries(originalThing?.$accordingTo||{})) {
-                if (Reflect.has(value, key) && Reflect.get(value, key) != null) {
-                    return Reflect.get(value, key, ...args)
+                if (value instanceof Object) {
+                    if (Reflect.has(value, key) && Reflect.get(value, key) != null) {
+                        return Reflect.get(value, key, ...args)
+                    }
                 }
             }
             return Object.getPrototypeOf(proxyObject)[key]
