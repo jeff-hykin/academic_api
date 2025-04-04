@@ -41,7 +41,7 @@ export async function fillGaps(ref, {extractAbstractOptions={}}={}) {
     // replace DOI links with redirects (which has more information)
     // 
     for (const [key, value] of Object.entries(ref.$accordingTo)) {
-        if (typeof value.url == "string" && value.url.startsWith("https://doi.org/")) {
+        if (typeof value.url == "string" && value?.url?.startsWith("https://doi.org/")) {
             try {
                 value.url = await getRedirectedUrl(value.url)
             } catch (error) {

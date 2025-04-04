@@ -112,7 +112,7 @@ export function ReferenceSystem({plugins={}}) {
                         promisePerUrl[value.url].then(abstract=>{
                             value.abstract = abstract
                         }).catch(error=>{
-                            warnings[`${pluginName}.abstract`] = error
+                            warnings[`${pluginName}.abstract`] = error?.stack || error
                         })
                     }
                 }

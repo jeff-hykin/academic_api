@@ -1,18 +1,21 @@
 import { DOMParser } from "../imports/deno_dom.js"
 import { createCachedFetcher, getRedirectedUrl } from "./fetch_tools.js"
-
+import { indent } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/source/flattened/indent.js'
+import { toRepresentation } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/source/flattened/to_representation.js'
 const htmlFetcher = createCachedFetcher({
     cache: {},
     rateLimitMilliseconds: 500, // google is picky and defensive
     onUpdateCache(url) {
         
     },
-    outputModifyer: result=>({
-        result: result.text(),
-        redirectedUrl: result.redirected,
-    }),
+    outputModifyer: async (response)=>{
+        return ({
+            result: await response.text(),
+            redirectedUrl: response.redirected ? response.url : null,
+        })
+    },
     urlNormalizer(url) {
-        return new URL(url)
+        return new URL(url).href
     }
 })
 
@@ -33,20 +36,6 @@ export const defaultCustomParsingRules = {
             return JSON.parse(`{${match[1]}}`).abstract
         }
         return Error(`Failed to extract abstract from ${document.body.innerHTML}`)
-        
-        // // FIXME
-        // var abstract
-        // for (let each of document.querySelectorAll("*")) {
-        //     if (each.tagName == "SCRIPT") {
-        //         each.innerHTML = ""
-        //     }
-        // }
-        // const abstractElement = [...document.querySelectorAll("*")].filter(each=>each.innerText.trim().startsWith("Abstract"))
-        // const abstractElement = [...document.querySelectorAll("div.u-mb-1")].filter(each=>each.innerText.trim().startsWith("Abstract"))[0]
-        // if (abstractElement) {
-        //     abstract = abstractElement[0].innerText
-        // }
-        // return abstract
     },
     // 
     // Frontiers
@@ -160,9 +149,6 @@ export const defaultCustomParsingRules = {
         return abstract
     },
 
-    // UNABLE (no abstract)
-    // https://search.proquest.com/
-
     // 
     // Wiley (likely unable because of is-human check)
     // 
@@ -227,6 +213,9 @@ export const defaultCustomParsingRules = {
         return document.querySelector("#abstract")?.parentElement?.innerText
     },
     "https://www.cell.com/": (document)=>{
+        if (document.body.innerText.match(/needs to review the security of your connection before proceeding/i)) {
+            return Error(`is-human check failed`)
+        }
         return document.querySelector("#author-abstract")?.innerText
     },
 
@@ -256,9 +245,17 @@ export const defaultCustomParsingRules = {
     "https://eprints.qut.edu.au/": (document)=>document.querySelector("#ep_abstract p")?.innerText,
     "https://www.science.org/": (document)=>document.querySelector("#abstract")?.innerText,
     "https://dspace.mit.edu/": (document)=>document.querySelector(".simple-item-view-description")?.innerText,
+    "https://pmc.ncbi.nlm.nih.gov/": (document)=>document.querySelector("#abstract1")?.innerText,
+    "https://spj.science.org/": (document)=>document.querySelector("#abstract")?.innerText,
+    "https://journals.physiology.org/": (document)=>document.querySelector(".abstractInFull")?.innerText,
+    "https://openaccess.thecvf.com/": (document)=>document.querySelector("#abstract")?.innerText,
+    "http://openaccess.thecvf.com/": (document)=>document.querySelector("#abstract")?.innerText,
+    "https://proceedings.mlr.press/": (document)=>document.querySelector("#abstract")?.innerText,
+    "https://web.p.ebscohost.com/": (document)=>document.querySelector(".abstract")?.innerText,
+    "https://www.emerald.com/": (document)=>document.querySelector(".abstract")?.innerText,
 }
 
-export async function extractAbstract(url, {useFallback=false, fetchOptions=null, cleanupWhitespace=true, cleanupStartWithAbstract=true, customParsingRules={}, timeout=5000, warnOnCustomParseError=true, attemptFallbackExtract=true, astralBrowser}={}) {
+export async function extractAbstract(url, {useFallback=false, fetchOptions=null, cleanupWhitespace=true, cleanupStartWithAbstract=true, customParsingRules={}, timeout=5000, warnOnCustomParseError=true, attemptFallbackExtract=true, astralBrowser, errorCharacterOutputLimit = 2000}={}) {
     if (typeof url != "string") {
         throw Error(`url must be a string, got ${url}`)
     }
@@ -294,7 +291,7 @@ export async function extractAbstract(url, {useFallback=false, fetchOptions=null
     } catch (error) {
         if (astralBrowser) {
             const page = await astralBrowser.newPage(url)
-            result = await page.evaluate(() => document.body.innerHTML)
+            result = await page.evaluate(() => document?.body?.innerHTML)
             try {
                 // NOTE: memory leak here until https://github.com/lino-levan/astral/issues/85
                 page.close()
@@ -312,10 +309,45 @@ export async function extractAbstract(url, {useFallback=false, fetchOptions=null
             "text/html",
         )
     } catch (error) {
-        throw Error(`unable to parse html from ${JSON.stringify(url)}`)
+        throw Error(`unable to parse html from ${JSON.stringify(url)},\n\n${toRepresentation(result,{indent:8}).slice(0,errorCharacterOutputLimit)}`)
+    }
+    
+    // 
+    // resistance to js-only pages
+    // 
+    if (astralBrowser && (document?.body?.innerText||"").trim().length==0 || (document?.title||"").trim().match(/Redirecting/i)) {
+        const page = await astralBrowser.newPage(url)
+        result = await page.evaluate(() => document?.body?.innerHTML)
+        try {
+            document = new DOMParser().parseFromString(
+                result,
+                "text/html",
+            )
+        } catch (error) {
+            throw Error(`unable to parse html from ${JSON.stringify(url)},\n\n${toRepresentation(result,{indent:8}).slice(0,errorCharacterOutputLimit)}`)
+        }
     }
     
     const urls = [...new Set([url, redirectedUrl])].filter(each=>each)
+        // try {
+        //     let prevUrl = redirectedUrl || url
+        //     while (1) {
+        //         const nextUrl = await getRedirectedUrl(prevUrl, {timeout, ...fetchOptions})
+        //         if (!nextUrl) {
+        //             break
+        //         }
+        //         // otherwise some urls are redirected to randomly generated stuff
+        //         if (new URL(nextUrl).origin == new URL(prevUrl).origin) {
+        //             break
+        //         }
+        //         urls.push(nextUrl)
+        //         prevUrl = nextUrl
+        //     }
+        //     console.debug(`urls are:`,urls)
+        // } catch (error) {
+            
+        // }
+    
     
     // 
     // custom parsing rules first
@@ -345,10 +377,13 @@ export async function extractAbstract(url, {useFallback=false, fetchOptions=null
     }
     
     if (!useFallback && typeof abstract != "string") {
+        if (document?.body?.innerText.match(/Verifying you are human\. This may take a few seconds/i)) {
+            throw Error(`is-human check failed`)
+        }
         if (matched.length == 0) {
             throw Error(`Unable to extract abstract from ${url}, no custom parsing rules matched ${JSON.stringify(urls)}`)
         } else {
-            throw Error(`Unable to extract abstract from ${url}, rules matched ${JSON.stringify(matched)}, but they didn't error or extract the abstract.\n\n${result}`)
+            throw Error(`Unable to extract abstract from ${url}, rules matched ${JSON.stringify(matched)}, but they didn't error or extract the abstract.\n\n${toRepresentation(result,{indent:8}).slice(0,errorCharacterOutputLimit)}`)
         }
     }
     
