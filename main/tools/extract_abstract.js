@@ -255,7 +255,7 @@ export const defaultCustomParsingRules = {
     "https://www.emerald.com/": (document)=>document.querySelector(".abstract")?.innerText,
 }
 
-export async function extractAbstract(url, {useFallback=false, fetchOptions=null, cleanupWhitespace=true, cleanupStartWithAbstract=true, customParsingRules={}, timeout=5000, warnOnCustomParseError=true, attemptFallbackExtract=true, astralBrowser, errorCharacterOutputLimit = 2000}={}) {
+export async function extractAbstract(url, {useFallback=false, fetchOptions=null, cleanupWhitespace=true, cleanupStartWithAbstract=true, customParsingRules={}, timeout=5000, warnOnCustomParseError=true, attemptFallbackExtract=true, astralBrowser, errorCharacterOutputLimit = 2000, preferBrowser=false, browserWaitTime=100}={}) {
     if (typeof url != "string") {
         throw Error(`url must be a string, got ${url}`)
     }
@@ -286,18 +286,24 @@ export async function extractAbstract(url, {useFallback=false, fetchOptions=null
     }
     let abstract
     var result, redirectedUrl
+    if (preferBrowser && astralBrowser) {
+        const page = await astralBrowser.newPage(url)
+        // to get past a lot of is-human checks
+        await new Promise(r=>setTimeout(r,browserWaitTime))
+        result = await page.evaluate(() => document?.body?.innerHTML)
+        Promise.resolve(page.close()).catch(error=>{})
+    }
     try {
-        var {result, redirectedUrl} = await htmlFetcher(url, fetchOptions)
+        if (!result) {
+            var {result, redirectedUrl} = await htmlFetcher(url, fetchOptions)
+        }
     } catch (error) {
         if (astralBrowser) {
             const page = await astralBrowser.newPage(url)
+            // to get past a lot of is-human checks
+            await new Promise(r=>setTimeout(r,browserWaitTime))
             result = await page.evaluate(() => document?.body?.innerHTML)
-            try {
-                // NOTE: memory leak here until https://github.com/lino-levan/astral/issues/85
-                page.close()
-            } catch (error) {
-                
-            }
+            Promise.resolve(page.close()).catch(error=>{})
         } else {
             throw error
         }
@@ -318,6 +324,7 @@ export async function extractAbstract(url, {useFallback=false, fetchOptions=null
     if (astralBrowser && (document?.body?.innerText||"").trim().length==0 || (document?.title||"").trim().match(/Redirecting/i)) {
         const page = await astralBrowser.newPage(url)
         result = await page.evaluate(() => document?.body?.innerHTML)
+        Promise.resolve(page.close()).catch(error=>{})
         try {
             document = new DOMParser().parseFromString(
                 result,
@@ -329,24 +336,6 @@ export async function extractAbstract(url, {useFallback=false, fetchOptions=null
     }
     
     const urls = [...new Set([url, redirectedUrl])].filter(each=>each)
-        // try {
-        //     let prevUrl = redirectedUrl || url
-        //     while (1) {
-        //         const nextUrl = await getRedirectedUrl(prevUrl, {timeout, ...fetchOptions})
-        //         if (!nextUrl) {
-        //             break
-        //         }
-        //         // otherwise some urls are redirected to randomly generated stuff
-        //         if (new URL(nextUrl).origin == new URL(prevUrl).origin) {
-        //             break
-        //         }
-        //         urls.push(nextUrl)
-        //         prevUrl = nextUrl
-        //     }
-        //     console.debug(`urls are:`,urls)
-        // } catch (error) {
-            
-        // }
     
     
     // 
@@ -377,12 +366,18 @@ export async function extractAbstract(url, {useFallback=false, fetchOptions=null
     }
     
     if (!useFallback && typeof abstract != "string") {
-        if (document?.body?.innerText.match(/Verifying you are human\. This may take a few seconds/i)) {
+        if (document?.body?.innerText.match(/Verify you are human by completing the action below|Verifying you are human\. This may take a few seconds/i)) {
+            if (!preferBrowser && astralBrowser) {
+                return extractAbstract(url, {fetchOptions, cleanupWhitespace, cleanupStartWithAbstract, customParsingRules, timeout, warnOnCustomParseError, attemptFallbackExtract, astralBrowser, errorCharacterOutputLimit, preferBrowser: true, browserWaitTime: 8000})
+            }
             throw Error(`is-human check failed`)
         }
         if (matched.length == 0) {
             throw Error(`Unable to extract abstract from ${url}, no custom parsing rules matched ${JSON.stringify(urls)}`)
         } else {
+            if (!preferBrowser && astralBrowser) {
+                return extractAbstract(url, {fetchOptions, cleanupWhitespace, cleanupStartWithAbstract, customParsingRules, timeout, warnOnCustomParseError, attemptFallbackExtract, astralBrowser, errorCharacterOutputLimit, preferBrowser: true, browserWaitTime: 8000})
+            }
             throw Error(`Unable to extract abstract from ${url}, rules matched ${JSON.stringify(matched)}, but they didn't error or extract the abstract.\n\n${toRepresentation(result,{indent:8}).slice(0,errorCharacterOutputLimit)}`)
         }
     }
