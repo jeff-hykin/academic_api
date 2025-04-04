@@ -13,7 +13,7 @@ export const googleScholarFetcher = createCachedTextFetcher({
        
     },
     urlNormalizer(url) {
-        return new URL(url)
+        return new URL(url).href
     }
 })
 
