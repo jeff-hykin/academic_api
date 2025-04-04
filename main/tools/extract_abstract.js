@@ -232,7 +232,7 @@ export const defaultCustomParsingRules = {
     "https://direct.mit.edu": (document)=>document.querySelector(".abstract")?.innerText,
     "https://elifesciences.org": (document)=>document.querySelector("#abstract")?.innerText,
     "https://proceedings.neurips.cc": (document)=>{
-        return document.querySelector("#container-fluid")?.innerText?.replace?.(/Abstract\b.+/,"")
+        return document.querySelector(".container-fluid")?.innerText?.replace?.(/Abstract\b.+/,"")
     },
     "https://www.cambridge.org": (document)=>document.querySelector(".abstract")?.innerText,
     "https://www.jneurosci.org": (document)=>document.querySelector("#abstract-1")?.innerText,
@@ -252,7 +252,9 @@ export const defaultCustomParsingRules = {
     "http://openaccess.thecvf.com/": (document)=>document.querySelector("#abstract")?.innerText,
     "https://proceedings.mlr.press/": (document)=>document.querySelector("#abstract")?.innerText,
     "https://web.p.ebscohost.com/": (document)=>document.querySelector(".abstract")?.innerText,
-    "https://www.emerald.com/": (document)=>document.querySelector(".abstract")?.innerText,
+    "https://www.emerald.com/": (document)=>document.querySelector(".abstract")?.innerText, // usually fails with is-human check
+    "https://www.taylorfrancis.com/": (document)=>document.querySelector(".book-content")?.innerText,
+    "https://www.annualreviews.org/": (document)=>document.querySelector(".description")?.innerText,
 }
 
 export async function extractAbstract(url, {useFallback=false, fetchOptions=null, cleanupWhitespace=true, cleanupStartWithAbstract=true, customParsingRules={}, timeout=5000, warnOnCustomParseError=true, attemptFallbackExtract=true, astralBrowser, errorCharacterOutputLimit = 2000, preferBrowser=false, browserWaitTime=100}={}) {
