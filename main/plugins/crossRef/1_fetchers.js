@@ -3,22 +3,22 @@ import { normalizeDoiString, couldBeValidDoi } from "../../tools/doi_tools.js"
 import { toRepresentation } from "../../imports/good.js"
 import { DOMParser } from "../../imports/deno_dom.js"
 
-// 
+//
 // central rate-limiter for crossRef
-// 
+//
 export const crossRefFetch = createCachedJsonFetcher({
     rateLimitMilliseconds: 100, // not sure what their rate limit is
-    urlNormalizer: url=>url,
+    urlNormalizer: (url) => url,
 })
 // probbaly would be good to somehow have these share a rate limiter
 export const crossRefSearchFetch = createCachedTextFetcher({
     rateLimitMilliseconds: 100, // not sure what their rate limit is
-    urlNormalizer: url=>url,
+    urlNormalizer: (url) => url,
 })
 
-// 
+//
 // get single
-// 
+//
 export async function crossRefDataFromDoi(doi) {
     if (typeof doi != "string") {
         throw Error(`crossRefDataFromDoi(doi), doi arg was not a string: ${toRepresentation(doi)}`)
@@ -679,19 +679,19 @@ export async function crossRefDataFromDoi(doi) {
     // }
 }
 
-// 
+//
 // get multiple
-// 
+//
 export function dataForDois(dois) {
-    return crossRefFetch(`https://api.crossref.org/works/?filter=${dois.map(eachDoi=>`doi:${eachDoi}`).join(",")}&rows=${dois.length}`).then(result=>result?.message?.items||[])
+    return crossRefFetch(`https://api.crossref.org/works/?filter=${dois.map((eachDoi) => `doi:${eachDoi}`).join(",")}&rows=${dois.length}`).then((result) => result?.message?.items || [])
 }
 export async function getLinkedCrossRefArticles(doi) {
     if (typeof doi != "string") {
         throw Error(`getLinkedCrossRefArticles(doi), doi arg was not a string: ${toRepresentation(doi)}`)
     }
     const crossRefObject = await crossRefDataFromDoi(doi)
-    
-    const dois = (crossRefObject?.reference||[]).map(each=>each.DOI).filter(each=>each)
+
+    const dois = (crossRefObject?.reference || []).map((each) => each.DOI).filter((each) => each)
     // crossRefObject?.reference = [
     //     {
     //         "issue": "4",
@@ -1087,31 +1087,31 @@ export async function getLinkedCrossRefArticles(doi) {
     }
 }
 
-// 
+//
 // search
-// 
+//
 export async function crossRefSearch(query) {
     const url = `https://search.crossref.org/search/works?q=${encodeURIComponent(query)}&from_ui=yes`
     const htmlResult = await crossRefSearchFetch(url)
-    // 
+    //
     // process html
-    // 
+    //
     const baseUrl = new URL(url).origin
-    const getHref = (element)=>element.getAttribute("href").startsWith("/")?`${baseUrl}/${element.getAttribute("href")}`:element.getAttribute("href")
-    const document = new DOMParser().parseFromString(
-        htmlResult,
-        "text/html",
-    )
-    const results =  [...document.querySelector("tbody").children]
+    const getHref = (element) => (element.getAttribute("href").startsWith("/") ? `${baseUrl}/${element.getAttribute("href")}` : element.getAttribute("href"))
+    const document = new DOMParser().parseFromString(htmlResult, "text/html")
+    const results = [...document.querySelector("tbody").children]
     const titlesAndDois = []
     for (let each of results) {
         let titleElement = each.querySelector("p.lead")
         if (titleElement) {
             const title = titleElement.innerText.trim()
             const linksEl = each.querySelector("div.item-links")
-            const dois = [...linksEl.querySelectorAll("a")].map(each=>getHref(each)).map(normalizeDoiString).filter(each=>couldBeValidDoi(each))
+            const dois = [...linksEl.querySelectorAll("a")]
+                .map((each) => getHref(each))
+                .map(normalizeDoiString)
+                .filter((each) => couldBeValidDoi(each))
             // TODO: could filter this better
-            const urls = [...linksEl.querySelectorAll("a")].map(each=>getHref(each))
+            const urls = [...linksEl.querySelectorAll("a")].map((each) => getHref(each))
             titlesAndDois.push({
                 title,
                 doi: dois[0],
@@ -1121,4 +1121,55 @@ export async function crossRefSearch(query) {
         }
     }
     return titlesAndDois
+}
+
+/**
+ * get bibtex
+ *
+ * @async
+ * @param {string} doi - The Digital Object Identifier (DOI) of the article.
+ * @returns {Promise<string>} - A promise that resolves to the BibTeX citation string.
+ *
+ * @throws {Error} If the DOI is invalid, the request fails, or the response is not BibTeX.
+ *
+ * @example
+ * ```js
+ * crossRefBibtexFromDoi('10.1038/s41586-020-2649-2')
+ *   .then(citation => console.log(citation))
+ *   .catch(error => console.error(error.message));
+ * ```
+ */
+export async function crossRefBibtexFromDoi(doi) {
+    if (typeof doi != "string") {
+        throw Error(`crossRefDataFromDoi(doi), doi arg was not a string: ${toRepresentation(doi)}`)
+    }
+    doi = normalizeDoiString(doi)
+
+    const endpoint = `https://api.crossref.org/works/${encodeURIComponent(doi.trim())}`
+
+    try {
+        const response = await crossRefSearchFetch(endpoint, {
+            headers: {
+                Accept: "application/x-bibtex",
+            },
+        })
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error(`Citation not found for DOI: ${doi}`)
+            } else {
+                throw new Error(`CrossRef API error (status ${response.status}): ${response.statusText}`)
+            }
+        }
+
+        const bibtex = await response.text()
+
+        if (!bibtex.startsWith("@")) {
+            throw new Error("Received response is not a valid BibTeX entry.")
+        }
+
+        return bibtex
+    } catch (error) {
+        throw new Error(`Failed to fetch citation: ${error.message}`)
+    }
 }
