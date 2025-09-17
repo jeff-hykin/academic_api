@@ -2,6 +2,18 @@ import { isValidUrl } from "./tools/is_valid_url.js"
 import { toRepresentation } from './imports/good.js'
 import { MultiSourceObject } from "./tools/multi_source_object.js"
 import { isModernDoi, couldBeValidDoi, matchValidDoiSubstring, normalizeDoiString } from "./tools/doi_tools.js"
+
+export const crushTitle = (title)=>title.toLowerCase().replace(/\W/," ").replace(/\s+/g," ").trim()
+
+export function defaultReferencesAreEqualCheck(a, b) {
+    const titlesMatch = crushTitle(a.title) == crushTitle(b.title)
+    for (let each of ["doi","year"]) {
+        if (a[each] && b[each] && a[each] != b[each]) {
+            return false
+        }
+    }
+    return titlesMatch
+}
 // common reference structure summary:
 //    {string} paper.title - The title of the paper. THE ONLY REQUIRED FIELD.
 //    {string} paper.doi - The DOI (Digital Object Identifier) of the paper.

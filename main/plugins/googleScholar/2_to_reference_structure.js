@@ -1,4 +1,4 @@
-import { coerceInsignificantEdgeCases } from "../../reference.js"
+import { coerceInsignificantEdgeCases } from "../../reference_tools.js"
 import { urlToDoiMaybe } from "../../tools/doi_tools.js"
 
 export function toReferenceStructure(obj) {
