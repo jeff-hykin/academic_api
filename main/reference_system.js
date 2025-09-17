@@ -5,7 +5,7 @@ import { extractAbstract } from "./tools/extract_abstract.js"
 import { fillGaps } from "./tools/fill_gaps.js"
 import { deepSortObject } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/source/flattened/deep_sort_object.js'
 import { zipShort } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/source/flattened/zip_short.js'
-import { reasonValueIsInvalidReferenceStructure, crushTitle } from "./reference_tools.js"
+import { reasonValueIsInvalidReferenceStructure, crushTitle, defaultReferencesAreEqualCheck } from "./reference_tools.js"
 import { normalizeDoiString } from "./tools/doi_tools.js"
 
 export function ReferenceSystem({plugins={}, referencesAreEqual=defaultReferencesAreEqualCheck}) {
@@ -34,6 +34,27 @@ export function ReferenceSystem({plugins={}, referencesAreEqual=defaultReference
             // TODO: fillData()
             // TODO: refeshData()
             // TODO: relatedWorkIncludes({source, }, refChecker)
+            async fillDoi({referencesAreEqual=defaultReferencesAreEqualCheck}={}) {
+                const { results, warnings } = await self.search(this.title)
+                const matches = []
+                const relatedReferences = []
+                for (let each of results) {
+                    // if references are equal, then we can just copy the DOI
+                    if (referencesAreEqual(each, this)) {
+                        for (const [source, value] of Object.entries(each.$accordingTo)) {
+                            if (value.doi) {
+                                this.$accordingTo = this.$accordingTo || {}
+                                this.$accordingTo[source] = this.$accordingTo[source] || {}
+                                this.$accordingTo[source].doi = value.doi
+                            }
+                        }
+                        matches.push(each)
+                    } else {
+                        relatedReferences.push(each)
+                    }
+                }
+                return { success: !!this.doi, coreData: this.$accordingTo, warnings, matches, allResults: results }
+            },
             async fillCoreData({extractAbstractOptions={}}={}) {
                 // grabs urls from DOI and vice-versa
                 const warnings = await fillGaps(this, {extractAbstractOptions})
@@ -298,7 +319,7 @@ export function ReferenceSystem({plugins={}, referencesAreEqual=defaultReference
                                 }
                             }
                             if (each.doi) {
-                                each.doi = normalizeDoiString(doi)
+                                each.doi = normalizeDoiString(each.doi)
                                 if (resultsByDoi[each.doi]) {
                                     resultsByDoi[each.doi][pluginName] = each
                                 } else {
@@ -352,7 +373,7 @@ export function ReferenceSystem({plugins={}, referencesAreEqual=defaultReference
                 localReferences.push(reference)
             }
             
-            return { results: references, warnings }
+            return { results: localReferences, warnings }
         },
         referencesAreEqual,
         titleToDoi: async function(title, {referencesAreEqual=self.referencesAreEqual}={}) {
