@@ -8,7 +8,7 @@ import { zipShort } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/source/f
 import { reasonValueIsInvalidReferenceStructure, crushTitle } from "./reference_tools.js"
 import { normalizeDoiString } from "./tools/doi_tools.js"
 
-export function ReferenceSystem({plugins={}}) {
+export function ReferenceSystem({plugins={}, referencesAreEqual=defaultReferencesAreEqualCheck}) {
     // for (const [key, value] of Object.entries(plugins)) {
     //     // TODO: validate plugins here
     // }
@@ -225,7 +225,8 @@ export function ReferenceSystem({plugins={}}) {
             },
         })
     
-    return {
+    let self
+    return self = {
         Reference,
         getReferences: function() {
             return allReferences
@@ -326,7 +327,7 @@ export function ReferenceSystem({plugins={}}) {
                     }
                 }
             }
-            let references = []
+            let localReferences = []
             
             const titles = new Set(titleOnlySources.map(each=>each.title))
             for (let eachTitle of titles) {
@@ -334,24 +335,39 @@ export function ReferenceSystem({plugins={}}) {
                 for (const [pluginName, value] of Object.entries(resultsByTitle[eachTitle])) {
                     reference.$accordingTo[pluginName] = value
                 }
-                references.push(reference)
+                localReferences.push(reference)
             }
 
             const dois = Object.keys(resultsByDoi)
-            for (let each of dois) {
+            for (let eachDoi of dois) {
                 let reference
-                if (byDoi[each] instanceof Reference) {
-                    reference = byDoi[each]
+                if (byDoi[eachDoi] instanceof Reference) {
+                    reference = byDoi[eachDoi]
                 } else {
                     reference = new Reference()
                 }
-                for (const [pluginName, value] of Object.entries(resultsByDoi[each])) {
+                for (const [pluginName, value] of Object.entries(resultsByDoi[eachDoi])) {
                     reference.$accordingTo[pluginName] = value
                 }
-                references.push(reference)
+                localReferences.push(reference)
             }
             
             return { results: references, warnings }
+        },
+        referencesAreEqual,
+        titleToDoi: async function(title, {referencesAreEqual=self.referencesAreEqual}={}) {
+            const { results, warnings } = await self.search(title)
+            const titleAsReference = {title}
+            const matches = []
+            const relatedReferences = []
+            for (let each of results) {
+                if (referencesAreEqual(each, titleAsReference)) {
+                    matches.push(each)
+                } else {
+                    relatedReferences.push(each)
+                }
+            }
+            return { quickResult: matches[0], results: matches, relatedReferences, warnings, }
         },
     }
 }
