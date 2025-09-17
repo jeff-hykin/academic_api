@@ -17280,9 +17280,6 @@ __export(citeproc_2_4_exports2, {
   tokenExec: () => cs2
 });
 
-// https://esm.sh/@citation-js/plugin-bibtex@0.7.18
-var plugin_bibtex_0_7_exports = {};
-
 // https://esm.sh/@citation-js/core@0.7.18/denonext/lib-mjs/Cite/static.mjs
 var static_exports2 = {};
 __export(static_exports2, {
@@ -20571,8 +20568,8 @@ var { prototype: _17, async: B17, validateOptions: z20, validateOutputOptions: I
 var J13 = g20.default ?? g20;
 export {
   D16 as CSL,
+  we2 as Cite,
   B17 as async,
-  plugin_bibtex_0_7_exports as bibtexPlugin,
   J13 as default,
   H17 as get,
   N22 as input,

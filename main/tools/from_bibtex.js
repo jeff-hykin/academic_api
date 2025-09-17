@@ -1,8 +1,11 @@
 // import { Cite } from 'https://esm.sh/citation-js@0.7.20'
 import { parse } from './cite_bundle.js'
 import { indent } from 'https://esm.sh/gh/jeff-hykin/good-js@1.18.2.0/source/flattened/indent.js'
+import { zipShort } from 'https://esm.sh/gh/jeff-hykin/good-js@1.18.2.0/source/flattened/zip_short.js'
 
 // import * as a from 'https://esm.sh/@citation-js/plugin-bibtex@0.7.18'
+
+export const escapeBibtexString = (string)=>string.replace(/\s?\n|\n\s?/g," ").replace(/{/g,"{{").replace(/}/g,"}}")
 
 /**
  * convert a bibtex string to a reference structure
@@ -78,7 +81,7 @@ export function bibtexToRefStructure(bibtex, { source="unknown" } = {}) {
     //         }
     //     }
     // ]
-    return array.map(each=>{
+    return zipShort(array,texts).map(([each,text])=>{
         each.properties.type = each.type
         each.properties.label = each.label
         each = each.properties
@@ -88,6 +91,7 @@ export function bibtexToRefStructure(bibtex, { source="unknown" } = {}) {
         if (each.author) {
             each.authorNames = each.author.split(" and ")
         }
+        each.bibtex = text
         return {
             $accordingTo: {
                 [source]: each,
