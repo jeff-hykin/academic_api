@@ -7,6 +7,7 @@ import { deepSortObject } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/so
 import { zipShort } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/source/flattened/zip_short.js'
 import { reasonValueIsInvalidReferenceStructure, crushTitle, defaultReferencesAreEqualCheck } from "./reference_tools.js"
 import { normalizeDoiString } from "./tools/doi_tools.js"
+import { bibtexToRefStructure } from "./tools/from_bibtex.js"
 
 export function ReferenceSystem({plugins={}, referencesAreEqual=defaultReferencesAreEqualCheck}) {
     // for (const [key, value] of Object.entries(plugins)) {
@@ -210,7 +211,22 @@ export function ReferenceSystem({plugins={}, referencesAreEqual=defaultReference
                                 })
                             )
                             promise.then(bibtexs=>{
-                                this.$accordingTo[pluginName].bibtex = bibtexs[0]
+                                bibtex = bibtexs[0]
+                                this.$accordingTo[pluginName].bibtex = bibtex
+                                // add data from bibtex
+                                try {
+                                    const entries = bibtexToRefStructure(bibtex, {source: pluginName})
+                                    if (entries.length == 1) {
+                                        // bibtex only fills missing fields
+                                        Object.assign(
+                                            entries[0].$accordingTo[pluginName],
+                                            this.$accordingTo[pluginName],
+                                            entries[0].$accordingTo[pluginName],
+                                        )
+                                    }
+                                } catch (error) {
+                                    console.warn(`Got bibtex, but failed to parse+integrate extra data (for ${this.title})`, error)
+                                }
                             })
                         }
                     }
