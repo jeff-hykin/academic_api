@@ -135,10 +135,12 @@ export function ReferenceSystem({plugins={}}) {
                             if (!(this.$accordingTo[pluginName] instanceof Object)) {
                                 this.$accordingTo[pluginName] = {}
                             }
-                            const promise = Promise.resolve(plugin.getConnectedReferences(this.$accordingTo[pluginName], this)).catch(error=>{
-                                warnings[pluginName] = error
-                            })
-                            promises.push(promise)
+                            const promise = Promise.resolve(plugin.getConnectedReferences(this.$accordingTo[pluginName], this))
+                            promises.push(
+                                promise.catch(error=>{
+                                    warnings[pluginName] = error
+                                })
+                            )
                             promise.then(connectedPapers=>{
                                 const references = []
                                 for (let each of connectedPapers) {
@@ -179,12 +181,14 @@ export function ReferenceSystem({plugins={}}) {
                             if (!this.doi) {
                                 continue 
                             }
-                            const promise = Promise.resolve(plugin.getBibtexForDois(this.doi)).catch(error=>{
-                                warnings[pluginName] = error
-                            })
-                            promises.push(promise)
-                            promise.then(bibtex=>{
-                                this.$accordingTo[pluginName].bibtex = bibtex
+                            const promise = Promise.resolve(plugin.getBibtexForDois([this.doi]))
+                            promises.push(
+                                promise.catch(error=>{
+                                    warnings[pluginName] = error
+                                })
+                            )
+                            promise.then(bibtexs=>{
+                                this.$accordingTo[pluginName].bibtex = bibtexs[0]
                             })
                         }
                     }
@@ -264,10 +268,10 @@ export function ReferenceSystem({plugins={}}) {
             let eachSourceResultsFlattened = []
             for (const [pluginName, plugin] of Object.entries(plugins)) {
                 if (plugin.search instanceof Function) {
-                    const promise = Promise.resolve(plugin.search(query)).catch(error=>{
+                    const promise = Promise.resolve(plugin.search(query))
+                    promises.push(promise.catch(error=>{
                         warnings[pluginName] = error
-                    })
-                    promises.push(promise)
+                    }))
                     promise.then(results=>{
                         if (!(results instanceof Array)) {
                             warnings[pluginName] = "plugin failed search "+pluginName
