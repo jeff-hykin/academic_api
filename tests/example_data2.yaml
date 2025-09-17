@@ -1,0 +1,195 @@
+-
+    notes:
+        nickname: NeoSLAM
+        resumeStatus: super-relevent|abstract
+        comment: 'has github link, but not only is it broken, it seems it never existed. Emailed author to try and get access.'
+        reasonsRelevant:
+            - title
+            - abstract
+        reasonsNotRelevant: []
+        discoveryMethod:
+            dateTime: '2025-01-29T15:26:58.981Z'
+            originalQuery: NeuroSLAM
+            searchEngine: googleScholar
+        events:
+            added: '2025-01-29T15:26:59.208Z'
+            sawAbstract: '2025-03-18T00:12:58.792Z'
+    $accordingTo:
+        openAlex:
+            doi: '10.3390/s24041143'
+            title: 'NeoSLAM: Long-Term SLAM Using Computational Models of the Brain'
+            abstract: null
+            concepts:
+                - robotics and sensor-based localization
+                - advanced image and video retrieval techniques
+                - underwater vehicles and communication systems
+                - aerospace engineering
+                - computer vision and pattern recognition
+                - ocean engineering
+                - simultaneous localization and mapping
+                - computer science
+                - artificial intelligence
+                - robotics
+                - field (mathematics)
+                - robot
+                - noise (video)
+                - face (sociological concept)
+                - term (time)
+                - computer vision
+                - mobile robot
+                - physics
+                - quantum mechanics
+                - social science
+                - mathematics
+                - sociology
+                - pure mathematics
+                - image (mathematics)
+            year: 2024
+            authorNames:
+                - Carlos Alexandre Pontes Pizzino
+                - Ramon R. Costa
+                - Daniel Mitchell
+                - Patrícia A. Vargas
+            url: 'https://www.mdpi.com/1424-8220/24/4/1143'
+            pdfUrl: 'https://www.mdpi.com/1424-8220/24/4/1143/pdf?version=1707467876'
+            citationCount: 0
+            citedAlexIds:
+                - 'https://openalex.org/W1515596477'
+                - 'https://openalex.org/W1833770305'
+                - 'https://openalex.org/W2012592962'
+                - 'https://openalex.org/W2035360823'
+                - 'https://openalex.org/W2071027807'
+                - 'https://openalex.org/W2106069155'
+                - 'https://openalex.org/W2112669647'
+                - 'https://openalex.org/W2117228865'
+                - 'https://openalex.org/W2119605622'
+                - 'https://openalex.org/W2121780146'
+                - 'https://openalex.org/W2131846894'
+                - 'https://openalex.org/W2141584146'
+                - 'https://openalex.org/W2151103935'
+                - 'https://openalex.org/W2284029970'
+                - 'https://openalex.org/W2404327188'
+                - 'https://openalex.org/W2593504731'
+                - 'https://openalex.org/W2618530766'
+                - 'https://openalex.org/W2743606304'
+                - 'https://openalex.org/W2746973055'
+                - 'https://openalex.org/W2765148382'
+                - 'https://openalex.org/W2769720482'
+                - 'https://openalex.org/W2950860789'
+                - 'https://openalex.org/W2953649472'
+                - 'https://openalex.org/W2963609447'
+                - 'https://openalex.org/W2964284952'
+                - 'https://openalex.org/W2979058050'
+                - 'https://openalex.org/W301022506'
+                - 'https://openalex.org/W3104162526'
+                - 'https://openalex.org/W3115677524'
+                - 'https://openalex.org/W3129245057'
+                - 'https://openalex.org/W3170571425'
+                - 'https://openalex.org/W3203768829'
+                - 'https://openalex.org/W3207777176'
+                - 'https://openalex.org/W4200630024'
+                - 'https://openalex.org/W4213094647'
+                - 'https://openalex.org/W4214868310'
+                - 'https://openalex.org/W4234756960'
+                - 'https://openalex.org/W4365147444'
+                - 'https://openalex.org/W4383343917'
+                - 'https://openalex.org/W4385301537'
+                - 'https://openalex.org/W4390276499'
+            relatedAlexIds:
+                - 'https://openalex.org/W4254970379'
+                - 'https://openalex.org/W4250956039'
+                - 'https://openalex.org/W4240485100'
+                - 'https://openalex.org/W42295635'
+                - 'https://openalex.org/W2912965286'
+                - 'https://openalex.org/W28570768'
+                - 'https://openalex.org/W2039460805'
+                - 'https://openalex.org/W2012658348'
+                - 'https://openalex.org/W1973996291'
+                - 'https://openalex.org/W1508899372'
+            openAlexId: W4391684984
+        googleScholar:
+            title: 'NeoSLAM: Long-Term SLAM Using Computational Models of the Brain'
+            authorNames:
+                - CAP Pizzino
+                - RR Costa
+                - D Mitchell
+                - PA Vargas
+            pdfUrl: null
+            url: 'https://www.mdpi.com/1424-8220/24/4/1143'
+            citationId: '13197553707910522902'
+            multiArticleId: '13197553707910522902'
+            citedByLink: 'https://scholar.google.com//scholar?cites=13197553707910522902&as_sdt=5,44&sciodt=0,44&hl=en&oe=ASCII'
+            publisherInfo: 'Sensors, 2024'
+            year: 2024
+            urlToCitedBy: 'https://scholar.google.com//scholar?cites=13197553707910522902&as_sdt=5,44&sciodt=0,44&hl=en&oe=ASCII'
+            citedByCount: 1
+    score:
+        - 5
+        - 1
+        - 303
+        - 0
+        - 2024
+    scoreString: 5|1|303|0|2024
+    _:
+        title: 'NeoSLAM: Long-Term SLAM Using Computational Models of the Brain'
+        doi: 10.3390/s24041143
+        year: 2024
+        publisherFlags: null
+        authorNames:
+            - Carlos Alexandre Pontes Pizzino
+            - Ramon R. Costa
+            - Daniel Mitchell
+            - Patrícia A. Vargas
+        url: 'https://www.mdpi.com/1424-8220/24/4/1143'
+        pdfUrl: 'https://www.mdpi.com/1424-8220/24/4/1143/pdf?version=1707467876'
+        cites: null
+        citedBy: null
+        abstract: 'Simultaneous Localization and Mapping (SLAM) is a fundamental problem in the field of robotics, enabling autonomous robots to navigate and create maps of unknown environments. Nevertheless, the SLAM methods that use cameras face problems in maintaining accurate localization over extended periods across various challenging conditions and scenarios. Following advances in neuroscience, we propose NeoSLAM, a novel long-term visual SLAM, which uses computational models of the brain to deal with this problem. Inspired by the human neocortex, NeoSLAM is based on a hierarchical temporal memory model that has the potential to identify temporal sequences of spatial patterns using sparse distributed representations. Being known to have a high representational capacity and high tolerance to noise, sparse distributed representations have several properties, enabling the development of a novel neuroscience-based loop-closure detector that allows for real-time performance, especially in resource-constrained robotic systems. The proposed method has been thoroughly evaluated in terms of environmental complexity by using a wheeled robot deployed in the field and demonstrated that the accuracy of loop-closure detection was improved compared with the traditional RatSLAM system.'
+- 
+    notes:
+        isDuplicate: true
+        resumeStatus: unclear|title
+        comment: ''
+        reasonsRelevant: []
+        reasonsNotRelevant: []
+        discoveryMethod:
+            dateTime: '2025-01-29T15:26:58.981Z'
+            originalQuery: NeuroSLAM
+            searchEngine: googleScholar
+        events:
+            added: '2025-01-29T15:26:59.209Z'
+    $accordingTo:
+        googleScholar:
+            title: 31.1 a 65nm 8.79 TOPS/W 23.82 mW mixed-signal oscillator-based NeuroSLAM accelerator for applications in edge robotics
+            authorNames:
+                - JH Yoon
+                - A Raychowdhury
+            pdfUrl: 'https://drive.google.com/file/d/1NhMGT1jW9hgBDKr4RX0lmvMBY5wTDjIL/view'
+            url: 'https://ieeexplore.ieee.org/abstract/document/9063142/'
+            citationId: '11918216110764081361'
+            multiArticleId: '11918216110764081361'
+            citedByLink: 'https://scholar.google.com//scholar?cites=11918216110764081361&as_sdt=5,44&sciodt=0,44&hl=en&oe=ASCII'
+            publisherInfo: '2020 IEEE International Solid, 2020'
+            year: 2020
+            urlToCitedBy: 'https://scholar.google.com//scholar?cites=11918216110764081361&as_sdt=5,44&sciodt=0,44&hl=en&oe=ASCII'
+            citedByCount: 13
+    score:
+        - 10
+        - 1
+        - 156
+        - 0
+        - 2020
+    scoreString: 10|1|156|0|2020
+    _:
+        title: 31.1 a 65nm 8.79 TOPS/W 23.82 mW mixed-signal oscillator-based NeuroSLAM accelerator for applications in edge robotics
+        doi: null
+        year: 2020
+        publisherFlags: null
+        authorNames:
+            - JH Yoon
+            - A Raychowdhury
+        url: 'https://ieeexplore.ieee.org/abstract/document/9063142/'
+        pdfUrl: 'https://drive.google.com/file/d/1NhMGT1jW9hgBDKr4RX0lmvMBY5wTDjIL/view'
+        cites: null
+        citedBy: null
+        abstract: null
