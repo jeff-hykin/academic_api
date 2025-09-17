@@ -18,7 +18,7 @@ export function getDataForDois(dois) {
 
 export function getBibtexForDois(dois) {
     // NOTE: sadly I don't think there is a way to get the bibtex for multiple DOIs at once (crossref limitation 2025)
-    return Promise.all(dois.map(each=>crossRefBibtexFromDoi(doi)))
+    return Promise.all(dois.map(each=>crossRefBibtexFromDoi(each)))
 }
 
 // this is the only required export

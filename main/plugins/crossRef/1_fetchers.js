@@ -1145,25 +1145,20 @@ export async function crossRefBibtexFromDoi(doi) {
     }
     doi = normalizeDoiString(doi)
 
-    const endpoint = `https://api.crossref.org/works/${encodeURIComponent(doi.trim())}`
+    const endpoint = `https://doi.org/${doi}`
 
     try {
-        const response = await crossRefSearchFetch(endpoint, {
+        let bibtex = await crossRefSearchFetch(endpoint, {
             headers: {
                 Accept: "application/x-bibtex",
             },
         })
-
-        if (!response.ok) {
-            if (response.status === 404) {
-                throw new Error(`Citation not found for DOI: ${doi}`)
-            } else {
-                throw new Error(`CrossRef API error (status ${response.status}): ${response.statusText}`)
-            }
+        if (typeof bibtex != "string") {
+            throw new Error(`Received response is not a valid BibTeX entry.`)
+        } else {
+            bibtex = bibtex.trim()
         }
-
-        const bibtex = await response.text()
-
+        
         if (!bibtex.startsWith("@")) {
             throw new Error("Received response is not a valid BibTeX entry.")
         }
