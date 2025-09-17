@@ -10,6 +10,10 @@ import { FileSystem } from "https://deno.land/x/quickr@0.8.4/main/file_system.js
 import { parseArgs, flag, required, initialValue } from "https://esm.sh/gh/jeff-hykin/good-js@1.18.2.0/source/flattened/parse_args.js"
 import { toCamelCase } from "https://esm.sh/gh/jeff-hykin/good-js@1.18.2.0/source/flattened/to_camel_case.js"
 import { didYouMean } from "https://esm.sh/gh/jeff-hykin/good-js@1.18.2.0/source/flattened/did_you_mean.js"
+import { bibtexToRefStructure } from "../main/tools/from_bibtex.js"
+
+// TODO:
+    // add --save option(s), e.g. --save-to, --save, --output
 
 // 
 // check for help/version
@@ -62,7 +66,10 @@ import { didYouMean } from "https://esm.sh/gh/jeff-hykin/good-js@1.18.2.0/source
                     # end of yaml file
             
             Options:
-                # one-item actions
+                # convert a bibtex to a reference file (compatible with aca)
+                --bibtex-input <path to bibtex file>
+
+                # one-item --file actions
                 --abstract-of <partial title or note.nickname>
                 --basics-of <partial title or note.nickname>
                 --bibtex-of <partial title or note.nickname>
@@ -111,10 +118,11 @@ import { didYouMean } from "https://esm.sh/gh/jeff-hykin/good-js@1.18.2.0/source
         fields: [
             [[ "--recursive", "-r"], flag, ],
             [[ "--inplace", "-i"], flag, ],
-            [[ "--file", 0], required, ],
-            [[ "--abstract-of", ], initialValue(""), ],
-            [[ "--basics-of", ], initialValue(""), ],
-            [[ "--bibtex-of", ], initialValue(""), ],
+            [[ "--file", 0], initialValue(null), ],
+            [[ "--bibtex-input", ], initialValue(null), ],
+            [[ "--abstract-of", ], initialValue(null), ],
+            [[ "--basics-of", ], initialValue(null), ],
+            [[ "--bibtex-of", ], initialValue(null), ],
             [[ "--fill-dois", ], flag, ],
             [[ "--fill-basics", ], flag, ],
             [[ "--fill-abstracts", ], flag, ],
@@ -151,6 +159,7 @@ import { didYouMean } from "https://esm.sh/gh/jeff-hykin/good-js@1.18.2.0/source
     // console.debug(`output is:`,output)
     const {
         file,
+        bibtexInput,
         abstractOf,
         basicsOf,
         bibtexOf,
@@ -167,12 +176,23 @@ import { didYouMean } from "https://esm.sh/gh/jeff-hykin/good-js@1.18.2.0/source
         filterOut,
     } = output.simplifiedNames
 
+// 
+// bibtex input
+// 
+    if (bibtexInput) {
+        const bibtex = Deno.readTextFileSync(bibtexInput)
+        console.log(
+            Yaml.stringify(
+                bibtexToRefStructure(bibtex)
+            )
+        )
+        Deno.exit(0)
+    }
 
-
-const data = Yaml.parse(Deno.readTextFileSync(file), { defaultStringType: 'QUOTE_DOUBLE',})
 // 
 // handle filters
 // 
+    const data = Yaml.parse(Deno.readTextFileSync(file), { defaultStringType: 'QUOTE_DOUBLE',})
     const refSys1 = ReferenceSystem({
         plugins,
     })
@@ -292,8 +312,7 @@ if (bibtexOf) {
     await Promise.all(promises)
 }
 
-Deno.writeTextFileSync(
-    "references.yaml",
+console.log(
     yaml.stringify(
         getReferences()
     )
