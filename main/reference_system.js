@@ -167,6 +167,35 @@ export function ReferenceSystem({plugins={}}) {
                     warnings,
                 }
             },
+            async fillBibtex(dois) {
+                let promises = []
+                let warnings = {}
+                for (const [pluginName, plugin] of Object.entries(plugins)) {
+                    if (plugin.getBibtexForDois instanceof Function) {
+                        // if haven't gotten them already
+                        if (!(typeof this.$accordingTo[pluginName]?.bibtex == "string")) {
+                            if (!(this.$accordingTo[pluginName] instanceof Object)) {
+                                this.$accordingTo[pluginName] = {}
+                            }
+                            if (!this.doi) {
+                                continue 
+                            }
+                            const promise = Promise.resolve(plugin.getBibtexForDois(this.doi)).catch(error=>{
+                                warnings[pluginName] = error
+                            })
+                            promises.push(promise)
+                            promise.then(bibtex=>{
+                                this.$accordingTo[pluginName].bibtex = bibtex
+                            })
+                        }
+                    }
+                }
+                await Promise.all(promises)
+                return {
+                    bibtex: this.$all.bibtex.filter(each=>each),
+                    warnings,
+                }
+            },
             toJSON() {
                 const basic = {...this}
                 for (let each of Object.keys(basic)) {
