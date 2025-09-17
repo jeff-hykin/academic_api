@@ -3,6 +3,7 @@ import crossRef from "./plugins/crossRef/3_standard_api.js"
 import googleScholar from "./plugins/googleScholar/3_standard_api.js"
 
 export default {
+    // NOTE: order matters
     openAlex,
     crossRef,
     googleScholar,
