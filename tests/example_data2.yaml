@@ -17,6 +17,19 @@
     $accordingTo:
         openAlex:
             doi: '10.3390/s24041143'
+            bibtex: |
+                @article{PontesPizzino2024,
+                    title = {NeoSLAM: Long-Term SLAM Using Computational Models of the Brain},
+                    journal = {Sensors},
+                    volume = {24},
+                    number = {4},
+                    pages = {1143},
+                    year = {2024},
+                    issn = {1424-8220},
+                    doi = {10.3390/s24041143},
+                    url = {https://www.mdpi.com/1424-8220/24/4/1143},
+                    eprint = {https://www.mdpi.com/1424-8220/24/4/1143/pdf},
+                }
             title: 'NeoSLAM: Long-Term SLAM Using Computational Models of the Brain'
             abstract: null
             concepts:
