@@ -5,7 +5,7 @@ import { extractAbstract } from "./tools/extract_abstract.js"
 import { fillGaps } from "./tools/fill_gaps.js"
 import { deepSortObject } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/source/flattened/deep_sort_object.js'
 import { zipShort } from 'https://esm.sh/gh/jeff-hykin/good-js@1.15.0.0/source/flattened/zip_short.js'
-import { reasonValueIsInvalidReferenceStructure } from "./reference.js"
+import { normalizeDoiString } from "./tools/doi_tools.js"
 
 export function ReferenceSystem({plugins={}}) {
     // for (const [key, value] of Object.entries(plugins)) {
@@ -296,6 +296,7 @@ export function ReferenceSystem({plugins={}}) {
                                 }
                             }
                             if (each.doi) {
+                                each.doi = normalizeDoiString(doi)
                                 if (resultsByDoi[each.doi]) {
                                     resultsByDoi[each.doi][pluginName] = each
                                 } else {
