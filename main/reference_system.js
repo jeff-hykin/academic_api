@@ -26,7 +26,6 @@ export function ReferenceSystem({plugins={}}) {
         function Reference() {
             const output = MultiSourceObject({})
             Object.setPrototypeOf(output, Reference.prototype)
-            allReferences.push(output)
             return output
         }
         Object.assign(Reference.prototype, {
