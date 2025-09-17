@@ -119,6 +119,8 @@ import { bibtexToRefStructure } from "../main/tools/from_bibtex.js"
             [[ "--recursive", "-r"], flag, ],
             [[ "--inplace", "-i"], flag, ],
             [[ "--file", 0], initialValue(null), ],
+            [[ "--save", ], flag, ],
+            [[ "--print", ], flag, ],
             [[ "--bibtex-input", ], initialValue(null), ],
             [[ "--abstract-of", ], initialValue(null), ],
             [[ "--basics-of", ], initialValue(null), ],
@@ -159,6 +161,8 @@ import { bibtexToRefStructure } from "../main/tools/from_bibtex.js"
     // console.debug(`output is:`,output)
     const {
         file,
+        print,
+        save,
         bibtexInput,
         abstractOf,
         basicsOf,
@@ -193,12 +197,12 @@ import { bibtexToRefStructure } from "../main/tools/from_bibtex.js"
 // handle filters
 // 
     const data = Yaml.parse(Deno.readTextFileSync(file), { defaultStringType: 'QUOTE_DOUBLE',})
-    const refSys1 = ReferenceSystem({
+    const refSys = ReferenceSystem({
         plugins,
     })
 
-    refSys1.loadReferences(data)
-    let allReferences = refSys1.getReferences()
+    refSys.loadReferences(data)
+    let allReferences = refSys.getReferences()
 
     let indicesToKeep = []
     // convert to only letters separated by spaces
@@ -233,15 +237,10 @@ import { bibtexToRefStructure } from "../main/tools/from_bibtex.js"
         }).filter(each=>each!=null))
     }
 
-
+    allReferences.filter()
 
     indicesToKeep = new Set(indicesToKeep) 
-    const filteredData = data.filter((each, index)=>indicesToKeep.has(index))
-    const refSys = ReferenceSystem({
-        plugins,
-    })
-    refSys.loadReferences(filteredData)
-    const references = refSys.getReferences()
+    const references = allReferences.filter((each, index)=>indicesToKeep.has(index))
 
 // 
 // helpers
@@ -266,54 +265,69 @@ import { bibtexToRefStructure } from "../main/tools/from_bibtex.js"
     // allUrls,
     // allAbstracts,
 
-if (bibtexOf) {
-    let results = getByPartialTitle(bibtexOf)
-    if (results.length == 0) {
-        console.log(`No results found for ${bibtexOf}`)
-    } else {
-        for (let each of results) {
-            if (each.bibtex) {
-                console.log(each.bibtex)
-                console.log()
+    if (bibtexOf) {
+        let results = getByPartialTitle(bibtexOf)
+        if (results.length == 0) {
+            console.log(`No results found for ${bibtexOf}`)
+        } else {
+            for (let each of results) {
+                if (each.bibtex) {
+                    console.log(each.bibtex)
+                    console.log()
+                }
             }
         }
-    }
-} else if (fillDois) {
-    let promises = []
-    for (let each of references) {
-        if (each.doi) {
-            promises.push(each.fillDoi().then(({success})=>console.log(`success? ${success} filling doi for: `,each.title)))
+    } else if (fillDois) {
+        let promises = []
+        for (let each of references) {
+            if (each.doi) {
+                promises.push(each.fillDoi().then(({success})=>console.log(`success? ${success} filling doi for: `,each.title)))
+            }
         }
-    }
-    await Promise.all(promises)
-} else if (fillBasics) {
-    let promises = []
-    for (let each of references) {
-        if (each.doi) {
-            promises.push(each.fillCoreData().then(_=>console.log("filled core data for: ",each.title)))
+        await Promise.all(promises)
+    } else if (fillBasics) {
+        let promises = []
+        for (let each of references) {
+            if (each.doi) {
+                promises.push(each.fillCoreData().then(_=>console.log("filled core data for: ",each.title)))
+            }
         }
-    }
-    await Promise.all(promises)
-} else if (fillBasics) {
-    let promises = []
-    for (let each of references) {
-        if (each.doi && !each.title) {
-            promises.push(each.fillCoreData().then(_=>console.log("filled core data for: ",each.title)))
+        await Promise.all(promises)
+    } else if (fillBasics) {
+        let promises = []
+        for (let each of references) {
+            if (each.doi && !each.title) {
+                promises.push(each.fillCoreData().then(_=>console.log("filled core data for: ",each.title)))
+            }
         }
-    }
-    await Promise.all(promises)
-} else if (fillBibtex) {
-    const promises = []
-    for (let each of references) {
-        if (each.doi && !each.bibtex) {
-            promises.push(each.fillBibtex().then(_=>console.log("filled bibtex for: ",each.title)))
+        await Promise.all(promises)
+    } else if (fillBibtex) {
+        const promises = []
+        for (let each of references) {
+            if (each.doi && !each.bibtex) {
+                promises.push(each.fillBibtex().then(_=>console.log("filled bibtex for: ",each.title)))
+            }
         }
+        await Promise.all(promises)
     }
-    await Promise.all(promises)
-}
 
-console.log(
-    yaml.stringify(
-        getReferences()
-    )
-)
+// 
+// output
+// 
+    if (save) {
+        Deno.writeTextFileSync(
+            file,
+            yaml.stringify(
+                // all references (including filtered out ones)
+                getReferences()
+            )
+        )
+    }
+    if (!save || print) {
+        console.log(
+            yaml.stringify(
+                // only the filtered-in ones
+                references
+            )
+        )
+    }
