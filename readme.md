@@ -8,7 +8,7 @@ This is an API for getting information about published works.
 ### Basic Search
 
 ```js
-import { Reference, search, loadReferences, getReferences } from 'https://esm.sh/gh/jeff-hyking/academic_api/main/main.js'
+import { Reference, search, loadReferences, getReferences } from 'https://esm.sh/gh/jeff-hykin/academic_api/main/main.js'
 
 // searches google scholar, crossref, and open alex, and combines the results into 1 object per reference
 // (you can also add plugins to search other sources)
