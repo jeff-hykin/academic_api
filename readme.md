@@ -45,7 +45,7 @@ for (const each of results) {
 ### Save and Load
 
 ```js
-import { Reference, search, loadReferences, getReferences } from 'https://esm.sh/gh/jeff-hyking/academic_api/main/main.js'
+import { Reference, search, loadReferences, getReferences } from 'https://esm.sh/gh/jeff-hykin/academic_api/main/main.js'
 import * as yaml from "https://deno.land/std@0.168.0/encoding/yaml.ts"
 
 // 
@@ -80,7 +80,7 @@ Deno.writeTextFileSync(
 ## Plugins
 
 ```js
-import { Reference, search } from 'https://esm.sh/gh/jeff-hyking/academic_api/main/reference_system.js'
+import { Reference, search } from 'https://esm.sh/gh/jeff-hykin/academic_api/main/reference_system.js'
 import openAlex from "./plugins/openAlex/3_standard_api.js"
 import crossRef from "./plugins/crossRef/3_standard_api.js"
 import googleScholar from "./plugins/googleScholar/3_standard_api.js"
